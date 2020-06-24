@@ -1,3 +1,3 @@
 [submodule "client"]
 	path = client
-	url = https://github.com/federicopoi/bug-tracker.git
+	url = https://github.com/federicopoi/tpm-project-mern.git
