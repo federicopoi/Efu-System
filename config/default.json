@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://projectotpm:Albrimasa.1@cluster0-xcryk.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "sl_mysecret"
+}
