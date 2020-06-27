@@ -1,0 +1,18 @@
+thead button::after {
+  content: "⇵";
+}
+
+thead button.ascending::after {
+  content: "⥔";
+  display: inline-block;
+  margin-left: 0em;
+}
+
+thead button.descending::after {
+  content: "⥙";
+  display: inline-block;
+  margin-left: 0em;
+}
+.nav-link {
+  cursor: pointer;
+}
