@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
-
+const fileUpload = require("express-fileupload");
+router.use(fileUpload());
 // Ticket Model
 const Tarjeta = require("../../models/Tarjeta");
 
@@ -30,6 +31,7 @@ router.post("/", (req, res) => {
     equipo,
     tipodeRiesgo,
     riesgoInicial,
+    url,
   } = req.body;
 
   // Simple validation
@@ -59,6 +61,7 @@ router.post("/", (req, res) => {
     equipo,
     tipodeRiesgo,
     riesgoInicial,
+    photo: url,
   });
 
   nuevaTarjeta.save().then((tarjeta) => res.json(tarjeta));
@@ -82,6 +85,7 @@ router.post("/amarilla", (req, res) => {
     sugerencia,
     tipodeRiesgo,
     riesgoInicial,
+    url,
   } = req.body;
 
   // Simple validation
@@ -114,6 +118,7 @@ router.post("/amarilla", (req, res) => {
     sugerencia,
     tipodeRiesgo,
     riesgoInicial,
+    photo: url,
   });
 
   nuevaTarjeta.save().then((tarjeta) => res.json(tarjeta));
@@ -217,11 +222,33 @@ router.post("/cerrar/amarilla", (req, res) => {
 
 // @route DELETE api/tarjetas/:id
 // @desc Delete A Tarjeta
-// @access Private
+// @access Public
 router.delete("/:id", (req, res) => {
   Tarjeta.findById(req.params.id)
     .then((tarjeta) => tarjeta.remove().then(() => res.json({ success: true })))
     .catch((err) => res.status(404).json({ success: false }));
 });
 
+// @route DELETE api/tarjetas/upload
+// @desc Agregar imagen al server
+// @access Public
+router.post("/upload", (req, res) => {
+  if (req.files === null) {
+    return res.status(400).json({ msg: "Sin imagen adjunta" });
+  }
+
+  const file = req.files.file;
+
+  file.mv(
+    `${__dirname}/../../client/public/uploads/${file.name}.png`,
+    (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send(err);
+      }
+
+      res.json({ file, filePath: `/uploads/${file.name}` });
+    }
+  );
+});
 module.exports = router;

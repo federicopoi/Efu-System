@@ -6,7 +6,6 @@ const config = require("config");
 const tarjetas = require("./routes/api/tarjetas");
 const users = require("./routes/api/users");
 const auth = require("./routes/api/auth");
-
 const app = express();
 
 // Bodyparser Middleware

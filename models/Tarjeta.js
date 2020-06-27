@@ -17,6 +17,9 @@ const TarjetaSchema = new Schema(
       type: String,
       default: "Abierta",
     },
+    photo: {
+      type: String,
+    },
     color: {
       type: String,
       required: true,
