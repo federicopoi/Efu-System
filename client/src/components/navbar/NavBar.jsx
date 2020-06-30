@@ -20,7 +20,7 @@ const NavBar = (props) => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand>Administración de tarjetas</NavbarBrand>
+        <NavbarBrand>EFU System</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -33,6 +33,11 @@ const NavBar = (props) => {
             <NavItem>
               <NavLink to="/tarjetas" activeClassName="active" tag={RRNavLink}>
                 Mis Tarjetas
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink to="/buscar" activeClassName="active" tag={RRNavLink}>
+                Buscar tarjeta
               </NavLink>
             </NavItem>
           </Nav>

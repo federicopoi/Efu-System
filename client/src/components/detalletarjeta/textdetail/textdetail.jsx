@@ -14,6 +14,10 @@ export class TextDetail extends Component {
 
   render() {
     const { tarjetas, link_id } = this.props;
+    const completeLink = window.location.href.replace(
+      `/tarjeta/${link_id}`,
+      ""
+    );
 
     return (
       <div>
@@ -54,6 +58,7 @@ export class TextDetail extends Component {
                             path={this.props.location.pathname}
                             color={color}
                             numero={numero}
+                            completePath={completeLink}
                           >
                             Mostrar QR
                           </QRModal>

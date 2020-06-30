@@ -12,6 +12,7 @@ import RegisterPage from "./auth-components/register/registerpage";
 import LayoutDetalle from "./components/detalletarjeta/layout";
 import { loadUser } from "./store/actions/authActions";
 import { connect } from "react-redux";
+import SearchBy from "./search/SearchBy";
 import MisTarjetasFiltro from "./components/tarjetas/MisTarjetasFiltro";
 class App extends Component {
   componentDidMount() {
@@ -40,6 +41,7 @@ const DefaultContainer = () => (
     <NavBar></NavBar>
     <Route exact path="/" component={DashBoard}></Route>
     <Route path="/agregartarjeta" component={AñadirTarjeta}></Route>
+    <Route path="/buscar" component={SearchBy}></Route>
     <Route path="/tarjetas" component={MisTarjetas}></Route>
     <Route path="/tarjetasfiltro" component={MisTarjetasFiltro}></Route>
     <Route path="/tarjeta/:id" component={LayoutDetalle}></Route>

@@ -7,7 +7,7 @@ const QRModal = (props) => {
 
   const toggle = () => setModal(!modal);
 
-  const link = "http://192.168.0.5:3000" + props.path;
+  const link = props.completePath + props.path;
 
   return (
     <div>
@@ -18,6 +18,7 @@ const QRModal = (props) => {
           <Row>
             <Col>
               <QRCode value={link} />
+
               <h4 className="mt-3">
                 Tarjeta {props.color} N°{props.numero}
               </h4>

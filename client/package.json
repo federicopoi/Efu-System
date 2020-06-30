@@ -21,6 +21,7 @@
     "react-easy-bar-chart": "0.0.2",
     "react-html-table-to-excel": "^2.0.0",
     "react-perfect-scrollbar": "1.2.0",
+    "react-qr-scanner": "0.0.9",
     "react-redux": "^7.2.0",
     "react-responsive-image": "^5.0.0",
     "react-router-dom": "4.2.2",
