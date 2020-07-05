@@ -6,186 +6,241 @@ const CerradaDetalle = (props) => {
   const { tarjetas, link_id } = props;
   return (
     <div>
-      <Row>
-        <Col>
-          <h2 className="mb-3">Detalle de cierre</h2>
-        </Col>
-      </Row>
-      <Card>
-        {tarjetas &&
-          tarjetas
-            .filter(({ _id }) => _id === link_id)
-            .map(
-              ({
-                _id,
-                inicioReparacion,
-                finReparacion,
-                responsable,
-                tiempoEmpleado,
-                causa,
-                tareaRealizada,
-                materialUtilizado,
-                convertida,
-                riesgoFinal,
-                verificacion,
-                accionesComplementarias,
-                color,
-                tipoAccion,
-              }) => {
-                return (
-                  <CardBody key={_id}>
-                    <Row className="my-3">
-                      {color !== "Amarilla" && (
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Inicio de la reparacion
-                          </h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {inicioReparacion}
-                          </h5>
-                        </Col>
+      {tarjetas &&
+        tarjetas
+          .filter(({ _id }) => _id === link_id)
+          .map(
+            ({
+              _id,
+              inicioReparacion,
+              finReparacion,
+              responsable,
+              tiempoEmpleado,
+              causa,
+              tareaRealizada,
+              materialUtilizado,
+              convertida,
+              riesgoFinal,
+              verificacion,
+              accionesComplementarias,
+              color,
+              tipoAccion,
+            }) => {
+              return (
+                <div>
+                  {color === "Azul" && <div class="trapezoidAzul"></div>}
+                  {color === "Verde" && <div class="trapezoidVerde"></div>}
+                  {color === "Roja" && <div class="trapezoidRojo"></div>}
+                  {color === "Amarilla" && (
+                    <div class="trapezoidAmarilla"></div>
+                  )}
+                  <Card>
+                    <CardBody key={_id}>
+                      {color !== "Amarilla" ? (
+                        <div>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Inicio de la reparacion:
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {inicioReparacion}
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Fin de la reparacion:
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {finReparacion}
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Responsable:{" "}
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {responsable}
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Tiemplo empleado:
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {tiempoEmpleado} horas
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Tipo de acción:
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {tipoAccion}
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Riesgo Final:
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {riesgoFinal}
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Tarjeta convertida
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {convertida ? (
+                                <h5 className="font-14 font-weight-normal">
+                                  Si
+                                </h5>
+                              ) : (
+                                <h5 className="font-14 font-weight-normal">
+                                  No
+                                </h5>
+                              )}
+                            </h5>
+                          </Row>
+                          <Row className="my-3 text-center">
+                            <Col>
+                              <h5 className="font-16 font-medium text-center">
+                                Causa de la anomalia:
+                              </h5>
+                            </Col>
+                          </Row>
+                          <Row className="text-center">
+                            <Col>
+                              <h5 className="font-14 font-weight-normal">
+                                {causa}
+                              </h5>
+                            </Col>
+                          </Row>
+                          <Row className="my-3 text-center">
+                            <Col>
+                              <h5 className="font-16 font-medium text-center">
+                                Tarea realizada:
+                              </h5>
+                            </Col>
+                          </Row>
+                          <Row className="text-center">
+                            <Col>
+                              <h5 className="font-14 font-weight-normal">
+                                {tareaRealizada}
+                              </h5>
+                            </Col>
+                          </Row>
+                          <Row className="my-3 text-center">
+                            <Col>
+                              <h5 className="font-16 font-medium text-center">
+                                Material utilizado
+                              </h5>
+                            </Col>
+                          </Row>
+                          <Row className="text-center">
+                            <Col>
+                              <h5 className="font-14 font-weight-normal">
+                                {materialUtilizado}
+                              </h5>
+                            </Col>
+                          </Row>
+                        </div>
+                      ) : (
+                        <div>
+                          <Row className="my-3 text-center">
+                            <Col>
+                              <h5 className="font-16 font-medium text-center">
+                                Acción realizada
+                              </h5>
+                            </Col>
+                          </Row>
+                          <Row className="text-center">
+                            <Col>
+                              <h5 className="font-14 font-weight-normal">
+                                {tareaRealizada}
+                              </h5>
+                            </Col>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Responsable:{" "}
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {responsable}
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Fin de terminación:
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {finReparacion}
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Verificacion (Resp. Pilar de seguridad)
+                            </h5>
+                            {verificacion ? (
+                              <h5 className="font-14 font-weight-normal">Si</h5>
+                            ) : (
+                              <h5 className="font-14 font-weight-normal">No</h5>
+                            )}
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Riesgo Final:
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {riesgoFinal}
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Acciones complementarias:
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {accionesComplementarias}
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Tipo de acción:
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {tipoAccion}
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">
+                              Tarjeta convertida
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {convertida ? (
+                                <h5 className="font-14 font-weight-normal">
+                                  Si
+                                </h5>
+                              ) : (
+                                <h5 className="font-14 font-weight-normal">
+                                  No
+                                </h5>
+                              )}
+                            </h5>
+                          </Row>
+                        </div>
                       )}
-                      {color === "Amarilla" && (
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">Riesgo Final</h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {riesgoFinal}
-                          </h5>
-                        </Col>
-                      )}
-                      <Col sm={6}>
-                        {color === "Amarilla" ? (
-                          <h5 className="font-16 font-medium">
-                            Fecha de terminacion
-                          </h5>
-                        ) : (
-                          <h5 className="font-16 font-medium">
-                            Fin de la reparacion
-                          </h5>
-                        )}
-                        <h5 className="font-14 font-weight-normal">
-                          {finReparacion}
-                        </h5>
-                      </Col>
-                    </Row>
-                    <Row className="my-3">
-                      <Col sm={6}>
-                        <h5 className="font-16 font-medium">Responsable</h5>
-                        <h5 className="font-14 font-weight-normal">
-                          {responsable}
-                        </h5>
-                      </Col>
-                      {color !== "Amarilla" && (
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Tiemplo empleado
-                          </h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {tiempoEmpleado} horas
-                          </h5>
-                        </Col>
-                      )}
-                      {color === "Amarilla" && (
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Tipo de acción
-                          </h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {tipoAccion}
-                          </h5>
-                        </Col>
-                      )}
-                    </Row>
-                    <Row className="my-3">
-                      {color !== "Amarilla" && (
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Causa de la anomalia
-                          </h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {causa}
-                          </h5>
-                        </Col>
-                      )}
-                      {color === "Amarilla" && (
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Verificacion (Resp. Pilar de seguridad)
-                          </h5>
-                          {verificacion ? (
-                            <h5 className="font-14 font-weight-normal">Si</h5>
-                          ) : (
-                            <h5 className="font-14 font-weight-normal">No</h5>
-                          )}
-                        </Col>
-                      )}
-                      <Col sm={6}>
-                        {color === "Amarilla" ? (
-                          <h5 className="font-16 font-medium">
-                            Acción realizada
-                          </h5>
-                        ) : (
-                          <h5 className="font-16 font-medium">
-                            Tarea realizada
-                          </h5>
-                        )}
-                        <h5 className="font-14 font-weight-normal">
-                          {tareaRealizada}
-                        </h5>
-                      </Col>
-                    </Row>
-                    <Row className="my-3">
-                      {color !== "Amarilla" && (
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Material utilizado
-                          </h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {materialUtilizado}
-                          </h5>
-                        </Col>
-                      )}
-                      {color === "Amarilla" && (
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Acciones Complementarias
-                          </h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {accionesComplementarias}
-                          </h5>
-                        </Col>
-                      )}
-                      {color !== "Azul" && (
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Tarjeta Convertida
-                          </h5>
-
-                          {convertida ? (
-                            <h5 className="font-14 font-weight-normal">Si</h5>
-                          ) : (
-                            <h5 className="font-14 font-weight-normal">No</h5>
-                          )}
-                        </Col>
-                      )}
-                    </Row>
-                    <Row className="my-3">
-                      {color !== "Amarilla" && (
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Tipo de acción
-                          </h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {tipoAccion}
-                          </h5>
-                        </Col>
-                      )}
-                    </Row>
-                  </CardBody>
-                );
-              }
-            )}
-      </Card>
+                    </CardBody>
+                    {color === "Azul" && <div class="rectangleAzul"></div>}
+                    {color === "Verde" && <div class="rectangleVerde"></div>}
+                    {color === "Roja" && <div class="rectangleRojo"></div>}
+                    {color === "Amarilla" && (
+                      <div class="rectangleAmarilla"></div>
+                    )}
+                  </Card>
+                </div>
+              );
+            }
+          )}
     </div>
   );
 };

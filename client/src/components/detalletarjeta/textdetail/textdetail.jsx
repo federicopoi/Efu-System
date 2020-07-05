@@ -27,55 +27,60 @@ export class TextDetail extends Component {
             .map(({ numero, descripcion, color, estado, _id }) => {
               return (
                 <div className="mb-3 break-text">
-                  <div className="d-flex align-items-center">
-                    <div>
-                      <h2 className="mb-3">
-                        Tarjeta {color} N° {numero}
-                      </h2>
+                  <Row>
+                    <Col>
+                      <div className="d-flex align-items-center">
+                        <div>
+                          <h2 className="mb-3">
+                            Tarjeta {color} N° {numero}
+                          </h2>
+                        </div>
 
-                      <h5 className="font-weight-normal">{descripcion}</h5>
-
-                      <Row className="mt-3">
-                        {estado === "Abierta" && color !== "Amarilla" && (
-                          <Col>
-                            <CerrarTarjetaModal
-                              _id={link_id}
-                              color={color}
-                            ></CerrarTarjetaModal>
-                          </Col>
-                        )}
-                        {estado === "Abierta" && color === "Amarilla" && (
-                          <Col>
-                            <CerrarTarjetaAmarillaModal
-                              _id={link_id}
-                              color={color}
-                            ></CerrarTarjetaAmarillaModal>
-                          </Col>
-                        )}
-
-                        <Col>
-                          <QRModal
-                            path={this.props.location.pathname}
-                            color={color}
-                            numero={numero}
-                            completePath={completeLink}
-                          >
-                            Mostrar QR
-                          </QRModal>
-                        </Col>
-                        {localStorage.token && (
-                          <Col>
-                            <Button
-                              color="danger"
-                              onClick={this.onDeleteClick.bind(this, _id)}
-                            >
-                              Borrar Tarjeta
-                            </Button>
-                          </Col>
-                        )}
-                      </Row>
-                    </div>
-                  </div>
+                        <div className="ml-auto d-flex no-block align-items-center">
+                          <div className="dl">
+                            <Row>
+                              {estado === "Abierta" && color !== "Amarilla" && (
+                                <Col>
+                                  <CerrarTarjetaModal
+                                    _id={link_id}
+                                    color={color}
+                                  ></CerrarTarjetaModal>
+                                </Col>
+                              )}
+                              {estado === "Abierta" && color === "Amarilla" && (
+                                <Col>
+                                  <CerrarTarjetaAmarillaModal
+                                    _id={link_id}
+                                    color={color}
+                                  ></CerrarTarjetaAmarillaModal>
+                                </Col>
+                              )}
+                              <Col>
+                                <QRModal
+                                  path={this.props.location.pathname}
+                                  color={color}
+                                  numero={numero}
+                                  completePath={completeLink}
+                                >
+                                  Mostrar QR
+                                </QRModal>
+                              </Col>
+                              {localStorage.token && (
+                                <Col>
+                                  <Button
+                                    color="danger"
+                                    onClick={this.onDeleteClick.bind(this, _id)}
+                                  >
+                                    Borrar Tarjeta
+                                  </Button>
+                                </Col>
+                              )}
+                            </Row>
+                          </div>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
                 </div>
               );
             })}

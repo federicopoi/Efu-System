@@ -37,3 +37,50 @@ thead button.descending::after {
   height: 100%;
   z-index: 2;
 }
+.trapezoidVerde {
+  border-bottom: 50px solid #4ade36;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  height: 0;
+}
+.trapezoidRojo {
+  border-bottom: 50px solid #de4d36;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  height: 0;
+}
+.trapezoidAzul {
+  border-bottom: 50px solid #367bde;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  height: 0;
+}
+.trapezoidAmarilla {
+  border-bottom: 50px solid #ded136;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  height: 0;
+}
+.rectangleAmarilla {
+  height: 50px;
+  background-color: #ded136;
+}
+.rectangleAzul {
+  height: 50px;
+  background-color: #367bde;
+}
+.rectangleRojo {
+  height: 50px;
+
+  background-color: #de4d36;
+}
+
+.rectangleVerde {
+  height: 50px;
+
+  background-color: #4ade36;
+}
+.my-flex-card > div > div.card {
+  height: calc(100% - 15px);
+  margin-bottom: 15px;
+}

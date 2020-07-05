@@ -8,6 +8,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+
 import { connect } from "react-redux";
 import { logout } from "../../store/actions/authActions";
 
@@ -20,7 +21,7 @@ const NavBar = (props) => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand>EFU System</NavbarBrand>
+        <NavbarBrand className="font-weight-bold">EFU System</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>

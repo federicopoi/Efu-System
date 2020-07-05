@@ -274,6 +274,7 @@ export const TarjetasTable = (props) => {
 export class MisTarjetas extends Component {
   componentDidMount() {
     this.props.getTarjetas();
+    window.scrollTo(0, 0);
   }
 
   render() {

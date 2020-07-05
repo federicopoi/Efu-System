@@ -22,6 +22,7 @@ export class AbiertaDetalle extends Component {
                 color,
                 detecto,
                 numero,
+                descripcion,
                 prioridad,
                 familia,
                 fecha,
@@ -36,111 +37,103 @@ export class AbiertaDetalle extends Component {
                 photo,
               }) => {
                 return (
-                  <Card>
-                    <CardBody>
-                      <Row className="my-2">
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">Estado</h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {estado}
+                  <div>
+                    {color === "Azul" && <div class="trapezoidAzul"></div>}
+                    {color === "Verde" && <div class="trapezoidVerde"></div>}
+                    {color === "Roja" && <div class="trapezoidRojo"></div>}
+                    {color === "Amarilla" && (
+                      <div class="trapezoidAmarilla"></div>
+                    )}
+
+                    <Card>
+                      <CardBody>
+                        <Row className="ml-2 my-1">
+                          <h5
+                            className="font-16 font-medium mr-2"
+                            style={{ display: "block" }}
+                          >
+                            Maquina / Instalación:
                           </h5>
-                        </Col>
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">Color</h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {color}
-                          </h5>
-                        </Col>
-                      </Row>
-                      <Row className="my-2">
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">Detecto</h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {detecto}
-                          </h5>
-                        </Col>
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">Prioridad</h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {prioridad}
-                          </h5>
-                        </Col>
-                      </Row>
-                      <Row className="my-2">
-                        {color !== "Amarilla" && (
-                          <Col sm={6}>
-                            <h5 className="font-16 font-medium">Familia</h5>
-                            <h5 className="font-14 font-weight-normal">
-                              {familia}
-                            </h5>
-                          </Col>
-                        )}
-                        {color === "Amarilla" && (
-                          <Col sm={6}>
-                            <h5 className="font-16 font-medium">
-                              Sugerencia para que no se repita
-                            </h5>
-                            <h5 className="font-14 font-weight-normal">
-                              {sugerencia}
-                            </h5>
-                          </Col>
-                        )}
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Fecha apertura
-                          </h5>
-                          <h5 className="font-14 font-weight-normal">
-                            {moment(fecha).format("l LTS")}
-                          </h5>
-                        </Col>
-                      </Row>
-                      <Row className="my-2">
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Maquina / Instalación
-                          </h5>
-                          <h5 className="font-14 font-weight-normal">
+                          <div>&nbsp;</div>
+                          <h5 className="font-16 font-weight-normal">
                             {maquina}
                           </h5>
-                        </Col>
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Equipo Autonomo
+                        </Row>
+                        <Row className="ml-2 my-1">
+                          <h5 className="font-16 font-medium mr-2">
+                            Equipo Autonomo:
                           </h5>
                           <h5 className="font-14 font-weight-normal">
                             {equipo}
                           </h5>
-                        </Col>
-                      </Row>
-                      <Row className="my-2">
-                        <Col sm={6}>
+                        </Row>
+                        <Row className="ml-2 my-1">
+                          <h5 className="font-16 font-medium mr-2">
+                            Fecha apertura:
+                          </h5>
+                          <h5 className="font-14 font-weight-normal">
+                            {moment(fecha).format("l LTS")}
+                          </h5>
+                        </Row>
+                        <Row className="ml-2 my-1">
+                          <h5 className="font-16 font-medium mr-2">
+                            Detecto:{" "}
+                          </h5>
+                          <h5 className="font-14 font-weight-normal">
+                            {detecto}
+                          </h5>
+                        </Row>
+                        <Row className="ml-2 my-1">
+                          <h5 className="font-16 font-medium mr-2">
+                            Prioridad:{" "}
+                          </h5>
+                          <h5 className="font-14 font-weight-normal">
+                            {prioridad}
+                          </h5>
+                        </Row>
+                        <Row className="ml-2 my-1">
+                          <h5 className="font-16 font-medium mr-2">Familia:</h5>
+                          <h5 className="font-14 font-weight-normal">
+                            {familia}
+                          </h5>
+                        </Row>
+                        <Row className="ml-2 my-1">
                           {color === "Amarilla" ? (
-                            <h5 className="font-16 font-medium">
-                              Tipo de Riesgo
+                            <h5 className="font-16 font-medium mr-2">
+                              Tipo de Riesgo:
                             </h5>
                           ) : (
-                            <h5 className="font-16 font-medium">Tipo</h5>
+                            <h5 className="font-16 font-medium mr-2">Tipo: </h5>
                           )}
                           <h5 className="font-14 font-weight-normal">
                             {tipodeRiesgo}
                           </h5>
-                        </Col>
-                        <Col sm={6}>
-                          <h5 className="font-16 font-medium">
-                            Riesgo Inicial
+                        </Row>
+
+                        <Row className="ml-2 my-1">
+                          <h5 className="font-16 font-medium mr-2">
+                            Riesgo Inicial:
                           </h5>
                           <h5 className="font-14 font-weight-normal">
                             {riesgoInicial}
                           </h5>
-                        </Col>
-                      </Row>
+                        </Row>
+                        {color === "Amarilla" && (
+                          <Row className="ml-2 my-1">
+                            <h5 className="font-16 font-medium mr-2">
+                              Sugerencia para que no se repita:
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {sugerencia}
+                            </h5>
+                          </Row>
+                        )}
 
-                      {color === "Amarilla" && (
-                        <div>
-                          <Row className="my-2">
-                            <Col>
-                              <h5 className="font-16 font-medium">
-                                Reporte de Incidente "Susto" experimentado
+                        {color === "Amarilla" && (
+                          <div>
+                            <Row className="ml-2 my-1">
+                              <h5 className="font-16 font-medium mr-2">
+                                Reporte de Incidente "Susto" experimentado:
                               </h5>
                               {sustoExperimentado ? (
                                 <h5 className="font-14 font-weight-normal">
@@ -151,9 +144,9 @@ export class AbiertaDetalle extends Component {
                                   No
                                 </h5>
                               )}
-                            </Col>
-                            <Col>
-                              <h5 className="font-16 font-medium">
+                            </Row>
+                            <Row className="ml-2 my-1">
+                              <h5 className="font-16 font-medium mr-2">
                                 Reporte de Incidente "Susto" observado
                               </h5>
                               {sustoObservado ? (
@@ -165,11 +158,9 @@ export class AbiertaDetalle extends Component {
                                   No
                                 </h5>
                               )}
-                            </Col>
-                          </Row>
-                          <Row className="my-2">
-                            <Col>
-                              <h5 className="font-16 font-medium">
+                            </Row>
+                            <Row className="ml-2 my-1">
+                              <h5 className="font-16 font-medium mr-2">
                                 El incidente puede afectar al Medio Ambiente
                               </h5>
                               {impactoAmbiente ? (
@@ -181,7 +172,71 @@ export class AbiertaDetalle extends Component {
                                   No
                                 </h5>
                               )}
-                            </Col>
+                            </Row>
+                            <Row className="ml-2 my-1">
+                              {estado === "Abierta" && (
+                                <div>
+                                  <h5 className="font-16 font-medium">
+                                    Alerta
+                                  </h5>
+                                  {prioridad === "Alta" &&
+                                    timeDiferrence <= 15 && (
+                                      <h5 className="font-14 font-weight-normal">
+                                        Faltan {-timeDiferrence + 15} dias
+                                      </h5>
+                                    )}
+                                  {prioridad === "Alta" &&
+                                    timeDiferrence >= 15 && (
+                                      <h5 className="font-14 font-weight-normal">
+                                        Excedido {timeDiferrence - 15} dias
+                                      </h5>
+                                    )}
+                                  {prioridad === "Media" &&
+                                    timeDiferrence <= 30 && (
+                                      <h5 className="font-14 font-weight-normal">
+                                        Faltan {-timeDiferrence + 30} dias
+                                      </h5>
+                                    )}
+                                  {prioridad === "Media" &&
+                                    timeDiferrence >= 30 && (
+                                      <h5 className="font-14 font-weight-normal">
+                                        Excedido {timeDiferrence - 30} dias
+                                      </h5>
+                                    )}
+                                  {prioridad === "Baja" &&
+                                    timeDiferrence <= 60 && (
+                                      <h5 className="font-14 font-weight-normal">
+                                        Faltan {-timeDiferrence + 60} dias
+                                      </h5>
+                                    )}
+                                  {prioridad === "Baja" &&
+                                    timeDiferrence >= 60 && (
+                                      <h5 className="font-14 font-weight-normal">
+                                        Excedido {-timeDiferrence - 60} dias
+                                      </h5>
+                                    )}
+                                </div>
+                              )}
+                            </Row>
+                          </div>
+                        )}
+                        <Row className="my-3 text-center">
+                          <Col>
+                            <h5 className="font-16 font-medium text-center">
+                              Descripción:
+                            </h5>
+                          </Col>
+                        </Row>
+                        <Row className="text-center">
+                          <Col>
+                            <h5 className="font-14 font-weight-normal">
+                              {descripcion}
+                            </h5>
+                          </Col>
+                        </Row>
+
+                        {color !== "Amarilla" && (
+                          <Row>
                             {estado === "Abierta" && (
                               <Col>
                                 <h5 className="font-16 font-medium">Alerta</h5>
@@ -224,58 +279,18 @@ export class AbiertaDetalle extends Component {
                               </Col>
                             )}
                           </Row>
-                        </div>
+                        )}
+                      </CardBody>
+                      {color === "Azul" && <div class="rectangleAzul"></div>}
+                      {color === "Verde" && (
+                        <div class="rectangleVerde text-center"></div>
                       )}
-                      {color !== "Amarilla" && (
-                        <Row>
-                          {estado === "Abierta" && (
-                            <Col>
-                              <h5 className="font-16 font-medium">Alerta</h5>
-                              {prioridad === "Alta" && timeDiferrence <= 15 && (
-                                <h5 className="font-14 font-weight-normal">
-                                  Faltan {-timeDiferrence + 15} dias
-                                </h5>
-                              )}
-                              {prioridad === "Alta" && timeDiferrence >= 15 && (
-                                <h5 className="font-14 font-weight-normal">
-                                  Excedido {timeDiferrence - 15} dias
-                                </h5>
-                              )}
-                              {prioridad === "Media" &&
-                                timeDiferrence <= 30 && (
-                                  <h5 className="font-14 font-weight-normal">
-                                    Faltan {-timeDiferrence + 30} dias
-                                  </h5>
-                                )}
-                              {prioridad === "Media" &&
-                                timeDiferrence >= 30 && (
-                                  <h5 className="font-14 font-weight-normal">
-                                    Excedido {timeDiferrence - 30} dias
-                                  </h5>
-                                )}
-                              {prioridad === "Baja" && timeDiferrence <= 60 && (
-                                <h5 className="font-14 font-weight-normal">
-                                  Faltan {-timeDiferrence + 60} dias
-                                </h5>
-                              )}
-                              {prioridad === "Baja" && timeDiferrence >= 60 && (
-                                <h5 className="font-14 font-weight-normal">
-                                  Excedido {-timeDiferrence - 60} dias
-                                </h5>
-                              )}
-                            </Col>
-                          )}
-                          <Col>
-                            <h5 className="font-16 font-medium">Imagen</h5>
-                            <ImagenModal
-                              color={color}
-                              numero={numero}
-                            ></ImagenModal>
-                          </Col>
-                        </Row>
+                      {color === "Roja" && <div class="rectangleRojo"></div>}
+                      {color === "Amarilla" && (
+                        <div class="rectangleAmarilla"></div>
                       )}
-                    </CardBody>
-                  </Card>
+                    </Card>
+                  </div>
                 );
               }
             )}

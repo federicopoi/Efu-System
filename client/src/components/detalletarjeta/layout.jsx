@@ -7,6 +7,7 @@ import { CerradaDetalle, TextDetail, AbiertaDetalle, ImagenDetalle } from ".";
 class LayoutDetalle extends Component {
   componentDidMount() {
     this.props.getTarjetas();
+    window.scrollTo(0, 0);
   }
   render() {
     const { tarjetas } = this.props.tarjetas;
@@ -21,42 +22,59 @@ class LayoutDetalle extends Component {
           <div className="page-content container-fluid">
             <Container className="container-fluid">
               {estadoTarjeta.toString() === "Abierta" ? (
-                <Row>
-                  <Col sm={12} lg={12}>
-                    <TextDetail
-                      tarjetas={tarjetas}
-                      link_id={link_id}
-                    ></TextDetail>
-                    <AbiertaDetalle
-                      tarjetas={tarjetas}
-                      link_id={link_id}
-                    ></AbiertaDetalle>
-                    <ImagenDetalle
-                      tarjetas={tarjetas}
-                      link_id={link_id}
-                    ></ImagenDetalle>
-                  </Col>
-                </Row>
-              ) : (
                 <div>
                   <Row>
-                    <Col sm={6} lg={5}>
+                    <Col>
                       <TextDetail
                         tarjetas={tarjetas}
                         link_id={link_id}
                       ></TextDetail>
-
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={6} lg={6}>
                       <AbiertaDetalle
                         tarjetas={tarjetas}
                         link_id={link_id}
                       ></AbiertaDetalle>
                     </Col>
 
-                    <Col sm={6} lg={7}>
+                    <Col sm={6} lg={6}>
+                      <ImagenDetalle
+                        tarjetas={tarjetas}
+                        link_id={link_id}
+                      ></ImagenDetalle>
+                    </Col>
+                  </Row>
+                </div>
+              ) : (
+                <div>
+                  <Row>
+                    <Col>
+                      <TextDetail
+                        tarjetas={tarjetas}
+                        link_id={link_id}
+                      ></TextDetail>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col sm={6} lg={6}>
+                      <AbiertaDetalle
+                        tarjetas={tarjetas}
+                        link_id={link_id}
+                      ></AbiertaDetalle>
+                    </Col>
+
+                    <Col sm={6} lg={6}>
                       <CerradaDetalle
                         tarjetas={tarjetas}
                         link_id={link_id}
                       ></CerradaDetalle>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
                       <ImagenDetalle
                         tarjetas={tarjetas}
                         link_id={link_id}

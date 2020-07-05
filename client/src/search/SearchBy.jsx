@@ -53,7 +53,7 @@ class SearchBy extends Component {
               </Input>
               <Label for="color">Numero *</Label>
               <Input
-                type="text"
+                type="number"
                 name="numero"
                 id="numero"
                 onChange={this.onChange}

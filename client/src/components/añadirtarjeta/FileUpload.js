@@ -63,7 +63,7 @@ const FileUpload = (props) => {
       }
     }
   };
-  console.log(file);
+
   return (
     <div>
       <Button onClick={toggle}>Subir Imagen</Button>
@@ -88,8 +88,8 @@ const FileUpload = (props) => {
             <Progress percentage={uploadPercentage} />
 
             <input
-              type="submit"
               value="Upload"
+              type="submit"
               onClick={onSubmit}
               className="btn btn-primary btn-block mt-4"
             />
