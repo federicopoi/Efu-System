@@ -139,7 +139,7 @@ class MisTarjetasFiltro extends Component {
     });
 
     const test3 = Array.from(new Set(test2));
-    console.log(test3);
+
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -264,8 +264,11 @@ class MisTarjetasFiltro extends Component {
 
                     {newFilter &&
                       newFilter.map((item, index) => {
-                        const link =
-                          "http://192.168.0.5:3000/tarjeta/" + item._id;
+                        const link = window.location.href.replace(
+                          "/tarjetasfiltro",
+                          "/tarjeta/"
+                        );
+
                         return (
                           <tbody key={index}>
                             <tr>
@@ -274,7 +277,7 @@ class MisTarjetasFiltro extends Component {
                                   ({ value, label }, index) => {
                                     return item[label] === "fecha" ? (
                                       <td key={index}>
-                                        {moment(item[value]).format("l LTS")}
+                                        {moment(item[value]).fromNow()}
                                       </td>
                                     ) : (
                                       <td key={index}>{item[value]}</td>
@@ -283,7 +286,7 @@ class MisTarjetasFiltro extends Component {
                                 )}
                               {this.state.qrcode && (
                                 <td>
-                                  <QRCode value={link} />
+                                  <QRCode value={link + item._id} />
                                 </td>
                               )}
                             </tr>
