@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, CardBody, Row, Col } from "reactstrap";
 import moment from "moment";
-import ImagenModal from "../imagenmodal/ImagenModal";
+
 export class AbiertaDetalle extends Component {
   render() {
     const { tarjetas, link_id } = this.props;

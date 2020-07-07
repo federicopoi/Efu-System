@@ -264,7 +264,8 @@ class MisTarjetasFiltro extends Component {
 
                     {newFilter &&
                       newFilter.map((item, index) => {
-                        const link = "http://192.168.0.5:3000" + item._id;
+                        const link =
+                          "http://192.168.0.5:3000/tarjeta/" + item._id;
                         return (
                           <tbody key={index}>
                             <tr>
