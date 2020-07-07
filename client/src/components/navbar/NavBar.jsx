@@ -11,7 +11,7 @@ import {
 
 import { connect } from "react-redux";
 import { logout } from "../../store/actions/authActions";
-
+import LoginPage from "../../auth-components/login/loginpage";
 import { withRouter, NavLink as RRNavLink } from "react-router-dom";
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,8 +46,8 @@ const NavBar = (props) => {
             <Nav className="ml-auto" navbar>
               <NavItem onClick={props.logout}>
                 <NavLink
-                  to="/"
-                  onClick={props.logout}
+                  to="#"
+                  onClick={props.logout && refreshPage}
                   activeClassName="active"
                   tag={RRNavLink}
                 >
@@ -58,9 +58,7 @@ const NavBar = (props) => {
           ) : (
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink to="/login" activeClassName="active" tag={RRNavLink}>
-                  Login
-                </NavLink>
+                <LoginPage></LoginPage>
               </NavItem>
             </Nav>
           )}
@@ -69,7 +67,9 @@ const NavBar = (props) => {
     </div>
   );
 };
-
+function refreshPage() {
+  window.location.reload(false);
+}
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   isAuthenticated: state.auth.isAuthenticated,

@@ -43,6 +43,7 @@ class SearchBy extends Component {
                 type="select"
                 name="color"
                 id="color"
+                className="mb-3"
                 onChange={this.onChange}
               >
                 <option>Seleccionar</option>

@@ -407,9 +407,12 @@ class AñadirTarjeta extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
-                <FileUpload
-                  id={this.state.color + this.state.numero}
-                ></FileUpload>
+                {this.state.color !== "Seleccionar" &&
+                  this.state.color !== "" && (
+                    <FileUpload
+                      id={this.state.color + this.state.numero}
+                    ></FileUpload>
+                  )}
 
                 {this.state.msg ? (
                   <Alert color="danger" className="mt-3">

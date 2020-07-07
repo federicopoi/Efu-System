@@ -55,13 +55,13 @@ export const TarjetasTable = (props) => {
           <Container>
             <Row>
               <Col>
-                <div className="d-flex align-items-center">
+                <div className="d-sm-flex align-items-center">
                   <div className="">
                     <div>
                       <h2 className="mb-3">Tarjetas</h2>
                     </div>
 
-                    <div className="ml-auto d-flex no-block align-items-center mb-3">
+                    <div className="ml-auto d-sm-flex no-block align-items-center mb-3 d-sm-flex">
                       <div className="dl">
                         <h5 className="font-weight-normal">
                           Todas las tarjetas en la base de datos
@@ -69,7 +69,7 @@ export const TarjetasTable = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="ml-auto d-flex no-block align-items-center">
+                  <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
                     <Col>
                       <Link to="/agregartarjeta">
                         <Button color="success" className="btn">
@@ -242,7 +242,7 @@ export const TarjetasTable = (props) => {
                                   )}
                               </td>
 
-                              <td>{moment(fecha).format("l LTS")}</td>
+                              <td>{moment(fecha).format("DD/MM/YYYY LTS")}</td>
                               <td>{descripcion}</td>
 
                               <td>{estado}</td>

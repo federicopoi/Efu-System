@@ -72,7 +72,7 @@ export class AbiertaDetalle extends Component {
                             Fecha apertura:
                           </h5>
                           <h5 className="font-14 font-weight-normal">
-                            {moment(fecha).format("l LTS")}
+                            {moment(fecha).format("DD/MM/YYYY LTS ")}
                           </h5>
                         </Row>
                         <Row className="ml-2 my-1">
@@ -220,25 +220,10 @@ export class AbiertaDetalle extends Component {
                             </Row>
                           </div>
                         )}
-                        <Row className="my-3 text-center">
-                          <Col>
-                            <h5 className="font-16 font-medium text-center">
-                              Descripción:
-                            </h5>
-                          </Col>
-                        </Row>
-                        <Row className="text-center">
-                          <Col>
-                            <h5 className="font-14 font-weight-normal">
-                              {descripcion}
-                            </h5>
-                          </Col>
-                        </Row>
-
                         {color !== "Amarilla" && (
-                          <Row>
+                          <Row className="ml-2 my-1">
                             {estado === "Abierta" && (
-                              <Col>
+                              <div>
                                 <h5 className="font-16 font-medium">Alerta</h5>
                                 {prioridad === "Alta" &&
                                   timeDiferrence <= 15 && (
@@ -276,10 +261,25 @@ export class AbiertaDetalle extends Component {
                                       Excedido {-timeDiferrence - 60} dias
                                     </h5>
                                   )}
-                              </Col>
+                              </div>
                             )}
                           </Row>
                         )}
+                        <Row className="my-3 text-center">
+                          <Col>
+                            <h5 className="font-16 font-medium text-center">
+                              Descripción:
+                            </h5>
+                          </Col>
+                        </Row>
+
+                        <Row className="text-center">
+                          <Col>
+                            <h5 className="font-14 font-weight-normal">
+                              {descripcion}
+                            </h5>
+                          </Col>
+                        </Row>
                       </CardBody>
                       {color === "Azul" && <div class="rectangleAzul"></div>}
                       {color === "Verde" && (

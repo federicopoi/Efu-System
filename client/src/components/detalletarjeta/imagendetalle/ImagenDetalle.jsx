@@ -9,6 +9,7 @@ export class ImagenDetalle extends Component {
       minWidth: "128px",
       maxWidth: window.innerWidth,
     };
+
     return (
       <div>
         {tarjetas &&

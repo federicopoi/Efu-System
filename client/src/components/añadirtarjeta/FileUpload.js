@@ -54,10 +54,10 @@ const FileUpload = (props) => {
 
       setUploadedFile({ fileName, filePath });
 
-      setMessage("File Uploaded");
+      setMessage("Imagen subida exitosamente");
     } catch (err) {
       if (err.response.status === 500) {
-        setMessage("There was a problem with the server");
+        setMessage("Hubo un problema con el servidor");
       } else {
         setMessage(err.response.data.msg);
       }
@@ -67,7 +67,7 @@ const FileUpload = (props) => {
   return (
     <div>
       <Button onClick={toggle}>Subir Imagen</Button>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
+      <Modal isOpen={modal}>
         <ModalHeader toggle={toggle}>Subir imagen</ModalHeader>
         <ModalBody>
           <Fragment>
@@ -78,6 +78,7 @@ const FileUpload = (props) => {
                 type="file"
                 className="custom-file-input"
                 id="customFile"
+                accept="image/*"
                 onChange={onChange}
               />
               <label className="custom-file-label" htmlFor="customFile">
@@ -88,7 +89,7 @@ const FileUpload = (props) => {
             <Progress percentage={uploadPercentage} />
 
             <input
-              value="Upload"
+              value="Subir"
               type="submit"
               onClick={onSubmit}
               className="btn btn-primary btn-block mt-4"

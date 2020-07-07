@@ -14,6 +14,7 @@ import {
   Container,
   Input,
   Label,
+  Button,
 } from "reactstrap";
 import Select from "react-select";
 
@@ -27,6 +28,7 @@ const options = [
   { value: "estado", label: "Estado acutal" },
   { value: "maquina", label: "Maquina / Instalacion" },
   { value: "detecto", label: "Detecto" },
+  { value: "familia", label: "Familia de anomalia" },
 ];
 class MisTarjetasFiltro extends Component {
   componentDidMount() {
@@ -65,6 +67,7 @@ class MisTarjetasFiltro extends Component {
       fecha: this.state.fecha && this.state.fecha,
       descripcion: this.state.descripcion && this.state.descripcion,
       estado: this.state.estado && this.state.estado,
+      maquina: this.state.maquina && this.state.maquina,
       detecto: this.state.detecto && this.state.detecto,
       familia: this.state.familia && this.state.familia,
     };
@@ -125,6 +128,18 @@ class MisTarjetasFiltro extends Component {
       familia: unicosFamilia,
     };
 
+    const test = tarjetas.map((item) => {
+      return options.map(({ value, label }) => {
+        return item[value];
+      });
+    });
+
+    const test2 = tarjetas.map((obj, index) => {
+      return Object.values(obj)[1];
+    });
+
+    const test3 = Array.from(new Set(test2));
+    console.log(test3);
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -184,6 +199,26 @@ class MisTarjetasFiltro extends Component {
                     />
                     Qr Code
                   </Label>
+                  <Button
+                    className="ml-3"
+                    onClick={() => {
+                      this.setState({
+                        numero: "",
+                        color: "",
+                        prioridad: "",
+                        equipo: "",
+                        fecha: "",
+                        estado: "",
+                        descripcion: "",
+                        maquina: "",
+                        detecto: "",
+                        familia: "",
+                        selectedOption: null,
+                      });
+                    }}
+                  >
+                    Reset
+                  </Button>
                 </div>
               </div>
               <Row className="mb-3">

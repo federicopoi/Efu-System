@@ -1,26 +1,33 @@
 import React, { Component } from "react";
-import { Container } from "reactstrap";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { login } from "../../store/actions/authActions";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  Label,
+  Input,
+  FormGroup,
+  NavLink,
+  Alert,
+} from "reactstrap";
 import { clearErrors } from "../../store/actions/errorActions";
-import { Alert, Label, Input, Form, FormGroup, Button, Col } from "reactstrap";
-import { withRouter } from "react-router-dom";
+import { login } from "../../store/actions/authActions";
 
-export class LoginPage extends Component {
+class LoginPage extends Component {
   state = {
+    modal: false,
     email: "",
     password: "",
     msg: null,
   };
 
-  static propTypes = {
-    isAuthenticated: PropTypes.bool,
-    error: PropTypes.object.isRequired,
-    login: PropTypes.func.isRequired,
-    clearErrors: PropTypes.func.isRequired,
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal,
+    });
   };
-
   componentDidUpdate(prevProps) {
     const { error, isAuthenticated } = this.props;
     if (error !== prevProps.error) {
@@ -35,8 +42,11 @@ export class LoginPage extends Component {
         });
       }
     }
-    if (isAuthenticated) {
-      this.props.history.push("/");
+    // If auth, close modal
+    if (this.state.modal) {
+      if (isAuthenticated) {
+        this.toggle();
+      }
     }
   }
   onChange = (e) => {
@@ -57,51 +67,49 @@ export class LoginPage extends Component {
   render() {
     return (
       <div>
-        <div className="page-wrapper d-block">
-          <div className="page-content container-fluid">
-            <Container className="App">
-              <h2 className="mb-3">Administrador de tarjetas</h2>
-              <Form className="form" onSubmit={this.onSubmit}>
-                <Col>
-                  <FormGroup>
-                    <Label>Email</Label>
-                    <Input
-                      type="email"
-                      name="email"
-                      id="exampleEmail"
-                      onChange={this.onChange}
-                      placeholder="myemail@email.com"
-                    />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Label for="examplePassword">Contraseña</Label>
-                    <Input
-                      type="password"
-                      name="password"
-                      onChange={this.onChange}
-                      id="examplePassword"
-                      placeholder="********"
-                    />
-                  </FormGroup>
-                </Col>
+        <NavLink onClick={this.toggle} href="#">
+          <Button color="link text-muted">Iniciar Sesión</Button>
+        </NavLink>
+        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+          <ModalHeader toggle={this.toggle}>Sign in</ModalHeader>
+          <ModalBody>
+            <Form onSubmit={this.onSubmit}>
+              <FormGroup>
+                <Label for="email">Email</Label>
+                <Input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Email"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+                <Label for="password">Password</Label>
+                <Input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
                 {this.state.msg ? (
                   <Alert color="danger">{this.state.msg}</Alert>
                 ) : null}
-                <Button>Submit</Button>
-              </Form>
-            </Container>
-          </div>
-        </div>
+                <Button color="dark" block style={{ marginTop: "2rem" }}>
+                  Login
+                </Button>
+              </FormGroup>
+            </Form>
+          </ModalBody>
+        </Modal>
       </div>
     );
   }
 }
+
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
 });
-export default withRouter(
-  connect(mapStateToProps, { login, clearErrors })(LoginPage)
-);
+export default connect(mapStateToProps, { login, clearErrors })(LoginPage);

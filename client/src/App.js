@@ -19,35 +19,25 @@ class App extends Component {
     this.props.store.dispatch(loadUser());
   }
   render() {
-    const role = this.props.user && this.props.user.role;
-
     return (
       <BrowserRouter>
         <Switch>
           <div className="App">
-            <Route exact path="/(login)" component={LoginContainer} />
-            <Route exact path="/(registrarse)" component={RegisterPage} />
-            <Route component={DefaultContainer}></Route>
+            <NavBar></NavBar>
+            <Route exact path="/" component={DashBoard}></Route>
+            <Route path="/agregartarjeta" component={AñadirTarjeta}></Route>
+            <Route path="/buscar" component={SearchBy}></Route>
+            <Route path="/tarjetas" component={MisTarjetas}></Route>
+            <Route path="/tarjetasfiltro" component={MisTarjetasFiltro}></Route>
+            <Route path="/tarjeta/:id" component={LayoutDetalle}></Route>
+            {/* <Route path="/register" component={RegisterPage}></Route> */}
+            <Footer></Footer>
           </div>
         </Switch>
       </BrowserRouter>
     );
   }
 }
-const LoginContainer = () => <Route path="/login" component={LoginPage} />;
-
-const DefaultContainer = () => (
-  <div>
-    <NavBar></NavBar>
-    <Route exact path="/" component={DashBoard}></Route>
-    <Route path="/agregartarjeta" component={AñadirTarjeta}></Route>
-    <Route path="/buscar" component={SearchBy}></Route>
-    <Route path="/tarjetas" component={MisTarjetas}></Route>
-    <Route path="/tarjetasfiltro" component={MisTarjetasFiltro}></Route>
-    <Route path="/tarjeta/:id" component={LayoutDetalle}></Route>
-    <Footer></Footer>
-  </div>
-);
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
