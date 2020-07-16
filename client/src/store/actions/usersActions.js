@@ -1,4 +1,4 @@
-import { GET_USERS, USERS_LOADING, UPDATE_SUCCESS } from "./types";
+import { GET_USERS, USERS_LOADING, BORRAR_USER } from "./types";
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 import axios from "axios";
@@ -19,14 +19,15 @@ export const getUsers = () => (dispatch) => {
     );
 };
 
-// Update User Role
-export const updateRole = ({ name, role }) => (dispatch, getState) => {
-  // Request body
-  const body = JSON.stringify({ name, role });
-
+export const borrarUser = (id) => (dispatch) => {
   axios
-    .post("/api/users/update", body, tokenConfig(getState))
-    .then((res) => dispatch({ type: UPDATE_SUCCESS, payload: res.data }))
+    .delete(`/api/users/${id}`)
+    .then((res) =>
+      dispatch({
+        type: BORRAR_USER,
+        payload: id,
+      })
+    )
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );

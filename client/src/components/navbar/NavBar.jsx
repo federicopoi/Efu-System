@@ -15,7 +15,6 @@ import LoginPage from "../../auth-components/login/loginpage";
 import { withRouter, NavLink as RRNavLink } from "react-router-dom";
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
 
   return (
@@ -41,6 +40,13 @@ const NavBar = (props) => {
                 Buscar tarjeta
               </NavLink>
             </NavItem>
+            {props.user && props.user.role === "Admin" && (
+              <NavItem>
+                <NavLink to="/admin" activeClassName="active" tag={RRNavLink}>
+                  Administrar usuarios
+                </NavLink>
+              </NavItem>
+            )}
           </Nav>
           {localStorage.token ? (
             <Nav className="ml-auto" navbar>

@@ -24,6 +24,7 @@ export class CerrarTarjetaModal extends Component {
     responsable: "",
     tiempoEmpleado: "",
     causa: "",
+    riesgoFinal: "",
     tareaRealizada: "",
     tipoAccion: "",
     materialUtilizado: "",
@@ -67,6 +68,7 @@ export class CerrarTarjetaModal extends Component {
       responsable,
       tiempoEmpleado,
       causa,
+      riesgoFinal,
       tareaRealizada,
       tipoAccion,
       materialUtilizado,
@@ -83,6 +85,7 @@ export class CerrarTarjetaModal extends Component {
       causa,
       tareaRealizada,
       tipoAccion,
+      riesgoFinal,
       materialUtilizado,
       convertida,
     };
@@ -97,6 +100,7 @@ export class CerrarTarjetaModal extends Component {
       !responsable ||
       !tiempoEmpleado ||
       !causa ||
+      !riesgoFinal ||
       !tipoAccion ||
       !tareaRealizada ||
       !materialUtilizado
@@ -155,6 +159,14 @@ export class CerrarTarjetaModal extends Component {
                   id="responsable"
                   className="mb-2"
                 ></Input>
+
+                <Label for="detecto">Riesgo Final</Label>
+                <Input
+                  type="text"
+                  name="riesgoFinal"
+                  id="riesgoFinal"
+                  onChange={this.onChange}
+                />
 
                 <Label for="updaters">Tiempo empleado en horas</Label>
                 <Input

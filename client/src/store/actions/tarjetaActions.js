@@ -6,6 +6,7 @@ import {
   BORRAR_TARJETA,
   AGREGAR_TARJETA_AMARILLA,
   CERRAR_TARJETA_AMARILLA,
+  EDITAR_TARJETA,
 } from "./types";
 
 import { returnErrors } from "./errorActions";
@@ -101,6 +102,46 @@ export const cerrarTarjetaAmarilla = (tarjeta) => (dispatch, getState) => {
           err.response.data,
           err.response.status,
           "CERRAR_TARJETA_AMARILLA_ERROR"
+        )
+      )
+    );
+};
+
+export const editarTarjeta = (tarjeta) => (dispatch) => {
+  axios
+    .post("/api/tarjetas/editar", tarjeta)
+    .then((res) =>
+      dispatch({
+        type: EDITAR_TARJETA,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          "EDITAR_TARJETA_ERROR"
+        )
+      )
+    );
+};
+
+export const editarTarjetaAmarilla = (tarjeta) => (dispatch) => {
+  axios
+    .post("/api/tarjetas/editarAmarilla", tarjeta)
+    .then((res) =>
+      dispatch({
+        type: EDITAR_TARJETA,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          "EDITAR_TARJETA_ERROR"
         )
       )
     );

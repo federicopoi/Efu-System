@@ -5,20 +5,13 @@ import PropTypes from "prop-types";
 import { register } from "../../store/actions/authActions";
 import { clearErrors } from "../../store/actions/errorActions";
 import { Label, Input, Alert } from "reactstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 
 export class RegisterPage extends Component {
   state = {
-    username: "",
     email: "",
     password: "",
     role: "",
-    acceso: {
-      dashboard: true,
-      tarjetas: true,
-      agregarTarjeta: true,
-      detalleTarjeta: true,
-    },
     msg: null,
   };
 
@@ -43,7 +36,7 @@ export class RegisterPage extends Component {
         });
       }
     }
-    if (isAuthenticated) {
+    if (this.props.success) {
       this.props.history.push("/");
     }
   }
@@ -56,11 +49,9 @@ export class RegisterPage extends Component {
 
     // Create usre object
     const newUser = {
-      username,
       email,
       password,
       role,
-      acceso,
     };
 
     // Atempt to register
@@ -72,66 +63,60 @@ export class RegisterPage extends Component {
       <div className="container h-100">
         <div className="row align-items-center h-100">
           <div className="col-6 mx-auto">
-            <Card className="px-5 py-5">
-              <form onSubmit={this.onSubmit}>
-                <h3>Register</h3>
+            {this.props.user && this.props.user.role === "Admin" && (
+              <Card className="px-5 py-5">
+                <form onSubmit={this.onSubmit}>
+                  <h3>Registrar Usuario</h3>
 
-                <div className="form-group">
-                  <Label for="name">Nombre de usuario</Label>
+                  <div className="form-group">
+                    <Label for="email">Email</Label>
+                    <Input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="Email"
+                      className="mb-3"
+                      onChange={this.onChange}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <Label for="password">Password</Label>
+                    <Input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="Password"
+                      className="mb-3"
+                      onChange={this.onChange}
+                    />
+                  </div>
+                  <Label for="color">Role</Label>
                   <Input
-                    type="text"
-                    name="username"
-                    id="username"
-                    placeholder="Username"
+                    type="select"
+                    name="role"
+                    id="role"
                     onChange={this.onChange}
-                  />
-                </div>
+                  >
+                    <option>Seleccionar</option>
+                    <option>Admin</option>
+                    <option>Jefe de area</option>
+                  </Input>
 
-                <div className="form-group">
-                  <Label for="email">Email</Label>
-                  <Input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Email"
-                    className="mb-3"
-                    onChange={this.onChange}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <Label for="password">Password</Label>
-                  <Input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Password"
-                    className="mb-3"
-                    onChange={this.onChange}
-                  />
-                </div>
-                <Label for="name">Rol</Label>
-                <Input
-                  type="text"
-                  name="role"
-                  id="role"
-                  placeholder="Operador de planta"
-                  onChange={this.onChange}
-                />
-
-                <button type="submit" className="btn btn-primary btn-block">
-                  Sign Up
-                </button>
-                {this.state.msg ? (
-                  <Alert color="danger" className="mt-3">
-                    {this.state.msg}
-                  </Alert>
-                ) : null}
-                <p className="forgot-password text-right">
-                  Already registered <a href="/login">sign in?</a>
-                </p>
-              </form>
-            </Card>
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-block mt-3"
+                  >
+                    Sign Up
+                  </button>
+                  {this.state.msg ? (
+                    <Alert color="danger" className="mt-3">
+                      {this.state.msg}
+                    </Alert>
+                  ) : null}
+                </form>
+              </Card>
+            )}
           </div>
         </div>
       </div>
@@ -140,8 +125,10 @@ export class RegisterPage extends Component {
 }
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  registerSuccess: state.auth.registerSuccess,
+  success: state.auth.success,
   error: state.error,
+  user: state.auth.user,
+  users: state.users,
 });
 export default withRouter(
   connect(mapStateToProps, { register, clearErrors })(RegisterPage)

@@ -5,10 +5,6 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
-    username: {
-      type: String,
-      required: true,
-    },
     email: {
       type: String,
       required: true,
@@ -22,26 +18,7 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    acceso: {
-      type: Array,
-      required: true,
-      dashboard: {
-        type: Boolean,
-        default: true,
-      },
-      tarjetas: {
-        type: Boolean,
-        default: true,
-      },
-      agregarTarjeta: {
-        type: Boolean,
-        default: true,
-      },
-      detalleTarjeta: {
-        type: Boolean,
-        default: true,
-      },
-    },
+
     register_date: {
       type: Date,
       default: Date.now,

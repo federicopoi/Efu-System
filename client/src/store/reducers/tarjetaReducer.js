@@ -6,6 +6,7 @@ import {
   BORRAR_TARJETA,
   AGREGAR_TARJETA_AMARILLA,
   CERRAR_TARJETA_AMARILLA,
+  EDITAR_TARJETA,
 } from "../actions/types";
 const initState = {
   tarjetas: [],
@@ -31,6 +32,7 @@ export default function (state = initState, action) {
       };
     case CERRAR_TARJETA:
     case CERRAR_TARJETA_AMARILLA:
+    case EDITAR_TARJETA:
       return Object.assign({}, state, {
         tarjetas: state.tarjetas.map((tarjeta) => {
           return tarjeta._id === action.payload._id ? action.payload : tarjeta;

@@ -137,6 +137,7 @@ router.post("/cerrar", (req, res) => {
     causa,
     tareaRealizada,
     tipoAccion,
+    riesgoFinal,
     materialUtilizado,
     convertida,
   } = req.body;
@@ -150,6 +151,7 @@ router.post("/cerrar", (req, res) => {
     !tiempoEmpleado ||
     !tipoAccion ||
     !causa ||
+    !riesgoFinal ||
     !tareaRealizada ||
     !materialUtilizado
   ) {
@@ -167,6 +169,7 @@ router.post("/cerrar", (req, res) => {
     tarjeta.tareaRealizada = tareaRealizada;
     tarjeta.materialUtilizado = materialUtilizado;
     tarjeta.estado = "Cerrada";
+    tarjeta.riesgoFinal = riesgoFinal;
     tarjeta.convertida = convertida;
     tarjeta.tipoAccion = tipoAccion;
     tarjeta.save();
@@ -174,8 +177,8 @@ router.post("/cerrar", (req, res) => {
   });
 });
 
-// @route POST api/tarjetas/cerrar
-// @desc Cerrar Tarjeta
+// @route POST api/tarjetas/cerrar/amarilla
+// @desc Cerrar Tarjeta Amarilla
 // @access Public
 router.post("/cerrar/amarilla", (req, res) => {
   const {
@@ -250,5 +253,101 @@ router.post("/upload", (req, res) => {
       res.json({ file, filePath: `/uploads/${file.name}` });
     }
   );
+});
+
+// @route POST api/tarjetas/editar
+// @desc Editar Tarjeta
+// @access Public
+router.post("/editar", (req, res) => {
+  const {
+    _id,
+    descripcion,
+    detecto,
+    prioridad,
+    maquina,
+    familia,
+    equipo,
+    riesgoInicial,
+    responsable,
+    tiempoEmpleado,
+    causa,
+    tipoAccion,
+    riesgoFinal,
+    tareaRealizada,
+    tipodeRiesgo,
+    materialUtilizado,
+  } = req.body;
+
+  // Simple validation
+
+  Tarjeta.findOne({ _id }).exec((err, tarjeta) => {
+    if (err) console.log("Editar Tarjeta  ", err);
+
+    tarjeta.descripcion = descripcion;
+    tarjeta.detecto = detecto;
+    tarjeta.responsable = responsable;
+    tarjeta.tiempoEmpleado = tiempoEmpleado;
+    tarjeta.causa = causa;
+    tarjeta.tareaRealizada = tareaRealizada;
+    tarjeta.materialUtilizado = materialUtilizado;
+    tarjeta.riesgoFinal = riesgoFinal;
+    tarjeta.prioridad = prioridad;
+    tarjeta.maquina = maquina;
+    tarjeta.tipodeRiesgo = tipodeRiesgo;
+    tarjeta.familia = familia;
+    tarjeta.tipoAccion = tipoAccion;
+    tarjeta.equipo = equipo;
+    tarjeta.riesgoInicial = riesgoInicial;
+
+    tarjeta.save();
+    res.json(tarjeta);
+  });
+});
+
+// @route POST api/tarjetas/editar
+// @desc Editar Tarjeta
+// @access Public
+router.post("/editarAmarilla", (req, res) => {
+  const {
+    _id,
+    descripcion,
+    detecto,
+    prioridad,
+    maquina,
+    familia,
+    equipo,
+    sugerencia,
+    tipodeRiesgo,
+    riesgoInicial,
+    responsable,
+    tareaRealizada,
+    riesgoFinal,
+    tipoAccion,
+    accionesComplementarias,
+  } = req.body;
+
+  // Simple validation
+
+  Tarjeta.findOne({ _id }).exec((err, tarjeta) => {
+    if (err) console.log("Editar Tarjeta  Amarilla", err);
+
+    tarjeta.descripcion = descripcion;
+    tarjeta.detecto = detecto;
+    tarjeta.responsable = responsable;
+    tarjeta.sugerencia = sugerencia;
+    tarjeta.tareaRealizada = tareaRealizada;
+    tarjeta.accionesComplementarias = accionesComplementarias;
+    tarjeta.riesgoFinal = riesgoFinal;
+    tarjeta.prioridad = prioridad;
+    tarjeta.maquina = maquina;
+    tarjeta.tipodeRiesgo = tipodeRiesgo;
+    tarjeta.familia = familia;
+    tarjeta.tipoAccion = tipoAccion;
+    tarjeta.equipo = equipo;
+    tarjeta.riesgoInicial = riesgoInicial;
+
+    tarjeta.save();
+    res.json(tarjeta);
+  });
 });
 module.exports = router;

@@ -1,4 +1,9 @@
-import { GET_USERS, USERS_LOADING, UPDATE_SUCCESS } from "../actions/types";
+import {
+  GET_USERS,
+  USERS_LOADING,
+  UPDATE_SUCCESS,
+  BORRAR_USER,
+} from "../actions/types";
 const initState = {
   users: [],
   loading: false,
@@ -11,6 +16,11 @@ export default function (state = initState, action) {
         ...state,
         users: action.payload,
         loading: false,
+      };
+    case BORRAR_USER:
+      return {
+        ...state,
+        users: state.users.filter((user) => user._id !== action.payload),
       };
     case USERS_LOADING:
       return {

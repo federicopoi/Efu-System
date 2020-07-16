@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import { getTarjetas } from "../../store/actions/tarjetaActions";
+import { agregarFilter, getFilters } from "../../store/actions/filterActions";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import QRCode from "qrcode.react";
 import moment from "moment";
@@ -15,8 +15,10 @@ import {
   Input,
   Label,
   Button,
+  Form,
 } from "reactstrap";
 import Select from "react-select";
+import PresetModal from "./PresetModal";
 
 const options = [
   { value: "numero", label: "N°" },
@@ -33,6 +35,7 @@ const options = [
 class MisTarjetasFiltro extends Component {
   componentDidMount() {
     this.props.getTarjetas();
+    this.props.getFilters();
   }
   state = {
     selectedOption: null,
@@ -51,6 +54,7 @@ class MisTarjetasFiltro extends Component {
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
   };
+
   onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -58,6 +62,7 @@ class MisTarjetasFiltro extends Component {
   };
   render() {
     const { tarjetas } = this.props.tarjetas;
+    const { filters } = this.props.filters;
     const { selectedOption } = this.state;
     var filter = {
       numero: this.state.numero && this.state.numero,
@@ -128,18 +133,6 @@ class MisTarjetasFiltro extends Component {
       familia: unicosFamilia,
     };
 
-    const test = tarjetas.map((item) => {
-      return options.map(({ value, label }) => {
-        return item[value];
-      });
-    });
-
-    const test2 = tarjetas.map((obj, index) => {
-      return Object.values(obj)[1];
-    });
-
-    const test3 = Array.from(new Set(test2));
-
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -165,6 +158,7 @@ class MisTarjetasFiltro extends Component {
                   </div>
                 </Col>
               </Row>
+
               <div className="mb-3">
                 <h5>Seleccionar elementos para la tabla</h5>
                 <Select
@@ -175,6 +169,54 @@ class MisTarjetasFiltro extends Component {
                   placeholder="Seleccionar"
                 />
               </div>
+
+              <Row>
+                <Col>
+                  {" "}
+                  {filters &&
+                    filters.map(
+                      ({
+                        nombre,
+                        selectedOption,
+                        numero,
+                        color,
+                        equipo,
+                        prioridad,
+                        fecha,
+                        descripcion,
+                        estado,
+                        maquina,
+                        detecto,
+                        familia,
+                        qrcode,
+                      }) => {
+                        return (
+                          <Button
+                            className="my-2 mx-2"
+                            onClick={() => {
+                              this.setState({
+                                selectedOption,
+                                numero,
+                                color,
+                                equipo,
+                                prioridad,
+                                fecha,
+                                descripcion,
+                                estado,
+                                maquina,
+                                detecto,
+                                familia,
+                                qrcode,
+                              });
+                            }}
+                          >
+                            {nombre}
+                          </Button>
+                        );
+                      }
+                    )}
+                </Col>
+              </Row>
 
               <div className="d-flex align-items-center">
                 <div className="">
@@ -219,6 +261,9 @@ class MisTarjetasFiltro extends Component {
                   >
                     Reset
                   </Button>
+                  <Form onSubmit={this.onSubmit}>
+                    <PresetModal state={this.state}></PresetModal>
+                  </Form>
                 </div>
               </div>
               <Row className="mb-3">
@@ -287,6 +332,9 @@ class MisTarjetasFiltro extends Component {
                               {this.state.qrcode && (
                                 <td>
                                   <QRCode value={link + item._id} />
+                                  <h4 className="mt-3">
+                                    Tarjeta {item.color} N°{item.numero}
+                                  </h4>
                                 </td>
                               )}
                             </tr>
@@ -306,8 +354,13 @@ class MisTarjetasFiltro extends Component {
 const mapStateToProps = (state) => {
   return {
     tarjetas: state.tarjetas,
+    filters: state.filters,
     user: state.auth.user,
   };
 };
 
-export default connect(mapStateToProps, { getTarjetas })(MisTarjetasFiltro);
+export default connect(mapStateToProps, {
+  getTarjetas,
+  agregarFilter,
+  getFilters,
+})(MisTarjetasFiltro);

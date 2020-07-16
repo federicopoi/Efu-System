@@ -22,10 +22,10 @@ router.get("/", (req, res) => {
 // @desc Register new user
 // @access Public
 router.post("/", (req, res) => {
-  const { username, email, password, role, acceso } = req.body;
+  const { email, password, role } = req.body;
 
   // Simple validation
-  if (!username || !email || !password || !role || !acceso) {
+  if (!email || !password || !role) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
 
@@ -34,11 +34,9 @@ router.post("/", (req, res) => {
     if (user) return res.status(400).json({ msg: "User alredy exist" });
 
     const newUser = new User({
-      username,
       email,
       password,
       role,
-      acceso,
     });
 
     // Create salt $ hash
@@ -57,10 +55,8 @@ router.post("/", (req, res) => {
                 token,
                 user: {
                   id: user.id,
-                  username: user.username,
                   email: user.email,
                   role: user.role,
-                  acceso: user.acceso,
                 },
               });
             }
@@ -71,4 +67,12 @@ router.post("/", (req, res) => {
   });
 });
 
+// @route DELETE api/users/:id
+// @desc Delte A User
+// @access Private
+router.delete("/:id", (req, res) => {
+  User.findById(req.params.id)
+    .then((user) => user.remove().then(() => res.json({ success: true })))
+    .catch((err) => res.status(404).json({ success: false }));
+});
 module.exports = router;

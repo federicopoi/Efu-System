@@ -13,6 +13,7 @@ import LayoutDetalle from "./components/detalletarjeta/layout";
 import { loadUser } from "./store/actions/authActions";
 import { connect } from "react-redux";
 import SearchBy from "./search/SearchBy";
+import AdminUsuarios from "./components/admin/AdminUsuarios";
 import MisTarjetasFiltro from "./components/tarjetas/MisTarjetasFiltro";
 class App extends Component {
   componentDidMount() {
@@ -27,10 +28,11 @@ class App extends Component {
             <Route exact path="/" component={DashBoard}></Route>
             <Route path="/agregartarjeta" component={AñadirTarjeta}></Route>
             <Route path="/buscar" component={SearchBy}></Route>
+            <Route path="/admin" component={AdminUsuarios}></Route>
             <Route path="/tarjetas" component={MisTarjetas}></Route>
             <Route path="/tarjetasfiltro" component={MisTarjetasFiltro}></Route>
             <Route path="/tarjeta/:id" component={LayoutDetalle}></Route>
-            {/* <Route path="/register" component={RegisterPage}></Route> */}
+            <Route path="/register" component={RegisterPage}></Route>
             <Footer></Footer>
           </div>
         </Switch>

@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import { getTarjetas } from "../../store/actions/tarjetaActions";
 import { connect } from "react-redux";
+import RIModal from "./RIModal";
 import { Redirect } from "react-router-dom";
 import FileUpload from "./FileUpload";
 import {
@@ -245,7 +246,13 @@ class AñadirTarjeta extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                      <Label for="detecto">Riesgo Inicial *</Label>
+                      <Row>
+                        <Col>
+                          <Label for="detecto">Riesgo Inicial *</Label>
+                        </Col>
+                        <RIModal></RIModal>
+                      </Row>
+
                       <Input
                         type="text"
                         name="riesgoInicial"
@@ -304,6 +311,26 @@ class AñadirTarjeta extends Component {
                     </FormGroup>
 
                     {this.state.color !== "Amarilla" && (
+                      <FormGroup>
+                        <Label for="familia">Familia de anomalias *</Label>
+                        <Input
+                          type="select"
+                          name="familia"
+                          id="familia"
+                          onChange={this.onChange}
+                        >
+                          <option>Seleccionar</option>
+                          <option>1 - Pequeñas Deficiencia</option>
+                          <option>2 - Condiciones basicas</option>
+                          <option>3 - Puntos inaccesibles</option>
+                          <option>4 - Focos de contaminacion</option>
+                          <option>5 - Defecto de Calidad</option>
+                          <option>6 - Elementos Innecesarios</option>
+                          <option>7 - Lugares Inseguros</option>
+                        </Input>
+                      </FormGroup>
+                    )}
+                    {this.state.color === "Amarilla" && (
                       <FormGroup>
                         <Label for="familia">Familia de anomalias *</Label>
                         <Input
