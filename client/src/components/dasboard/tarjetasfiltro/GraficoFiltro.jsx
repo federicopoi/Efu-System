@@ -321,6 +321,8 @@ export class GraficoFiltro extends Component {
                   tarjetasFiltro3={
                     arrTarjetasFiltroAcumuladasCerradasPorcentaje
                   }
+                  tarjetasmesabiertas={array}
+                  tarjetasmescerradas={arrayCerradas}
                   color={this.state.color}
                   fechas={fechastarjetasUnicasRango}
                 ></TableModal>

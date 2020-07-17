@@ -9,7 +9,7 @@ import {
   CardBody,
   Media,
 } from "reactstrap";
-
+import Image from "./RIImage.png";
 const RIModal = (props) => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -27,11 +27,7 @@ const RIModal = (props) => {
         <ModalHeader toggle={toggle}>Riesgo Inicial</ModalHeader>
         <ModalBody>
           <Media>
-            <Media
-              style={imgStyle}
-              object
-              src="https://image.slidesharecdn.com/002emmantenimientoautonomo-150923023729-lva1-app6891/95/002-em-mantenimiento-autonomo-49-638.jpg?cb=1442976043"
-            />
+            <Media style={imgStyle} object src={Image} />
           </Media>
         </ModalBody>
       </Modal>

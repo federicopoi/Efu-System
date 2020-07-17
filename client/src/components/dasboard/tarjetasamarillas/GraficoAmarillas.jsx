@@ -265,6 +265,8 @@ export class GraficoAmarillas extends Component {
                   tarjetasFiltro3={
                     arrTarjetasAmarillasAcumuladasCerradasPorcentaje
                   }
+                  tarjetasmesabiertas={array}
+                  tarjetasmescerradas={arrayCerradas}
                   color="Amarillas"
                   fechas={fechastarjetasUnicasRango}
                 ></TableModal>

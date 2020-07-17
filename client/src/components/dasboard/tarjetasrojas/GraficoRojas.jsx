@@ -256,6 +256,8 @@ export class GraficoRojas extends Component {
                   tarjetasFiltro1={arrTarjetasRojasAcumuladas}
                   tarjetasFiltro2={arrTarjetasRojasAcumuladasCerradas}
                   tarjetasFiltro3={arrTarjetasRojasAcumuladasCerradasPorcentaje}
+                  tarjetasmesabiertas={array}
+                  tarjetasmescerradas={arrayCerradas}
                   color="Rojas"
                   fechas={fechastarjetasUnicasRango}
                 ></TableModal>

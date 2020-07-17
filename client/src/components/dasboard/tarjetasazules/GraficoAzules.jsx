@@ -261,6 +261,8 @@ export class GraficoAzules extends Component {
                   tarjetasFiltro3={
                     arrTarjetasAzulesAcumuladasCerradasPorcentaje
                   }
+                  tarjetasmesabiertas={array}
+                  tarjetasmescerradas={arrayCerradas}
                   color="Azules"
                   fechas={fechastarjetasUnicasRango}
                 ></TableModal>

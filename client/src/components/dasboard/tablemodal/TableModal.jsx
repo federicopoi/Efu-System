@@ -48,6 +48,22 @@ const TableModal = (props) => {
             })}
           </tr>
         </tbody>
+        <tbody>
+          <tr>
+            <td>Por mes abiertas</td>
+            {props.fechas.map((item, index) => {
+              return <td>{props.tarjetasmesabiertas[index]}</td>;
+            })}
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td>Por mes cerradas</td>
+            {props.fechas.map((item, index) => {
+              return <td>{props.tarjetasmescerradas[index]}</td>;
+            })}
+          </tr>
+        </tbody>
       </Table>
     </div>
   );
