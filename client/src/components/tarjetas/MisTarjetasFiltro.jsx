@@ -27,10 +27,14 @@ const options = [
   { value: "equipo", label: "Equipo Autonomo" },
   { value: "fecha", label: "Fecha apertura" },
   { value: "descripcion", label: "Descripcion anomalia" },
-  { value: "estado", label: "Estado acutal" },
+  { value: "estado", label: "Estado actual" },
   { value: "maquina", label: "Maquina / Instalacion" },
   { value: "detecto", label: "Detecto" },
   { value: "familia", label: "Familia de anomalia" },
+  { value: "tipodeRiesgo", label: "Tipo de Riesgo" },
+  { value: "riesgoInicial", label: "Riesgo Inicial" },
+  { value: "riesgoFinal", label: "Riesgo Final" },
+  { value: "tipoAccion", label: "Tipo de Accion" },
 ];
 class MisTarjetasFiltro extends Component {
   componentDidMount() {
@@ -49,6 +53,10 @@ class MisTarjetasFiltro extends Component {
     maquina: "",
     detecto: "",
     familia: "",
+    tipodeRiesgo: "",
+    riesgoInicial: "",
+    riesgoFinal: "",
+    tipoAccion: "",
     qrcode: false,
   };
   handleChange = (selectedOption) => {
@@ -75,6 +83,10 @@ class MisTarjetasFiltro extends Component {
       maquina: this.state.maquina && this.state.maquina,
       detecto: this.state.detecto && this.state.detecto,
       familia: this.state.familia && this.state.familia,
+      tipodeRiesgo: this.state.tipodeRiesgo && this.state.tipodeRiesgo,
+      riesgoInicial: this.state.riesgoInicial && this.state.riesgoInicial,
+      riesgoFinal: this.state.riesgoFinal && this.state.riesgoFinal,
+      tipoAccion: this.state.tipoAccion && this.state.tipoAccion,
     };
 
     const multiFilter = (arr, filters) => {
@@ -120,6 +132,18 @@ class MisTarjetasFiltro extends Component {
     const arrFamilia = tarjetas.map(({ familia }) => familia);
     const unicosFamilia = Array.from(new Set(arrFamilia));
 
+    const arrTipo = tarjetas.map(({ tipodeRiesgo }) => tipodeRiesgo);
+    const unicosTipo = Array.from(new Set(arrTipo));
+
+    const arrRiesgoInicial = tarjetas.map(({ riesgoInicial }) => riesgoInicial);
+    const unicosRiesgoInicial = Array.from(new Set(arrRiesgoInicial));
+
+    const arrRiesgoFinal = tarjetas.map(({ riesgoFinal }) => riesgoFinal);
+    const unicosRiesgoFinal = Array.from(new Set(arrRiesgoFinal));
+
+    const arrTipoAccion = tarjetas.map(({ tipoAccion }) => tipoAccion);
+    const unicosTipoAccion = Array.from(new Set(arrTipoAccion));
+
     const globalArray = {
       numero: unicosNumero,
       color: unicosColores,
@@ -131,6 +155,10 @@ class MisTarjetasFiltro extends Component {
       maquina: unicosMaquina,
       detecto: unicosDetecto,
       familia: unicosFamilia,
+      tipodeRiesgo: unicosTipo,
+      riesgoInicial: unicosRiesgoInicial,
+      riesgoFinal: unicosRiesgoFinal,
+      tipoAccion: unicosTipoAccion,
     };
 
     return (
@@ -172,7 +200,6 @@ class MisTarjetasFiltro extends Component {
 
               <Row>
                 <Col>
-                  {" "}
                   {filters &&
                     filters.map(
                       ({

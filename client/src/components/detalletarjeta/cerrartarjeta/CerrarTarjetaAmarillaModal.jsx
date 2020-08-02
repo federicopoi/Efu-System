@@ -64,6 +64,7 @@ export class CerrarTarjetaAmarillaModal extends Component {
       tareaRealizada,
       convertida,
       riesgoFinal,
+      causa,
       tipoAccion,
       verificacion,
       accionesComplementarias,
@@ -77,6 +78,7 @@ export class CerrarTarjetaAmarillaModal extends Component {
       tareaRealizada,
       riesgoFinal,
       verificacion,
+      causa,
       tipoAccion,
       accionesComplementarias,
       convertida,
@@ -90,6 +92,7 @@ export class CerrarTarjetaAmarillaModal extends Component {
       !finReparacionHora ||
       !responsable ||
       !tipoAccion ||
+      !causa ||
       !accionesComplementarias ||
       !tareaRealizada
     ) {
@@ -135,6 +138,14 @@ export class CerrarTarjetaAmarillaModal extends Component {
                   type="text"
                   name="responsable"
                   id="responsable"
+                  className="mb-2"
+                ></Input>
+                <Label for="responsable">Causa</Label>
+                <Input
+                  onChange={this.onChange}
+                  type="text"
+                  name="causa"
+                  id="causa"
                   className="mb-2"
                 ></Input>
                 <Label for="updaters">Fecha de terminacion</Label>

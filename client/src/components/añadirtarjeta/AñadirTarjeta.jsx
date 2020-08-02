@@ -120,6 +120,7 @@ class AñadirTarjeta extends Component {
       sustoExperimentado,
       sustoObservado,
       impactoAmbiente,
+      familia,
       sugerencia,
       tipodeRiesgo,
       riesgoInicial,
@@ -340,13 +341,6 @@ class AñadirTarjeta extends Component {
                           onChange={this.onChange}
                         >
                           <option>Seleccionar</option>
-                          <option>1 - Pequeñas Deficiencia</option>
-                          <option>2 - Condiciones basicas</option>
-                          <option>3 - Puntos inaccesibles</option>
-                          <option>4 - Focos de contaminacion</option>
-                          <option>5 - Defecto de Calidad</option>
-                          <option>6 - Elementos Innecesarios</option>
-                          <option>7 - Lugares Inseguros</option>
                           <option>8 - Actos Inseguros</option>
                         </Input>
                       </FormGroup>

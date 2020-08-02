@@ -170,6 +170,12 @@ const CerradaDetalle = (props) => {
                             </h5>
                           </Row>
                           <Row className="my-1 ml-2">
+                            <h5 className="font-16 font-medium mr-2">Causa:</h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {causa}
+                            </h5>
+                          </Row>
+                          <Row className="my-1 ml-2">
                             <h5 className="font-16 font-medium mr-2">
                               Fin de terminación:
                             </h5>

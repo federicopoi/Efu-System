@@ -79,6 +79,7 @@ router.post("/amarilla", (req, res) => {
     prioridad,
     maquina,
     equipo,
+    familia,
     sustoExperimentado,
     sustoObservado,
     impactoAmbiente,
@@ -95,6 +96,7 @@ router.post("/amarilla", (req, res) => {
     !color ||
     !detecto ||
     !prioridad ||
+    !familia ||
     !maquina ||
     !equipo ||
     !sugerencia ||
@@ -111,6 +113,7 @@ router.post("/amarilla", (req, res) => {
     detecto,
     prioridad,
     maquina,
+    familia,
     equipo,
     sustoExperimentado,
     sustoObservado,
@@ -188,6 +191,7 @@ router.post("/cerrar/amarilla", (req, res) => {
     tareaRealizada,
     tipoAccion,
     riesgoFinal,
+    causa,
     verificacion,
     accionesComplementarias,
     convertida,
@@ -200,6 +204,7 @@ router.post("/cerrar/amarilla", (req, res) => {
     !finReparacion ||
     !responsable ||
     !tipoAccion ||
+    !causa ||
     !accionesComplementarias ||
     !tareaRealizada
   ) {
@@ -213,6 +218,7 @@ router.post("/cerrar/amarilla", (req, res) => {
     tarjeta.responsable = responsable;
     tarjeta.riesgoFinal = riesgoFinal;
     tarjeta.verificacion = verificacion;
+    tarjeta.causa = causa;
     tarjeta.tareaRealizada = tareaRealizada;
     tarjeta.accionesComplementarias = accionesComplementarias;
     tarjeta.estado = "Cerrada";
