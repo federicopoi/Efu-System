@@ -44,6 +44,7 @@ class PresetModal extends Component {
       detecto,
       familia,
       qrcode,
+      alerta,
     } = this.props.state;
 
     // Crear Filter
@@ -61,6 +62,7 @@ class PresetModal extends Component {
       detecto,
       familia,
       qrcode,
+      alerta,
     };
     e.preventDefault();
     this.props.agregarFilter(nuevoFilter);

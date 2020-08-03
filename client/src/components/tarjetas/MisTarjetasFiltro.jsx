@@ -58,6 +58,7 @@ class MisTarjetasFiltro extends Component {
     riesgoFinal: "",
     tipoAccion: "",
     qrcode: false,
+    alerta: false,
   };
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
@@ -216,6 +217,7 @@ class MisTarjetasFiltro extends Component {
                         detecto,
                         familia,
                         qrcode,
+                        alerta,
                       }) => {
                         return (
                           <Button
@@ -234,6 +236,7 @@ class MisTarjetasFiltro extends Component {
                                 detecto,
                                 familia,
                                 qrcode,
+                                alerta,
                               });
                             }}
                           >
@@ -252,22 +255,46 @@ class MisTarjetasFiltro extends Component {
                   </div>
                 </div>
                 <div className="ml-auto d-flex no-block align-items-center">
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      id="qrcode"
-                      name="qrcode"
-                      onChange={(e) => {
-                        this.onChange({
-                          target: {
-                            name: e.target.name,
-                            value: e.target.checked,
-                          },
-                        });
-                      }}
-                    />
-                    Qr Code
-                  </Label>
+                  <Col>
+                    <Label check>
+                      <Input
+                        type="checkbox"
+                        id="alerta"
+                        className="mr-4"
+                        name="alerta"
+                        onChange={(e) => {
+                          this.onChange({
+                            target: {
+                              name: e.target.name,
+                              value: e.target.checked,
+                            },
+                          });
+                        }}
+                      />
+                      Alerta
+                    </Label>
+                    <Col>
+                      <Row>
+                        <Label check>
+                          <Input
+                            type="checkbox"
+                            id="qrcode"
+                            name="qrcode"
+                            onChange={(e) => {
+                              this.onChange({
+                                target: {
+                                  name: e.target.name,
+                                  value: e.target.checked,
+                                },
+                              });
+                            }}
+                          />
+                          Qr Code
+                        </Label>
+                      </Row>
+                    </Col>
+                  </Col>
+
                   <Button
                     className="ml-3"
                     onClick={() => {
@@ -282,6 +309,8 @@ class MisTarjetasFiltro extends Component {
                         maquina: "",
                         detecto: "",
                         familia: "",
+                        qrcode: false,
+                        alerta: false,
                         selectedOption: null,
                       });
                     }}
@@ -331,6 +360,9 @@ class MisTarjetasFiltro extends Component {
                         {this.state.qrcode && (
                           <th className="border-0">QR Code</th>
                         )}
+                        {this.state.alerta && (
+                          <th className="border-0">Alerta</th>
+                        )}
                       </tr>
                     </thead>
 
@@ -339,6 +371,11 @@ class MisTarjetasFiltro extends Component {
                         const link = window.location.href.replace(
                           "/tarjetasfiltro",
                           "/tarjeta/"
+                        );
+
+                        const timeDiferrence = moment().diff(
+                          item.fecha,
+                          "days"
                         );
 
                         return (
@@ -364,6 +401,36 @@ class MisTarjetasFiltro extends Component {
                                   </h4>
                                 </td>
                               )}
+                              {this.state.alerta &&
+                                item.prioridad === "Alta" &&
+                                timeDiferrence <= 15 && (
+                                  <td>Faltan {-timeDiferrence + 15} dias</td>
+                                )}
+                              {this.state.alerta &&
+                                item.prioridad === "Alta" &&
+                                timeDiferrence >= 15 && (
+                                  <td>Excedido {timeDiferrence - 15} dias</td>
+                                )}
+                              {this.state.alerta &&
+                                item.prioridad === "Media" &&
+                                timeDiferrence <= 30 && (
+                                  <td>Faltan {-timeDiferrence + 30} dias</td>
+                                )}
+                              {this.state.alerta &&
+                                item.prioridad === "Media" &&
+                                timeDiferrence >= 30 && (
+                                  <td>Excedido {timeDiferrence - 30} dias</td>
+                                )}
+                              {this.state.alerta &&
+                                item.prioridad === "Baja" &&
+                                timeDiferrence <= 60 && (
+                                  <td>Faltan {-timeDiferrence + 60} dias</td>
+                                )}
+                              {this.state.alerta &&
+                                item.prioridad === "Baja" &&
+                                timeDiferrence >= 60 && (
+                                  <td>Excedido {-timeDiferrence - 60} dias</td>
+                                )}
                             </tr>
                           </tbody>
                         );

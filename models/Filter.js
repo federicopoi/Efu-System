@@ -41,6 +41,9 @@ const FilterSchema = new Schema(
     qrcode: {
       type: Boolean,
     },
+    alerta: {
+      type: Boolean,
+    },
 
     selectedOption: {
       type: Array,

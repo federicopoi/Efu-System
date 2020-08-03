@@ -33,6 +33,7 @@ router.post("/", (req, res) => {
     detecto,
     familia,
     qrcode,
+    alerta,
   } = req.body;
 
   const nuevoFilter = new Filter({
@@ -49,6 +50,7 @@ router.post("/", (req, res) => {
     detecto,
     familia,
     qrcode,
+    alerta,
   });
 
   nuevoFilter.save().then((filter) => res.json(filter));
