@@ -11,6 +11,7 @@ import {
   Alert,
 } from "reactstrap";
 import { getTarjetas } from "../../store/actions/tarjetaActions";
+import { getCampos } from "../../store/actions/camposActions";
 import { connect } from "react-redux";
 import RIModal from "./RIModal";
 import { Redirect } from "react-router-dom";
@@ -23,6 +24,7 @@ import {
 class AñadirTarjeta extends Component {
   componentDidMount() {
     this.props.getTarjetas();
+    this.props.getCampos();
   }
   state = {
     numero: "",
@@ -135,6 +137,8 @@ class AñadirTarjeta extends Component {
       return <Redirect to="/tarjetas" />;
     }
 
+    const { campos } = this.props.campos;
+
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -239,10 +243,14 @@ class AñadirTarjeta extends Component {
                         onChange={this.onChange}
                       >
                         <option>Seleccionar</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                        {campos &&
+                          campos
+                            .filter(({ name, value }) => {
+                              return name === "maquina";
+                            })
+                            .map(({ name, value }, index) => {
+                              return <option key={index}>{value}</option>;
+                            })}
                       </Input>
                     </FormGroup>
 
@@ -298,16 +306,14 @@ class AñadirTarjeta extends Component {
                         onChange={this.onChange}
                       >
                         <option>Seleccionar</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
+                        {campos &&
+                          campos
+                            .filter(({ name, value }) => {
+                              return name === "equipo";
+                            })
+                            .map(({ name, value }, index) => {
+                              return <option key={index}>{value}</option>;
+                            })}
                       </Input>
                     </FormGroup>
 
@@ -361,7 +367,7 @@ class AñadirTarjeta extends Component {
 
                     {this.state.color !== "Amarilla" ? (
                       <FormGroup>
-                        <Label for="detecto">Tipo *</Label>
+                        <Label for="detecto">Tipo de riesgo*</Label>
                         <Input
                           type="select"
                           name="tipodeRiesgo"
@@ -369,12 +375,14 @@ class AñadirTarjeta extends Component {
                           onChange={this.onChange}
                         >
                           <option>Seleccionar</option>
-                          <option>Atrapamiento</option>
-                          <option>Corte</option>
-                          <option>Quemadura</option>
-                          <option>Deslizamiento</option>
-                          <option>Salpicadura</option>
-                          <option>Otros</option>
+                          {campos &&
+                            campos
+                              .filter(({ name, value }) => {
+                                return name === "tipo";
+                              })
+                              .map(({ name, value }, index) => {
+                                return <option key={index}>{value}</option>;
+                              })}
                         </Input>
                       </FormGroup>
                     ) : (
@@ -387,28 +395,14 @@ class AñadirTarjeta extends Component {
                           onChange={this.onChange}
                         >
                           <option>Seleccionar</option>
-                          <option>Atrapamiento</option>
-                          <option>Corte</option>
-                          <option>Quemadura</option>
-                          <option>Deslizamiento</option>
-                          <option>Salpicadura</option>
-                          <option>Otros</option>
-                          <option>Aire comprimido</option>
-                          <option>Agua</option>
-                          <option>Aceite</option>
-                          <option>Vapor</option>
-                          <option>Materia prima</option>
-                          <option>Polvo</option>
-                          <option>No tocar</option>
-                          <option>No subir</option>
-                          <option>No bajar</option>
-                          <option>No detenerse</option>
-                          <option>No acercarse</option>
-                          <option>No esforzarse</option>
-                          <option>No prejuzgar</option>
-                          <option>No equivocarse</option>
-                          <option>No exponer al hombre</option>
-                          <option>No usar registros</option>
+                          {campos &&
+                            campos
+                              .filter(({ name, value }) => {
+                                return name === "tipo";
+                              })
+                              .map(({ name, value }, index) => {
+                                return <option key={index}>{value}</option>;
+                              })}
                         </Input>
                       </FormGroup>
                     )}
@@ -457,6 +451,7 @@ class AñadirTarjeta extends Component {
 const mapStateToProps = (state) => {
   return {
     tarjetas: state.tarjetas,
+    campos: state.campos,
     error: state.error,
   };
 };
@@ -464,4 +459,5 @@ export default connect(mapStateToProps, {
   agregarTarjeta,
   agregarTarjetaAmarilla,
   getTarjetas,
+  getCampos,
 })(AñadirTarjeta);
