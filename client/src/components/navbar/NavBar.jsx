@@ -43,7 +43,7 @@ const NavBar = (props) => {
             {props.user && props.user.role === "Admin" && (
               <NavItem>
                 <NavLink to="/admin" activeClassName="active" tag={RRNavLink}>
-                  Administrar usuarios
+                  Administrar
                 </NavLink>
               </NavItem>
             )}
