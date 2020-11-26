@@ -97,6 +97,9 @@ const TarjetaSchema = new Schema(
     tipoAccion: {
       type: String,
     },
+    planta: {
+      type: String,
+    },
 
     // Solo en Amarillas
 
