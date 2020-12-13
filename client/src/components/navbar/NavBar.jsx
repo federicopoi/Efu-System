@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { logout } from "../../store/actions/authActions";
 import LoginPage from "../../auth-components/login/loginpage";
 import { withRouter, NavLink as RRNavLink } from "react-router-dom";
+import Logo from "./logo.png";
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -20,7 +21,16 @@ const NavBar = (props) => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand className="font-weight-bold">EFU System</NavbarBrand>
+        <NavbarBrand>
+          <img
+            src={Logo}
+            width="150"
+            height="43"
+            className="d-inline-block align-top"
+          />
+        </NavbarBrand>
+
+        {/* <NavbarBrand className="font-weight-bold">EFU System</NavbarBrand> */}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
