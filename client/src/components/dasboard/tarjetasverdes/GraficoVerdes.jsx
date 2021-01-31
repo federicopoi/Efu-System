@@ -235,7 +235,7 @@ export class GraficoVerdes extends Component {
     return (
       <div>
         <Row>
-          <Col lg={4} md={12} sm={12}>
+          <Col lg={5} md={12} sm={12}>
             <Card>
               <CardBody>
                 <h3 className="mb-3">Evolucion de Tarjetas Verdes</h3>
@@ -247,23 +247,16 @@ export class GraficoVerdes extends Component {
               </CardBody>
             </Card>
           </Col>
-          <Col lg={8} md={12} sm={12}>
-            <Card>
-              <CardBody>
-                <h3>Tabla</h3>
-                <TableModal
-                  tarjetasFiltro1={arrTarjetasVerdesAcumuladas}
-                  tarjetasFiltro2={arrTarjetasVerdesAcumuladasCerradas}
-                  tarjetasFiltro3={
-                    arrTarjetasVerdesAcumuladasCerradasPorcentaje
-                  }
-                  tarjetasmesabiertas={array}
-                  tarjetasmescerradas={arrayCerradas}
-                  color="Verdes"
-                  fechas={fechastarjetasUnicasRango}
-                ></TableModal>
-              </CardBody>
-            </Card>
+          <Col lg={7} md={12} sm={12}>
+            <TableModal
+              tarjetasFiltro1={arrTarjetasVerdesAcumuladas}
+              tarjetasFiltro2={arrTarjetasVerdesAcumuladasCerradas}
+              tarjetasFiltro3={arrTarjetasVerdesAcumuladasCerradasPorcentaje}
+              tarjetasmesabiertas={array}
+              tarjetasmescerradas={arrayCerradas}
+              color="Verdes"
+              fechas={fechastarjetasUnicasRango}
+            ></TableModal>
           </Col>
         </Row>
       </div>

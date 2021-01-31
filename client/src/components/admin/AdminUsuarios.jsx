@@ -14,9 +14,14 @@ import {
 } from "reactstrap";
 import { Link, Redirect } from "react-router-dom";
 import CampoModal from "./camposModal";
+import CamposParteMaquinaModal from "./camposparteMaquinaModal";
 import { getUsers, borrarUser } from "../../store/actions/usersActions";
 import { borrarCampo } from "../../store/actions/camposActions";
-import { getCampos } from "../../store/actions/camposActions";
+import VersionControlModal from "./versionControlModal";
+import {
+  getCampos,
+  parteMaquinaDelete,
+} from "../../store/actions/camposActions";
 export class AdminUsuarios extends Component {
   componentDidMount() {
     this.props.getUsers();
@@ -34,11 +39,24 @@ export class AdminUsuarios extends Component {
     idMaquina: "",
     idEquipo: "",
     idTipo: "",
+    idRiesgoInicial: "",
+    idRiesgoFinal: "",
+    maquina: "",
+    parteMaquina: "",
+  };
+  parteMaquinaDeleteFunction = (e) => {
+    const { idMaquina, parteMaquina } = this.state;
+    const parteMaquinaD = {
+      _id: idMaquina,
+      name: parteMaquina,
+    };
+    this.props.parteMaquinaDelete(parteMaquinaD);
   };
   render() {
     const { users } = this.props.users;
     const { campos } = this.props.campos;
     console.log(this.state);
+    console.log(campos);
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -50,20 +68,42 @@ export class AdminUsuarios extends Component {
                     <div className="d-sm-flex align-items-center">
                       <div className="">
                         <div>
-                          <h2 className="mb-3">Administrar usuarios</h2>
+                          <h2 className="mb-3">Administrar</h2>
                         </div>
                       </div>
+
                       <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
-                        <Link to="/register">
-                          <Button color="success" className="btn">
-                            Agregar usuario
-                          </Button>
-                        </Link>
+                        <Col>
+                          <VersionControlModal></VersionControlModal>
+                        </Col>
                       </div>
                     </div>
                   </Col>
                 </Row>
-                <Card>
+
+                <Row className="mt-3">
+                  <Col>
+                    <div className="d-sm-flex align-items-center mt-3">
+                      <div className="">
+                        <div>
+                          <h3 className="mb-3">Usuarios</h3>
+                        </div>
+                      </div>
+
+                      <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
+                        <Col>
+                          <Link to="/register">
+                            <Button color="success" className="btn">
+                              Agregar usuario
+                            </Button>
+                          </Link>
+                        </Col>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+
+                <Card className="mb-3">
                   <CardBody>
                     <Table className="no-wrap v-middle" responsive>
                       <thead>
@@ -95,12 +135,12 @@ export class AdminUsuarios extends Component {
                     </Table>
                   </CardBody>
                 </Card>
-                <Row>
-                  <Col>
+                <Row className="mt-3">
+                  <Col className="mt-3">
                     <div className="d-sm-flex align-items-center">
                       <div className="">
                         <div>
-                          <h2 className="mb-3">Administrar campos</h2>
+                          <h3 className="mb-3">Campos</h3>
                         </div>
                       </div>
                     </div>
@@ -124,6 +164,7 @@ export class AdminUsuarios extends Component {
                                   onChange={(e) => {
                                     this.setState({
                                       idMaquina: e.target.value,
+                                      maquina: e.target.value,
                                     });
                                   }}
                                 >
@@ -135,7 +176,9 @@ export class AdminUsuarios extends Component {
                                       })
                                       .map(({ name, value, _id }) => {
                                         return (
-                                          <option value={_id}>{value}</option>
+                                          <option value={_id} name={value}>
+                                            {value}
+                                          </option>
                                         );
                                       })}
                                 </Input>
@@ -157,13 +200,63 @@ export class AdminUsuarios extends Component {
                         </div>
                       </Col>
                     </Row>
+                    {this.state.maquina !== "" && (
+                      <Row>
+                        <Col>
+                          <div className="d-sm-flex align-items-center">
+                            <div className="">
+                              <div>
+                                <FormGroup>
+                                  <Label for="maquina">Parte de maquina</Label>
+                                  <Input
+                                    type="select"
+                                    name="parteMaquina"
+                                    id="parteMaquina"
+                                    onChange={(e) => {
+                                      this.setState({
+                                        parteMaquina: e.target.value,
+                                      });
+                                    }}
+                                  >
+                                    <option>Seleccionar</option>
+                                    {campos &&
+                                      campos
+                                        .filter(({ _id }) => {
+                                          return _id === this.state.maquina;
+                                        })
+                                        .map(({ parteMaquina }) => {
+                                          return parteMaquina.map((item) => {
+                                            return (
+                                              <option value={item}>
+                                                {item}
+                                              </option>
+                                            );
+                                          });
+                                        })}
+                                  </Input>
+                                </FormGroup>
+                              </div>
+                            </div>
+                            <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
+                              <CamposParteMaquinaModal campo="maquina"></CamposParteMaquinaModal>
+                              <Button
+                                onClick={this.parteMaquinaDeleteFunction}
+                                className="bg-danger border-danger ml-3"
+                              >
+                                Borrar
+                              </Button>
+                            </div>
+                          </div>
+                        </Col>
+                      </Row>
+                    )}
                     <Row>
                       <Col>
                         <div className="d-sm-flex align-items-center">
                           <div className="">
                             <div>
                               <FormGroup>
-                                <Label for="tipo">Tipo</Label>
+                                <Label for="tipo">Tipo de riesgo</Label>
                                 <Input
                                   type="select"
                                   name="tipo"
@@ -210,7 +303,7 @@ export class AdminUsuarios extends Component {
                           <div className="">
                             <div>
                               <FormGroup>
-                                <Label for="equipo">Equipo</Label>
+                                <Label for="equipo">Equipo Autonomo</Label>
                                 <Input
                                   type="select"
                                   name="equipo"
@@ -251,6 +344,100 @@ export class AdminUsuarios extends Component {
                         </div>
                       </Col>
                     </Row>
+                    <Row>
+                      <Col>
+                        <div className="d-sm-flex align-items-center">
+                          <div className="">
+                            <div>
+                              <FormGroup>
+                                <Label for="equipo">Riesgo Inicial</Label>
+                                <Input
+                                  type="select"
+                                  name="riesgoInicial"
+                                  id="riesgoInicial"
+                                  onChange={(e) => {
+                                    this.setState({
+                                      idRiesgoInicial: e.target.value,
+                                    });
+                                  }}
+                                >
+                                  <option>Seleccionar</option>
+                                  {campos &&
+                                    campos
+                                      .filter(({ name }) => {
+                                        return name === "riesgoInicial";
+                                      })
+                                      .map(({ name, value, _id }) => {
+                                        return (
+                                          <option value={_id}>{value}</option>
+                                        );
+                                      })}
+                                </Input>
+                              </FormGroup>
+                            </div>
+                          </div>
+                          <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
+                            <CampoModal campo="riesgoInicial"></CampoModal>
+                            <Button
+                              onClick={this.onDeleteClickCampo.bind(
+                                this,
+                                this.state.idRiesgoInicial
+                              )}
+                              className="bg-danger border-danger ml-3"
+                            >
+                              Borrar
+                            </Button>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <div className="d-sm-flex align-items-center">
+                          <div className="">
+                            <div>
+                              <FormGroup>
+                                <Label for="equipo">Riesgo Final</Label>
+                                <Input
+                                  type="select"
+                                  name="riesgoFinal"
+                                  id="riesgoFinal"
+                                  onChange={(e) => {
+                                    this.setState({
+                                      idRiesgoFinal: e.target.value,
+                                    });
+                                  }}
+                                >
+                                  <option>Seleccionar</option>
+                                  {campos &&
+                                    campos
+                                      .filter(({ name }) => {
+                                        return name === "riesgoFinal";
+                                      })
+                                      .map(({ name, value, _id }) => {
+                                        return (
+                                          <option value={_id}>{value}</option>
+                                        );
+                                      })}
+                                </Input>
+                              </FormGroup>
+                            </div>
+                          </div>
+                          <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
+                            <CampoModal campo="riesgoFinal"></CampoModal>
+                            <Button
+                              onClick={this.onDeleteClickCampo.bind(
+                                this,
+                                this.state.idRiesgoFinal
+                              )}
+                              className="bg-danger border-danger ml-3"
+                            >
+                              Borrar
+                            </Button>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
                   </CardBody>
                 </Card>
               </Container>
@@ -274,4 +461,5 @@ export default connect(mapStateToProps, {
   borrarUser,
   getCampos,
   borrarCampo,
+  parteMaquinaDelete,
 })(AdminUsuarios);

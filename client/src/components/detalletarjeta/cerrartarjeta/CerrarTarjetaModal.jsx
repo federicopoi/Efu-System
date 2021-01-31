@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clearErrors } from "../../../store/actions/errorActions";
 import { cerrarTarjeta } from "../../../store/actions/tarjetaActions";
+import { getCampos } from "../../../store/actions/camposActions";
 import {
   Button,
   Modal,
@@ -75,13 +76,23 @@ export class CerrarTarjetaModal extends Component {
       convertida,
     } = this.state;
 
+    const horaInicio = inicioReparacionHora.split(":");
+    const horaFinal = finReparacionHora.split(":");
+
+    const InicioReparacionHoraFloat = parseFloat(horaInicio[0]);
+    const FinReparacionHoraFloat = parseFloat(horaFinal[0]);
+
+    const horaFinal1 = FinReparacionHoraFloat - InicioReparacionHoraFloat;
+
+    const tiemploEmpleadoString = `${horaFinal1}`;
+
     // Cerrar Tarjeta
     const tarjetaActualizada = {
       _id,
       inicioReparacion: inicioReparacionDia + " " + inicioReparacionHora,
       finReparacion: finReparacionDia + " " + finReparacionHora,
       responsable,
-      tiempoEmpleado,
+      tiempoEmpleado: tiemploEmpleadoString,
       causa,
       tareaRealizada,
       tipoAccion,
@@ -91,6 +102,7 @@ export class CerrarTarjetaModal extends Component {
     };
 
     this.props.cerrarTarjeta(tarjetaActualizada);
+
     if (
       !_id ||
       !inicioReparacionDia ||
@@ -110,7 +122,12 @@ export class CerrarTarjetaModal extends Component {
       return this.toggle();
     }
   };
+  componentDidMount() {
+    this.props.getCampos();
+  }
   render() {
+    const { campos } = this.props.campos;
+
     return (
       <div>
         <Button onClick={this.toggle}>Cerrar Tarjeta</Button>
@@ -119,7 +136,7 @@ export class CerrarTarjetaModal extends Component {
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
-                <Label for="updaters">Inicio Reparacion</Label>
+                <Label for="updaters">Inicio de la Tarea</Label>
                 <Input
                   onChange={this.onChange}
                   type="date"
@@ -135,7 +152,7 @@ export class CerrarTarjetaModal extends Component {
                   className="mb-2"
                 ></Input>
 
-                <Label for="updaters">Fin Reparacion</Label>
+                <Label for="updaters">Fin de la Tarea</Label>
                 <Input
                   onChange={this.onChange}
                   type="date"
@@ -162,20 +179,25 @@ export class CerrarTarjetaModal extends Component {
 
                 <Label for="detecto">Riesgo Final</Label>
                 <Input
-                  type="text"
+                  type="select"
                   name="riesgoFinal"
                   id="riesgoFinal"
                   onChange={this.onChange}
-                />
-
-                <Label for="updaters">Tiempo empleado en horas</Label>
-                <Input
-                  onChange={this.onChange}
-                  type="text"
-                  name="tiempoEmpleado"
-                  id="tiempoEmpleado"
-                  className="mb-2"
-                ></Input>
+                >
+                  <option>Seleccionar</option>
+                  {campos &&
+                    campos
+                      .filter(({ name, value }) => {
+                        return name === "riesgoFinal";
+                      })
+                      .map(({ name, value, _id }, index) => {
+                        return (
+                          <option key={index} _id={_id}>
+                            {value}
+                          </option>
+                        );
+                      })}
+                </Input>
 
                 <Label for="updaters">Causa de la Anomalia</Label>
                 <Input
@@ -195,7 +217,7 @@ export class CerrarTarjetaModal extends Component {
                   className="mb-2"
                 ></Input>
 
-                <Label for="tipoAccion">Tipo de acción *</Label>
+                <Label for="tipoAccion">Tipo de acción a realizar *</Label>
                 <Input
                   type="select"
                   name="tipoAccion"
@@ -257,8 +279,10 @@ export class CerrarTarjetaModal extends Component {
 }
 const mapStateToProps = (state) => ({
   error: state.error,
+  campos: state.campos,
 });
 export default connect(mapStateToProps, {
   clearErrors,
   cerrarTarjeta,
+  getCampos,
 })(CerrarTarjetaModal);

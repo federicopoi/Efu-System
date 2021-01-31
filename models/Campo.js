@@ -11,6 +11,12 @@ const CamposSchema = new Schema(
     value: {
       type: String,
     },
+    parteMaquina: {
+      type: Array,
+      name: {
+        type: String,
+      },
+    },
   },
   {
     collection: "campos",

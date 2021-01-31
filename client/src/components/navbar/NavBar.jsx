@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { logout } from "../../store/actions/authActions";
 import LoginPage from "../../auth-components/login/loginpage";
 import { withRouter, NavLink as RRNavLink } from "react-router-dom";
+
 import Logo from "./logo.png";
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +31,6 @@ const NavBar = (props) => {
           />
         </NavbarBrand>
 
-        {/* <NavbarBrand className="font-weight-bold">EFU System</NavbarBrand> */}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>

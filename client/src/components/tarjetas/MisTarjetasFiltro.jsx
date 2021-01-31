@@ -19,6 +19,7 @@ import {
 } from "reactstrap";
 import Select from "react-select";
 import PresetModal from "./PresetModal";
+import { Redirect } from "react-router-dom";
 
 const options = [
   { value: "numero", label: "N°" },
@@ -35,6 +36,12 @@ const options = [
   { value: "riesgoInicial", label: "Riesgo Inicial" },
   { value: "riesgoFinal", label: "Riesgo Final" },
   { value: "tipoAccion", label: "Tipo de Accion" },
+  { value: "responsable", label: "Responsable" },
+  { value: "tiempoEmpleado", label: "Tiempo Empleado" },
+  { value: "convertida", label: "Tarjeta Convertida" },
+  { value: "causa", label: "Causa de anomalia" },
+  { value: "tareaRealizada", label: "Tarea Realizada" },
+  { value: "materialUtilizado", label: "Material Utilizado" },
 ];
 class MisTarjetasFiltro extends Component {
   componentDidMount() {
@@ -43,6 +50,12 @@ class MisTarjetasFiltro extends Component {
   }
   state = {
     selectedOption: null,
+    tareaRealizada: "",
+    materialUtilizado: "",
+    causa: "",
+    convertida: "",
+    tiempoEmpleado: "",
+    responsable: "",
     numero: "",
     color: "",
     equipo: "",
@@ -59,6 +72,7 @@ class MisTarjetasFiltro extends Component {
     tipoAccion: "",
     qrcode: false,
     alerta: false,
+    comentarios: false,
   };
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
@@ -69,6 +83,7 @@ class MisTarjetasFiltro extends Component {
       [e.target.name]: e.target.value,
     });
   };
+
   render() {
     const { tarjetas } = this.props.tarjetas;
     const { filters } = this.props.filters;
@@ -88,6 +103,13 @@ class MisTarjetasFiltro extends Component {
       riesgoInicial: this.state.riesgoInicial && this.state.riesgoInicial,
       riesgoFinal: this.state.riesgoFinal && this.state.riesgoFinal,
       tipoAccion: this.state.tipoAccion && this.state.tipoAccion,
+      responsable: this.state.responsable && this.state.responsable,
+      tiempoEmpleado: this.state.tiempoEmpleado && this.state.tiempoEmpleado,
+      convertida: this.state.convertida && this.state.convertida,
+      causa: this.state.causa && this.state.causa,
+      tareaRealizada: this.state.tareaRealizada && this.state.tareaRealizada,
+      materialUtilizado:
+        this.state.materialUtilizado && this.state.materialUtilizado,
     };
 
     const multiFilter = (arr, filters) => {
@@ -145,6 +167,30 @@ class MisTarjetasFiltro extends Component {
     const arrTipoAccion = tarjetas.map(({ tipoAccion }) => tipoAccion);
     const unicosTipoAccion = Array.from(new Set(arrTipoAccion));
 
+    const arrResponsable = tarjetas.map(({ responsable }) => responsable);
+    const unicosResponsable = Array.from(new Set(arrResponsable));
+
+    const arrTiempoEmpleado = tarjetas.map(
+      ({ tiempoEmpleado }) => tiempoEmpleado
+    );
+    const unicosTiempoEmpleado = Array.from(new Set(arrTiempoEmpleado));
+
+    const arrConvertida = tarjetas.map(({ convertida }) => convertida);
+    const unicosConvertida = Array.from(new Set(arrConvertida));
+
+    const arrCausa = tarjetas.map(({ causa }) => causa);
+    const unicosCausa = Array.from(new Set(arrCausa));
+
+    const arrTareaRealizada = tarjetas.map(
+      ({ tareaRealizada }) => tareaRealizada
+    );
+    const unicosTareaRealizada = Array.from(new Set(arrTareaRealizada));
+
+    const arrMaterialUtilizado = tarjetas.map(
+      ({ materialUtilizado }) => materialUtilizado
+    );
+    const unicosMaterialUtilizado = Array.from(new Set(arrMaterialUtilizado));
+
     const globalArray = {
       numero: unicosNumero,
       color: unicosColores,
@@ -160,8 +206,17 @@ class MisTarjetasFiltro extends Component {
       riesgoInicial: unicosRiesgoInicial,
       riesgoFinal: unicosRiesgoFinal,
       tipoAccion: unicosTipoAccion,
+      responsable: unicosResponsable,
+      tiempoEmpleado: unicosTiempoEmpleado,
+      convertida: arrConvertida,
+      causa: unicosCausa,
+      tareaRealizada: unicosTareaRealizada,
+      materialUtilizado: unicosMaterialUtilizado,
     };
-
+    // if (!localStorage.token) return <Redirect to="/login" />;
+    // if (this.props.user && this.props.user.role === "Operario") {
+    //   return <Redirect to="/login" />;
+    // }
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -293,6 +348,26 @@ class MisTarjetasFiltro extends Component {
                         </Label>
                       </Row>
                     </Col>
+                    <Col>
+                      <Row>
+                        <Label check>
+                          <Input
+                            type="checkbox"
+                            id="comentarios"
+                            name="comentarios"
+                            onChange={(e) => {
+                              this.onChange({
+                                target: {
+                                  name: e.target.name,
+                                  value: e.target.checked,
+                                },
+                              });
+                            }}
+                          />
+                          Comentarios
+                        </Label>
+                      </Row>
+                    </Col>
                   </Col>
 
                   <Button
@@ -311,6 +386,7 @@ class MisTarjetasFiltro extends Component {
                         familia: "",
                         qrcode: false,
                         alerta: false,
+                        comentarios: false,
                         selectedOption: null,
                       });
                     }}
@@ -363,6 +439,15 @@ class MisTarjetasFiltro extends Component {
                         {this.state.alerta && (
                           <th className="border-0">Alerta</th>
                         )}
+                        {this.state.comentarios && (
+                          <th className="border-0">Autor Comentario</th>
+                        )}
+                        {this.state.comentarios && (
+                          <th className="border-0">Descripción Comentario</th>
+                        )}
+                        {this.state.comentarios && (
+                          <th className="border-0">Fecha Comentario</th>
+                        )}
                       </tr>
                     </thead>
 
@@ -381,26 +466,6 @@ class MisTarjetasFiltro extends Component {
                         return (
                           <tbody key={index}>
                             <tr>
-                              {selectedOption &&
-                                selectedOption.map(
-                                  ({ value, label }, index) => {
-                                    return item[label] === "fecha" ? (
-                                      <td key={index}>
-                                        {moment(item[value]).fromNow()}
-                                      </td>
-                                    ) : (
-                                      <td key={index}>{item[value]}</td>
-                                    );
-                                  }
-                                )}
-                              {this.state.qrcode && (
-                                <td>
-                                  <QRCode value={link + item._id} />
-                                  <h4 className="mt-3">
-                                    Tarjeta {item.color} N°{item.numero}
-                                  </h4>
-                                </td>
-                              )}
                               {this.state.alerta &&
                                 item.prioridad === "Alta" &&
                                 timeDiferrence <= 15 && (
@@ -431,6 +496,55 @@ class MisTarjetasFiltro extends Component {
                                 timeDiferrence >= 60 && (
                                   <td>Excedido {-timeDiferrence - 60} dias</td>
                                 )}
+                              {selectedOption &&
+                                selectedOption.map(
+                                  ({ value, label }, index) => {
+                                    return item[label] === "fecha" ? (
+                                      <td key={index}>
+                                        {moment(item[value]).fromNow()}
+                                      </td>
+                                    ) : (
+                                      <td key={index}>{item[value]}</td>
+                                    );
+                                  }
+                                )}
+                              {this.state.qrcode && (
+                                <td>
+                                  <QRCode value={link + item._id} />
+                                  <h4 className="mt-3">
+                                    Tarjeta {item.color} N°{item.numero}
+                                  </h4>
+                                </td>
+                              )}
+                              {this.state.comentarios && (
+                                <td>
+                                  {item.comentarios.map(({ autor }, index) => {
+                                    return <div key={index}>{autor}</div>;
+                                  })}
+                                </td>
+                              )}
+                              {this.state.comentarios && (
+                                <td>
+                                  {item.comentarios.map(
+                                    ({ descripcion }, index) => {
+                                      return (
+                                        <div key={index}>{descripcion}</div>
+                                      );
+                                    }
+                                  )}
+                                </td>
+                              )}
+                              {this.state.comentarios && (
+                                <td>
+                                  {item.comentarios.map(({ fecha }, index) => {
+                                    return (
+                                      <div key={index}>
+                                        {moment(fecha).format("DD/MM/YYYY LTS")}
+                                      </div>
+                                    );
+                                  })}
+                                </td>
+                              )}
                             </tr>
                           </tbody>
                         );

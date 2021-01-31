@@ -54,7 +54,9 @@ class CampoModal extends Component {
           Agregar
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Agregar campo maquina</ModalHeader>
+          <ModalHeader toggle={this.toggle}>
+            Agregar campo {this.props.campo}
+          </ModalHeader>
           <ModalBody>
             <Label for="value">Nombre del campo</Label>
             <Input

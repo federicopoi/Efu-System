@@ -7,6 +7,8 @@ import {
   AGREGAR_TARJETA_AMARILLA,
   CERRAR_TARJETA_AMARILLA,
   EDITAR_TARJETA,
+  AGREGAR_COMENTARIO,
+  AGREGAR_IMAGEN,
 } from "./types";
 
 import { returnErrors } from "./errorActions";
@@ -165,4 +167,31 @@ export const borrarTarjeta = (id) => (dispatch) => {
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+
+export const agregarComentario = (comentario) => (dispatch) => {
+  axios
+    .post("/api/tarjetas/agregarcomentario", comentario)
+    .then((res) =>
+      dispatch({
+        type: AGREGAR_COMENTARIO,
+        payload: res.data,
+      })
+    )
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+export const agregarImagen = (imagen) => (dispatch) => {
+  axios
+    .post("/api/tarjetas/agregarimagen", imagen)
+    .then((res) =>
+      dispatch({
+        type: AGREGAR_IMAGEN,
+        payload: res.data,
+      })
+    )
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
 };

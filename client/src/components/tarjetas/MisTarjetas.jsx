@@ -77,13 +77,6 @@ export const TarjetasTable = (props) => {
                         </Button>
                       </Link>
                     </Col>
-                    <Col>
-                      <Link to="/tarjetasfiltro">
-                        <Button color="secondary" className="btn">
-                          Filtrar Tarjetas
-                        </Button>
-                      </Link>
-                    </Col>
                   </div>
                 </div>
               </Col>
@@ -288,6 +281,9 @@ export class MisTarjetas extends Component {
 const mapStateToProps = (state) => {
   return {
     tarjetas: state.tarjetas,
+    users: state.users,
+    user: state.auth.user,
+    isAuthenticated: state.auth.isAuthenticated,
   };
 };
 export default connect(mapStateToProps, { getTarjetas })(MisTarjetas);

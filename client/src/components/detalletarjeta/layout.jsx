@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import { Row, Col, Container } from "reactstrap";
 import { connect } from "react-redux";
 import { getTarjetas } from "../../store/actions/tarjetaActions";
-import { CerradaDetalle, TextDetail, AbiertaDetalle, ImagenDetalle } from ".";
+import {
+  CerradaDetalle,
+  TextDetail,
+  AbiertaDetalle,
+  ImagenDetalle,
+  ComentariosDetalle,
+} from ".";
 
 class LayoutDetalle extends Component {
   componentDidMount() {
@@ -42,6 +48,14 @@ class LayoutDetalle extends Component {
                   </Row>
                   <Row>
                     <Col>
+                      <ComentariosDetalle
+                        tarjetas={tarjetas}
+                        link_id={link_id}
+                      ></ComentariosDetalle>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
                       <ImagenDetalle
                         tarjetas={tarjetas}
                         link_id={link_id}
@@ -73,6 +87,14 @@ class LayoutDetalle extends Component {
                         tarjetas={tarjetas}
                         link_id={link_id}
                       ></CerradaDetalle>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <ComentariosDetalle
+                        tarjetas={tarjetas}
+                        link_id={link_id}
+                      ></ComentariosDetalle>
                     </Col>
                   </Row>
                   <Row>

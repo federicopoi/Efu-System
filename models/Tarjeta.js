@@ -17,7 +17,7 @@ const TarjetaSchema = new Schema(
       type: String,
       default: "Abierta",
     },
-    photo: {
+    imagenUrl: {
       type: String,
     },
     color: {
@@ -38,6 +38,10 @@ const TarjetaSchema = new Schema(
     },
     //
     maquina: {
+      type: String,
+      required: true,
+    },
+    parteMaquina: {
       type: String,
       required: true,
     },
@@ -76,6 +80,9 @@ const TarjetaSchema = new Schema(
     responsable: {
       type: String,
     },
+    areaResponsable: {
+      type: String,
+    },
     tiempoEmpleado: {
       type: String,
     },
@@ -97,9 +104,6 @@ const TarjetaSchema = new Schema(
     tipoAccion: {
       type: String,
     },
-    planta: {
-      type: String,
-    },
 
     // Solo en Amarillas
 
@@ -111,10 +115,24 @@ const TarjetaSchema = new Schema(
     },
 
     // Global
-
     fecha: {
       type: Date,
       default: Date.now,
+    },
+    comentarios: {
+      type: Array,
+      autor: {
+        type: String,
+        required: true,
+      },
+      descripcion: {
+        type: String,
+        required: true,
+      },
+      fecha: {
+        type: Date,
+        required: true,
+      },
     },
   },
 

@@ -216,7 +216,7 @@ class EditarTarjetaModalAmarilla extends Component {
                   </FormGroup>
 
                   <FormGroup>
-                    <Label for="detecto">Tipo de Riesgo*</Label>
+                    <Label for="detecto">Tipo de R / FC / LDA *</Label>
                     <Input
                       type="select"
                       name="tipodeRiesgo"
