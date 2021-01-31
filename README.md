@@ -3,6 +3,7 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
+* [Demo](#demo)
 
 ## General info
 EFU System is a software which digitize Total Process Management (TPM) tags. EFU System is build with Mongo DB, Express JS, React JS, and Node JS.
@@ -41,3 +42,7 @@ $ npm install
 ``
 $ npm run dev
 ``
+
+## Demo
+You can demo this project through this link:
+https://efu-system.herokuapp.com/
