@@ -62,7 +62,6 @@ export class PlanificacionDetalle extends Component {
         .filter(({ _id }) => _id === link_id)
         .map(({ planificacion }) => planificacion);
 
-    console.log(tarjetas);
     return (
       <div>
         <Card>
@@ -71,7 +70,7 @@ export class PlanificacionDetalle extends Component {
               <Col>
                 <div className="d-flex align-items-center">
                   <div>
-                    <h3> Planificación del Tratamiento de Tarjetas</h3>
+                    <h3>Planificación del Tratamiento de Tarjetas</h3>
                   </div>
 
                   <div className="ml-auto d-flex no-block align-items-center">
@@ -97,6 +96,8 @@ export class PlanificacionDetalle extends Component {
                               return (
                                 <PlanificacionModal
                                   _id={link_id}
+                                  p={false}
+                                  button={true}
                                   tarjeta={{
                                     previstaCierre,
                                     responsableSeguimiento,

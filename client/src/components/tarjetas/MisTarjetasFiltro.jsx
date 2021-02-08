@@ -72,7 +72,7 @@ class MisTarjetasFiltro extends Component {
     tipoAccion: "",
     qrcode: false,
     alerta: false,
-    comentarios: false,
+    planificacion: false,
   };
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
@@ -353,8 +353,8 @@ class MisTarjetasFiltro extends Component {
                         <Label check>
                           <Input
                             type="checkbox"
-                            id="comentarios"
-                            name="comentarios"
+                            id="planificacion"
+                            name="planificacion"
                             onChange={(e) => {
                               this.onChange({
                                 target: {
@@ -364,7 +364,7 @@ class MisTarjetasFiltro extends Component {
                               });
                             }}
                           />
-                          Comentarios
+                          Planificación
                         </Label>
                       </Row>
                     </Col>
@@ -386,7 +386,7 @@ class MisTarjetasFiltro extends Component {
                         familia: "",
                         qrcode: false,
                         alerta: false,
-                        comentarios: false,
+                        planificacion: false,
                         selectedOption: null,
                       });
                     }}
@@ -439,14 +439,48 @@ class MisTarjetasFiltro extends Component {
                         {this.state.alerta && (
                           <th className="border-0">Alerta</th>
                         )}
-                        {this.state.comentarios && (
-                          <th className="border-0">Autor Comentario</th>
+                        {this.state.planificacion && (
+                          <th className="border-0">Fecha prevista de cierre</th>
                         )}
-                        {this.state.comentarios && (
-                          <th className="border-0">Descripción Comentario</th>
+                        {this.state.planificacion && (
+                          <th className="border-0">
+                            Responsable del seguimiento
+                          </th>
                         )}
-                        {this.state.comentarios && (
-                          <th className="border-0">Fecha Comentario</th>
+                        {this.state.planificacion && (
+                          <th className="border-0">Recursos a utilizar</th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">
+                            Materiales/Repuestos necesarios
+                          </th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">
+                            Fecha solicitud a Compras
+                          </th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">
+                            Fecha compromotida por Compras
+                          </th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">Tarea a realizar</th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">
+                            Responsable de la tarea a realizar
+                          </th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">Comentario 1</th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">Comentario 2</th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">Comentario 3</th>
                         )}
                       </tr>
                     </thead>
@@ -516,14 +550,52 @@ class MisTarjetasFiltro extends Component {
                                   </h4>
                                 </td>
                               )}
-                              {this.state.comentarios && (
+                              {this.state.planificacion && (
                                 <td>
-                                  {item.comentarios.map(({ autor }, index) => {
-                                    return <div key={index}>{autor}</div>;
-                                  })}
+                                  {moment(item.previstaCierre).format(
+                                    "DD/MM/YYYY"
+                                  )}
                                 </td>
                               )}
-                              {this.state.comentarios && (
+                              {this.state.planificacion && (
+                                <td>{item.responsableSeguimiento}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.recursos}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.materiales}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>
+                                  {moment(item.solicitudCompras).format(
+                                    "DD/MM/YYYY"
+                                  )}
+                                </td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>
+                                  {moment(item.comprometidaCompras).format(
+                                    "DD/MM/YYYY"
+                                  )}
+                                </td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.tareaRealizar}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.responsableTarea}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.comentario1}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.comentario2}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.comentario3}</td>
+                              )}
+                              {/* {this.state.comentarios && (
                                 <td>
                                   {item.comentarios.map(
                                     ({ descripcion }, index) => {
@@ -544,7 +616,7 @@ class MisTarjetasFiltro extends Component {
                                     );
                                   })}
                                 </td>
-                              )}
+                              )} */}
                             </tr>
                           </tbody>
                         );

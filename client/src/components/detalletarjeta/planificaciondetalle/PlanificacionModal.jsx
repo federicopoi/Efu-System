@@ -107,14 +107,21 @@ export class PlanificacionModal extends Component {
   render() {
     return (
       <div>
-        <p
-          onClick={this.toggle}
-          color="success"
-          style={{ cursor: "pointer" }}
-          className="my-3"
-        >
-          Planificar Tarjeta
-        </p>
+        {this.props.button && (
+          <Button onClick={this.toggle} color="secondary" className="my-3">
+            Planificar Tarjeta
+          </Button>
+        )}
+        {this.props.p && (
+          <p
+            onClick={this.toggle}
+            color="success"
+            style={{ cursor: "pointer" }}
+            className="my-3"
+          >
+            Planificar Tarjeta
+          </p>
+        )}
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>

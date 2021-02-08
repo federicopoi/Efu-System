@@ -38,9 +38,21 @@ const UploadImageModal = (props) => {
   console.log(props._id);
   return (
     <div>
-      <Button color="secondary" onClick={toggle}>
-        Adjuntar Imagen
-      </Button>
+      {props.button && (
+        <Button onClick={toggle} color="secondary" className="my-3">
+          Adjuntar Imagen
+        </Button>
+      )}
+      {props.p && (
+        <p
+          onClick={toggle}
+          color="success"
+          style={{ cursor: "pointer" }}
+          className="my-3"
+        >
+          Adjuntar Imagen
+        </p>
+      )}
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Adjuntar Imagen</ModalHeader>
 

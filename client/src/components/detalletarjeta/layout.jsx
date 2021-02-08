@@ -32,6 +32,12 @@ class LayoutDetalle extends Component {
         .filter(({ _id }) => _id === link_id)
         .map(({ planificacion }) => planificacion);
 
+    const imagen =
+      tarjetas &&
+      tarjetas
+        .filter(({ _id }) => _id === link_id)
+        .map(({ imageUrl }) => imageUrl);
+
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -67,14 +73,16 @@ class LayoutDetalle extends Component {
                       </Col>
                     </Row>
                   )}
-                  <Row>
-                    <Col>
-                      <ImagenDetalle
-                        tarjetas={tarjetas}
-                        link_id={link_id}
-                      ></ImagenDetalle>
-                    </Col>
-                  </Row>
+                  {imagen[0] && (
+                    <Row>
+                      <Col>
+                        <ImagenDetalle
+                          tarjetas={tarjetas}
+                          link_id={link_id}
+                        ></ImagenDetalle>
+                      </Col>
+                    </Row>
+                  )}
                 </div>
               ) : (
                 <div>
@@ -112,14 +120,16 @@ class LayoutDetalle extends Component {
                       </Col>
                     </Row>
                   )}
-                  <Row>
-                    <Col>
-                      <ImagenDetalle
-                        tarjetas={tarjetas}
-                        link_id={link_id}
-                      ></ImagenDetalle>
-                    </Col>
-                  </Row>
+                  {imagen[0] && (
+                    <Row>
+                      <Col>
+                        <ImagenDetalle
+                          tarjetas={tarjetas}
+                          link_id={link_id}
+                        ></ImagenDetalle>
+                      </Col>
+                    </Row>
+                  )}
                 </div>
               )}
             </Container>

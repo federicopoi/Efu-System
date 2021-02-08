@@ -6,6 +6,7 @@ import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { borrarTarjeta } from "../../../store/actions/tarjetaActions";
 import PlanificacionModal from "../planificaciondetalle/PlanificacionModal";
+import UploadImageModal from "../imagendetalle/UploadImageModal";
 import {
   Button,
   Row,
@@ -143,6 +144,13 @@ export class TextDetail extends Component {
                                         Mostrar QR
                                       </QRModal>
                                     </Col>
+                                    <Col>
+                                      <UploadImageModal
+                                        p={true}
+                                        button={false}
+                                        link_id={completeLink}
+                                      ></UploadImageModal>
+                                    </Col>
 
                                     {localStorage.token &&
                                       this.props.user &&
@@ -275,6 +283,8 @@ export class TextDetail extends Component {
                                     {plan[0] === false && (
                                       <PlanificacionModal
                                         _id={link_id}
+                                        p={true}
+                                        button={false}
                                         tarjeta={{
                                           previstaCierre,
                                           responsableSeguimiento,
