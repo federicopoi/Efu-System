@@ -7,7 +7,7 @@ import {
   TextDetail,
   AbiertaDetalle,
   ImagenDetalle,
-  ComentariosDetalle,
+  PlanificacionDetalle,
 } from ".";
 
 class LayoutDetalle extends Component {
@@ -21,6 +21,16 @@ class LayoutDetalle extends Component {
     const estadoTarjeta = tarjetas
       .filter(({ _id }) => _id === link_id)
       .map(({ estado }) => estado);
+
+    const imageUrl = tarjetas
+      .filter(({ _id }) => _id === link_id)
+      .map(({ imageUrl }) => imageUrl);
+
+    const plan =
+      tarjetas &&
+      tarjetas
+        .filter(({ _id }) => _id === link_id)
+        .map(({ planificacion }) => planificacion);
 
     return (
       <div>
@@ -46,14 +56,17 @@ class LayoutDetalle extends Component {
                       ></AbiertaDetalle>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col>
-                      <ComentariosDetalle
-                        tarjetas={tarjetas}
-                        link_id={link_id}
-                      ></ComentariosDetalle>
-                    </Col>
-                  </Row>
+
+                  {plan[0] && (
+                    <Row>
+                      <Col>
+                        <PlanificacionDetalle
+                          tarjetas={tarjetas}
+                          link_id={link_id}
+                        ></PlanificacionDetalle>
+                      </Col>
+                    </Row>
+                  )}
                   <Row>
                     <Col>
                       <ImagenDetalle
@@ -89,14 +102,16 @@ class LayoutDetalle extends Component {
                       ></CerradaDetalle>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col>
-                      <ComentariosDetalle
-                        tarjetas={tarjetas}
-                        link_id={link_id}
-                      ></ComentariosDetalle>
-                    </Col>
-                  </Row>
+                  {plan[0] && (
+                    <Row>
+                      <Col>
+                        <PlanificacionDetalle
+                          tarjetas={tarjetas}
+                          link_id={link_id}
+                        ></PlanificacionDetalle>
+                      </Col>
+                    </Row>
+                  )}
                   <Row>
                     <Col>
                       <ImagenDetalle

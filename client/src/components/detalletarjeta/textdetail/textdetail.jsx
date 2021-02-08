@@ -5,13 +5,37 @@ import QRModal from "./QRModal";
 import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { borrarTarjeta } from "../../../store/actions/tarjetaActions";
-import { Button, Row, Col } from "reactstrap";
+import PlanificacionModal from "../planificaciondetalle/PlanificacionModal";
+import {
+  Button,
+  Row,
+  Col,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 import EditarTarjetaModal from "../editartarjeta/EditarTarjetaModal";
 import EditarTarjetaModalAmarilla from "../editartarjeta/EditarTarjetaModalAmarilla";
 export class TextDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.wrapper = React.createRef();
+  }
   onDeleteClick = (id) => {
     this.props.borrarTarjeta(id);
     this.props.history.push("/tarjetas");
+  };
+
+  state = {
+    collapse: false,
+    qrmodal: false,
+  };
+  toogle = () => {
+    this.setState({ collapse: !this.state.collapse });
+  };
+  setqrmodal = () => {
+    this.setState({ qrmodal: !this.state.qrmodal });
   };
 
   render() {
@@ -20,6 +44,12 @@ export class TextDetail extends Component {
       `/tarjeta/${link_id}`,
       ""
     );
+
+    const plan =
+      tarjetas &&
+      tarjetas
+        .filter(({ _id }) => _id === link_id)
+        .map(({ planificacion }) => planificacion);
 
     return (
       <div>
@@ -55,6 +85,18 @@ export class TextDetail extends Component {
                 riesgoFinal,
                 tipoAccion,
                 materialUtilizado,
+                previstaCierre,
+                responsableSeguimiento,
+                recursos,
+                materiales,
+                solicitudCompras,
+                comprometidaCompras,
+                tareaRealizar,
+                responsableTarea,
+                comentario1,
+                comentario2,
+                comentario3,
+                planificacion,
               }) => {
                 return (
                   <div className="mb-3 break-text">
@@ -225,6 +267,25 @@ export class TextDetail extends Component {
                                       ></EditarTarjetaModalAmarilla>
                                     </Col>
                                   )}
+                                {plan[0] === false && (
+                                  <PlanificacionModal
+                                    _id={link_id}
+                                    tarjeta={{
+                                      previstaCierre,
+                                      responsableSeguimiento,
+                                      recursos,
+                                      materiales,
+                                      solicitudCompras,
+                                      comprometidaCompras,
+                                      tareaRealizar,
+                                      responsableTarea,
+                                      comentario1,
+                                      comentario2,
+                                      comentario3,
+                                    }}
+                                  ></PlanificacionModal>
+                                )}
+
                                 {localStorage.token &&
                                   this.props.user &&
                                   this.props.user.role === "Admin" && (

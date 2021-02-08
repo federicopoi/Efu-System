@@ -119,23 +119,45 @@ const TarjetaSchema = new Schema(
       type: Date,
       default: Date.now,
     },
-    comentarios: {
-      type: Array,
-      autor: {
-        type: String,
-        required: true,
-      },
-      descripcion: {
-        type: String,
-        required: true,
-      },
-      fecha: {
-        type: Date,
-        required: true,
-      },
+
+    previstaCierre: {
+      type: Date,
+    },
+    responsableSeguimiento: {
+      type: String,
+    },
+    recursos: {
+      type: String,
+    },
+    materiales: {
+      type: String,
+    },
+    solicitudCompras: {
+      type: Date,
+    },
+    comprometidaCompras: {
+      type: Date,
+    },
+    tareaRealizar: {
+      type: String,
+    },
+    responsableTarea: {
+      type: String,
+    },
+    comentario1: {
+      type: String,
+    },
+    comentario2: {
+      type: String,
+    },
+    comentario3: {
+      type: String,
+    },
+    planificacion: {
+      type: Boolean,
+      default: false,
     },
   },
-
   {
     collection: "tarjetas",
   }

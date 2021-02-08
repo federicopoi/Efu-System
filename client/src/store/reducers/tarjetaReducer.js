@@ -7,7 +7,7 @@ import {
   AGREGAR_TARJETA_AMARILLA,
   CERRAR_TARJETA_AMARILLA,
   EDITAR_TARJETA,
-  AGREGAR_COMENTARIO,
+  AGREGAR_PLANIFICACION,
   AGREGAR_IMAGEN,
 } from "../actions/types";
 const initState = {
@@ -56,7 +56,7 @@ export default function (state = initState, action) {
         ...state,
         cargando: true,
       };
-    case AGREGAR_COMENTARIO:
+    case AGREGAR_PLANIFICACION:
       return {
         ...state,
         tarjetas: [action.payload],
