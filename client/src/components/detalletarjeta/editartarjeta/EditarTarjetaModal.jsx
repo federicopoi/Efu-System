@@ -122,7 +122,9 @@ class EditarTarjetaModal extends Component {
     const { campos } = this.props.campos;
     return (
       <div>
-        <Button onClick={this.toggle}>Editar Tarjeta</Button>
+        <p onClick={this.toggle} style={{ cursor: "pointer" }} className="my-3">
+          Editar Tarjeta
+        </p>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Editar Tarjeta</ModalHeader>
           <ModalBody>

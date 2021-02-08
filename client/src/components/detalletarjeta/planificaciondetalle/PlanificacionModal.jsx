@@ -31,6 +31,7 @@ export class PlanificacionModal extends Component {
     comentario1: this.props.tarjeta.comentario1,
     comentario2: this.props.tarjeta.comentario2,
     comentario3: this.props.tarjeta.comentario3,
+    planificacion: this.props.tarjeta.planificacion,
     msg: null,
   };
   onChange = (e) => {
@@ -106,9 +107,15 @@ export class PlanificacionModal extends Component {
   render() {
     return (
       <div>
-        <Button onClick={this.toggle} color="success">
+        <p
+          onClick={this.toggle}
+          color="success"
+          style={{ cursor: "pointer" }}
+          className="my-3"
+        >
           Planificar Tarjeta
-        </Button>
+        </p>
+
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>
             Planificación del Tratamiento de Tarjetas
