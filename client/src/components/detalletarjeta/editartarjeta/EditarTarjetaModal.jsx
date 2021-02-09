@@ -141,7 +141,6 @@ class EditarTarjetaModal extends Component {
                       type="select"
                       name="maquina"
                       id="maquina"
-                      defaultValue={this.state.maquina}
                       onChange={(e) => {
                         const index = e.target.selectedIndex;
                         const el = e.target.childNodes[index];

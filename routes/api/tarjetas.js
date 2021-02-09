@@ -328,6 +328,7 @@ router.post("/editarAmarilla", (req, res) => {
     detecto,
     prioridad,
     maquina,
+    parteMaquina,
     familia,
     equipo,
     sugerencia,
@@ -338,6 +339,8 @@ router.post("/editarAmarilla", (req, res) => {
     riesgoFinal,
     tipoAccion,
     accionesComplementarias,
+    causa,
+    materialUtilizado,
   } = req.body;
 
   // Simple validation
@@ -359,7 +362,9 @@ router.post("/editarAmarilla", (req, res) => {
     tarjeta.tipoAccion = tipoAccion;
     tarjeta.equipo = equipo;
     tarjeta.riesgoInicial = riesgoInicial;
-
+    tarjeta.parteMaquina = parteMaquina;
+    tarjeta.causa = causa;
+    tarjeta.materialUtilizado = materialUtilizado;
     tarjeta.save();
     res.json(tarjeta);
   });
