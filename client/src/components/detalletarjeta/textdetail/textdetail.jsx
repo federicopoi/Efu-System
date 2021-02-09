@@ -52,6 +52,12 @@ export class TextDetail extends Component {
         .filter(({ _id }) => _id === link_id)
         .map(({ planificacion }) => planificacion);
 
+    const imagen =
+      tarjetas &&
+      tarjetas
+        .filter(({ _id }) => _id === link_id)
+        .map(({ imagenUrl }) => imagenUrl);
+
     return (
       <div>
         {tarjetas &&
@@ -144,13 +150,15 @@ export class TextDetail extends Component {
                                         Mostrar QR
                                       </QRModal>
                                     </Col>
-                                    <Col>
-                                      <UploadImageModal
-                                        p={true}
-                                        button={false}
-                                        link_id={completeLink}
-                                      ></UploadImageModal>
-                                    </Col>
+                                    {imagen[0] === undefined && (
+                                      <Col>
+                                        <UploadImageModal
+                                          p={true}
+                                          button={false}
+                                          _id={link_id}
+                                        ></UploadImageModal>
+                                      </Col>
+                                    )}
 
                                     {localStorage.token &&
                                       this.props.user &&

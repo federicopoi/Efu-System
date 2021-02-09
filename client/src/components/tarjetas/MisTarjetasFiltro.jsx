@@ -550,13 +550,14 @@ class MisTarjetasFiltro extends Component {
                                   </h4>
                                 </td>
                               )}
-                              {this.state.planificacion && (
-                                <td>
-                                  {moment(item.previstaCierre).format(
-                                    "DD/MM/YYYY"
-                                  )}
-                                </td>
-                              )}
+                              {this.state.planificacion &&
+                                item.previstaCierre !== undefined && (
+                                  <td>
+                                    {moment(item.previstaCierre).format(
+                                      "DD/MM/YYYY"
+                                    )}
+                                  </td>
+                                )}
                               {this.state.planificacion && (
                                 <td>{item.responsableSeguimiento}</td>
                               )}
@@ -566,20 +567,22 @@ class MisTarjetasFiltro extends Component {
                               {this.state.planificacion && (
                                 <td>{item.materiales}</td>
                               )}
-                              {this.state.planificacion && (
-                                <td>
-                                  {moment(item.solicitudCompras).format(
-                                    "DD/MM/YYYY"
-                                  )}
-                                </td>
-                              )}
-                              {this.state.planificacion && (
-                                <td>
-                                  {moment(item.comprometidaCompras).format(
-                                    "DD/MM/YYYY"
-                                  )}
-                                </td>
-                              )}
+                              {this.state.planificacion &&
+                                item.solicitudCompras !== undefined && (
+                                  <td>
+                                    {moment(item.solicitudCompras).format(
+                                      "DD/MM/YYYY"
+                                    )}
+                                  </td>
+                                )}
+                              {this.state.planificacion &&
+                                item.comprometidaCompras !== undefined && (
+                                  <td>
+                                    {moment(item.comprometidaCompras).format(
+                                      "DD/MM/YYYY"
+                                    )}
+                                  </td>
+                                )}
                               {this.state.planificacion && (
                                 <td>{item.tareaRealizar}</td>
                               )}

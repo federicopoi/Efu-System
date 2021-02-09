@@ -22,10 +22,6 @@ class LayoutDetalle extends Component {
       .filter(({ _id }) => _id === link_id)
       .map(({ estado }) => estado);
 
-    const imageUrl = tarjetas
-      .filter(({ _id }) => _id === link_id)
-      .map(({ imageUrl }) => imageUrl);
-
     const plan =
       tarjetas &&
       tarjetas
@@ -36,7 +32,7 @@ class LayoutDetalle extends Component {
       tarjetas &&
       tarjetas
         .filter(({ _id }) => _id === link_id)
-        .map(({ imageUrl }) => imageUrl);
+        .map(({ imagenUrl }) => imagenUrl);
 
     return (
       <div>

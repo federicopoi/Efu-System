@@ -98,6 +98,7 @@ footer {
 .dropdown {
   position: relative;
   display: inline-block;
+  white-space: nowrap;
 }
 
 .dropdown-content {

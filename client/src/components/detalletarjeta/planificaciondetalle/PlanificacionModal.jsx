@@ -117,7 +117,7 @@ export class PlanificacionModal extends Component {
             onClick={this.toggle}
             color="success"
             style={{ cursor: "pointer" }}
-            className="my-3"
+            className="my-3 mx-3"
           >
             Planificar Tarjeta
           </p>
