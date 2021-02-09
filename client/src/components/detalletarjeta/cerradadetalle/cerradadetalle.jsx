@@ -40,7 +40,7 @@ const CerradaDetalle = (props) => {
                         <div>
                           <Row className="my-1 ml-2">
                             <h5 className="font-16 font-medium mr-2">
-                              Inicio de la reparacion:
+                              Inicio de la tarea:
                             </h5>
                             <h5 className="font-14 font-weight-normal">
                               {inicioReparacion}
@@ -48,7 +48,7 @@ const CerradaDetalle = (props) => {
                           </Row>
                           <Row className="my-1 ml-2">
                             <h5 className="font-16 font-medium mr-2">
-                              Fin de la reparacion:
+                              Fin de la Tarea:
                             </h5>
                             <h5 className="font-14 font-weight-normal">
                               {finReparacion}
@@ -72,7 +72,7 @@ const CerradaDetalle = (props) => {
                           </Row>
                           <Row className="my-1 ml-2">
                             <h5 className="font-16 font-medium mr-2">
-                              Tipo de acción a realizar:
+                              Tipo de Accion realizada:
                             </h5>
                             <h5 className="font-14 font-weight-normal">
                               {tipoAccion}
@@ -211,7 +211,7 @@ const CerradaDetalle = (props) => {
                           </Row>
                           <Row className="my-1 ml-2">
                             <h5 className="font-16 font-medium mr-2">
-                              Tipo de acción:
+                              Tipo de Accion realizada:
                             </h5>
                             <h5 className="font-14 font-weight-normal">
                               {tipoAccion}
