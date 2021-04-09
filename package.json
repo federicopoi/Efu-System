@@ -13,6 +13,7 @@
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "bcryptjs": "^2.4.3",
     "body-parse": "^0.1.0",
     "cloudinary-react": "^1.6.8",
@@ -21,6 +22,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",
     "jsonwebtoken": "^8.5.1",
+    "material-table": "^1.69.2",
     "mongoose": "^5.9.10",
     "react-print-components": "^1.0.4",
     "react-select": "^3.1.0",
