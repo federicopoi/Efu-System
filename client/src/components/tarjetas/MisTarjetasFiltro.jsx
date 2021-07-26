@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getTarjetas } from "../../store/actions/tarjetaActions";
+import { getCampos } from "../../store/actions/camposActions";
 import { agregarFilter, getFilters } from "../../store/actions/filterActions";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import QRCode from "qrcode.react";
@@ -30,6 +31,7 @@ const options = [
   { value: "descripcion", label: "Descripcion anomalia" },
   { value: "estado", label: "Estado actual" },
   { value: "maquina", label: "Maquina / Instalacion" },
+  { value: "parteMaquina", label: "Parte Maquina" },
   { value: "detecto", label: "Detecto" },
   { value: "familia", label: "Familia de anomalia" },
   { value: "tipodeRiesgo", label: "Tipo de Riesgo" },
@@ -38,7 +40,6 @@ const options = [
   { value: "tipoAccion", label: "Tipo de Accion" },
   { value: "responsable", label: "Responsable" },
   { value: "tiempoEmpleado", label: "Tiempo Empleado" },
-  { value: "convertida", label: "Tarjeta Convertida" },
   { value: "causa", label: "Causa de anomalia" },
   { value: "tareaRealizada", label: "Tarea Realizada" },
   { value: "materialUtilizado", label: "Material Utilizado" },
@@ -47,13 +48,13 @@ class MisTarjetasFiltro extends Component {
   componentDidMount() {
     this.props.getTarjetas();
     this.props.getFilters();
+    this.props.getCampos();
   }
   state = {
     selectedOption: null,
     tareaRealizada: "",
     materialUtilizado: "",
     causa: "",
-    convertida: "",
     tiempoEmpleado: "",
     responsable: "",
     numero: "",
@@ -70,9 +71,11 @@ class MisTarjetasFiltro extends Component {
     riesgoInicial: "",
     riesgoFinal: "",
     tipoAccion: "",
+    parteMaquina: "",
     qrcode: false,
     alerta: false,
     planificacion: false,
+    convertida: false,
   };
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
@@ -86,6 +89,7 @@ class MisTarjetasFiltro extends Component {
 
   render() {
     const { tarjetas } = this.props.tarjetas;
+    const { campos } = this.props.campos;
     const { filters } = this.props.filters;
     const { selectedOption } = this.state;
     var filter = {
@@ -105,11 +109,11 @@ class MisTarjetasFiltro extends Component {
       tipoAccion: this.state.tipoAccion && this.state.tipoAccion,
       responsable: this.state.responsable && this.state.responsable,
       tiempoEmpleado: this.state.tiempoEmpleado && this.state.tiempoEmpleado,
-      convertida: this.state.convertida && this.state.convertida,
       causa: this.state.causa && this.state.causa,
       tareaRealizada: this.state.tareaRealizada && this.state.tareaRealizada,
       materialUtilizado:
         this.state.materialUtilizado && this.state.materialUtilizado,
+      parteMaquina: this.state.parteMaquina && this.state.parteMaquina,
     };
 
     const multiFilter = (arr, filters) => {
@@ -149,6 +153,18 @@ class MisTarjetasFiltro extends Component {
     const arrMaquina = tarjetas.map(({ maquina }) => maquina);
     const unicosMaquina = Array.from(new Set(arrMaquina));
 
+    const arrParteMaquina = campos
+      .filter(({ value }) => {
+        return value === this.state.maquina;
+      })
+      .map(({ parteMaquina }) => {
+        return parteMaquina.map((item) => {
+          return item;
+        });
+      });
+
+    const unicosarrParteMaquina = Array.from(new Set(arrParteMaquina[0]));
+
     const arrDetecto = tarjetas.map(({ detecto }) => detecto);
     const unicosDetecto = Array.from(new Set(arrDetecto));
 
@@ -175,9 +191,6 @@ class MisTarjetasFiltro extends Component {
     );
     const unicosTiempoEmpleado = Array.from(new Set(arrTiempoEmpleado));
 
-    const arrConvertida = tarjetas.map(({ convertida }) => convertida);
-    const unicosConvertida = Array.from(new Set(arrConvertida));
-
     const arrCausa = tarjetas.map(({ causa }) => causa);
     const unicosCausa = Array.from(new Set(arrCausa));
 
@@ -200,6 +213,7 @@ class MisTarjetasFiltro extends Component {
       estado: unicosEstado,
       descripcion: unicosDescripcion,
       maquina: unicosMaquina,
+      parteMaquina: unicosarrParteMaquina,
       detecto: unicosDetecto,
       familia: unicosFamilia,
       tipodeRiesgo: unicosTipo,
@@ -208,7 +222,6 @@ class MisTarjetasFiltro extends Component {
       tipoAccion: unicosTipoAccion,
       responsable: unicosResponsable,
       tiempoEmpleado: unicosTiempoEmpleado,
-      convertida: arrConvertida,
       causa: unicosCausa,
       tareaRealizada: unicosTareaRealizada,
       materialUtilizado: unicosMaterialUtilizado,
@@ -273,6 +286,7 @@ class MisTarjetasFiltro extends Component {
                         familia,
                         qrcode,
                         alerta,
+                        convertida,
                       }) => {
                         return (
                           <Button
@@ -292,6 +306,7 @@ class MisTarjetasFiltro extends Component {
                                 familia,
                                 qrcode,
                                 alerta,
+                                convertida,
                               });
                             }}
                           >
@@ -328,6 +343,7 @@ class MisTarjetasFiltro extends Component {
                       />
                       Alerta
                     </Label>
+
                     <Col>
                       <Row>
                         <Label check>
@@ -345,6 +361,27 @@ class MisTarjetasFiltro extends Component {
                             }}
                           />
                           Qr Code
+                        </Label>
+                      </Row>
+                    </Col>
+                    <Col>
+                      <Row>
+                        <Label check>
+                          <Input
+                            type="checkbox"
+                            id="convertida"
+                            className="mr-4"
+                            name="convertida"
+                            onChange={(e) => {
+                              this.onChange({
+                                target: {
+                                  name: e.target.name,
+                                  value: e.target.checked,
+                                },
+                              });
+                            }}
+                          />
+                          Convertida
                         </Label>
                       </Row>
                     </Col>
@@ -386,6 +423,7 @@ class MisTarjetasFiltro extends Component {
                         familia: "",
                         qrcode: false,
                         alerta: false,
+                        conertida: false,
                         planificacion: false,
                         selectedOption: null,
                       });
@@ -433,12 +471,14 @@ class MisTarjetasFiltro extends Component {
                           selectedOption.map(({ value, label }) => {
                             return <th className="border-0">{label}</th>;
                           })}
+
                         {this.state.qrcode && (
                           <th className="border-0">QR Code</th>
                         )}
                         {this.state.alerta && (
                           <th className="border-0">Alerta</th>
                         )}
+
                         {this.state.planificacion && (
                           <th className="border-0">Fecha prevista de cierre</th>
                         )}
@@ -481,6 +521,9 @@ class MisTarjetasFiltro extends Component {
                         )}
                         {this.state.planificacion && (
                           <th className="border-0">Comentario 3</th>
+                        )}
+                        {this.state.convertida && (
+                          <th className="border-0">Convertida</th>
                         )}
                       </tr>
                     </thead>
@@ -530,6 +573,7 @@ class MisTarjetasFiltro extends Component {
                                 timeDiferrence >= 60 && (
                                   <td>Excedido {-timeDiferrence - 60} dias</td>
                                 )}
+
                               {selectedOption &&
                                 selectedOption.map(
                                   ({ value, label }, index) => {
@@ -542,6 +586,7 @@ class MisTarjetasFiltro extends Component {
                                     );
                                   }
                                 )}
+
                               {this.state.qrcode && (
                                 <td>
                                   <QRCode value={link + item._id} />
@@ -598,6 +643,12 @@ class MisTarjetasFiltro extends Component {
                               {this.state.planificacion && (
                                 <td>{item.comentario3}</td>
                               )}
+
+                              {this.state.convertida &&
+                                item.convertida === true && <td>Si</td>}
+
+                              {this.state.convertida &&
+                                item.convertida === false && <td>No</td>}
                               {/* {this.state.comentarios && (
                                 <td>
                                   {item.comentarios.map(
@@ -639,6 +690,7 @@ const mapStateToProps = (state) => {
     tarjetas: state.tarjetas,
     filters: state.filters,
     user: state.auth.user,
+    campos: state.campos,
   };
 };
 
@@ -646,4 +698,5 @@ export default connect(mapStateToProps, {
   getTarjetas,
   agregarFilter,
   getFilters,
+  getCampos,
 })(MisTarjetasFiltro);

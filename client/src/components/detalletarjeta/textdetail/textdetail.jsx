@@ -284,8 +284,6 @@ export class TextDetail extends Component {
                                               riesgoFinal,
                                               tipoAccion,
                                               accionesComplementarias,
-                                              causa,
-                                              materialUtilizado,
                                             }}
                                           ></EditarTarjetaModalAmarilla>
                                         </Col>

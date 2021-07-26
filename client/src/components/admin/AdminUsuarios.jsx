@@ -68,7 +68,7 @@ export class AdminUsuarios extends Component {
                     <div className="d-sm-flex align-items-center">
                       <div className="">
                         <div>
-                          <h2 className="mb-3">Administrar</h2>
+                          <h2 className="mb-3">ADMINISTRAR</h2>
                         </div>
                       </div>
 
@@ -367,6 +367,9 @@ export class AdminUsuarios extends Component {
                                       .filter(({ name }) => {
                                         return name === "riesgoInicial";
                                       })
+                                      .sort((a, b) => {
+                                        return a.value - b.value;
+                                      })
                                       .map(({ name, value, _id }) => {
                                         return (
                                           <option value={_id}>{value}</option>
@@ -413,6 +416,9 @@ export class AdminUsuarios extends Component {
                                     campos
                                       .filter(({ name }) => {
                                         return name === "riesgoFinal";
+                                      })
+                                      .sort((a, b) => {
+                                        return a.value - b.value;
                                       })
                                       .map(({ name, value, _id }) => {
                                         return (

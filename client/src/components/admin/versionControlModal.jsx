@@ -24,45 +24,12 @@ const VersionControlModal = (props) => {
         onClick={toggle}
         style={{ cursor: "pointer" }}
       >
-        v. 1.2.4
+        v. 1.2.2
       </p>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Control de Versión</ModalHeader>
         <ModalBody>
           <ListGroup>
-            <h6 style={{ fontWeight: "bold" }} className="mb-3">
-              Versión 1.2.4 | 07/02/21
-            </h6>
-            <div class="row">
-              <div class="span12">
-                <div class="inside">
-                  <Container>
-                    <div class="entry-content">
-                      <p>
-                        &#9642; Planificacion del Tratamiento de tarjetas
-                        agregada.
-                      </p>
-                    </div>
-                  </Container>
-                </div>
-              </div>
-            </div>
-            <h6 style={{ fontWeight: "bold" }} className="mb-3">
-              Versión 1.2.3 | 30/01/21
-            </h6>
-            <div class="row">
-              <div class="span12">
-                <div class="inside">
-                  <Container>
-                    <div class="entry-content">
-                      <p>&#9642; Tiempo empleado se calcula automaticamente.</p>
-                      <p>&#9642; Comentarios agregados.</p>
-                      <p>&#9642; Comentarios agregados a exportar tarjetas.</p>
-                    </div>
-                  </Container>
-                </div>
-              </div>
-            </div>
             <h6 style={{ fontWeight: "bold" }} className="mb-3">
               Versión 1.2.2 | 22/01/21
             </h6>
@@ -71,6 +38,10 @@ const VersionControlModal = (props) => {
                 <div class="inside">
                   <Container>
                     <div class="entry-content">
+                      <p>
+                        &#9642; Editar tarjeta: parte de maquina ahora se puede
+                        editar.
+                      </p>
                       <p>
                         &#9642; Login ahora requerido cuando se accede a una
                         tarjeta por qr.

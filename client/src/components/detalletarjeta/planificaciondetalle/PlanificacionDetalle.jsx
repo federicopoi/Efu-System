@@ -138,8 +138,6 @@ export class PlanificacionDetalle extends Component {
                     comentario2,
                     comentario3,
                   }) => {
-                    previstaCierre !== undefined && console.log("true");
-
                     return (
                       <div>
                         <Row className="my-2">

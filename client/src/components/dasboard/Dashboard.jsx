@@ -116,7 +116,7 @@ class DashBoard extends Component {
                       this.toggle("6");
                     }}
                   >
-                    Mapas de riesgo
+                    Reducción de Riesgo
                   </NavLink>
                 </NavItem>
                 <NavItem>

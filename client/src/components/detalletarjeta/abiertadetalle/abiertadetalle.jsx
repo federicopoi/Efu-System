@@ -90,9 +90,7 @@ export class AbiertaDetalle extends Component {
                           </h5>
                         </Row>
                         <Row className="ml-2 my-1">
-                          <h5 className="font-16 font-medium mr-2">
-                            Detecto:{" "}
-                          </h5>
+                          <h5 className="font-16 font-medium mr-2">Detectó:</h5>
                           <h5 className="font-14 font-weight-normal">
                             {detecto}
                           </h5>

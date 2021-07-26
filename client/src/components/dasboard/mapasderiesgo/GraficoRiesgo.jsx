@@ -70,78 +70,47 @@ export class GraficoRiesgo extends Component {
 
     // Porcentaje de puntos tratados
 
-    const arrPorcentajePuntos = (arrAbiertas.length / newFilter.length) * 100;
+    const arrPorcentajePuntos = (arrCerradas.length * 100) / newFilter.length;
 
     // Nivel Riesgo Inicial
 
-    // No significativo
-    const RI1 = newFilter.filter(({ riesgoInicial }) =>
-      riesgoInicial.includes("NS: No Significativo")
-    ).length;
+    const arrValuesRiesgoInicial =
+      newFilter &&
+      newFilter.map(({ riesgoInicial }) => {
+        return parseInt(riesgoInicial);
+      });
 
-    // Poco significativo
-    const RI2 =
-      newFilter.filter(({ riesgoInicial }) =>
-        riesgoInicial.includes("PS: Poco Significativo")
-      ).length * 2;
-
-    // Moderado
-    const RI3 =
-      newFilter.filter(({ riesgoInicial }) =>
-        riesgoInicial.includes("MO: Moderado")
-      ).length * 3;
-
-    // Sigfificativo
-    const RI4 =
-      newFilter.filter(({ riesgoInicial }) =>
-        riesgoInicial.includes("SI: Significativo")
-      ).length * 4;
-
-    // Intolerable
-    const RI5 =
-      newFilter.filter(({ riesgoInicial }) =>
-        riesgoInicial.includes("IN: Intolerable")
-      ).length * 5;
-
-    const nivelRiesgoInicial = RI1 + RI2 + RI3 + RI4 + RI5;
+    const nivelRiesgoInicial = arrValuesRiesgoInicial.reduce(
+      (a, b) => a + b,
+      0
+    );
 
     // Nivel Riesgo Final
 
-    // No significativo
-    const RI1A = arrCerradas.filter(
-      ({ riesgoFinal }) =>
-        riesgoFinal.toLowerCase() === "NS: No Significativo".toLowerCase()
-    ).length;
+    const arrValuesRiesgoFinal =
+      arrCerradas &&
+      arrCerradas.map(({ riesgoFinal }) => {
+        return parseInt(riesgoFinal);
+      });
 
-    // Poco significativo
-    const RI2A =
-      arrCerradas.filter(
-        ({ riesgoFinal }) =>
-          riesgoFinal.toLowerCase() === "PS: Poco Significativo".toLowerCase()
-      ).length * 2;
+    const sumArrValuesRiesgoFinal = arrValuesRiesgoFinal.reduce(
+      (a, b) => a + b,
+      0
+    );
 
-    // Moderado
-    const RI3A =
-      arrCerradas.filter(
-        ({ riesgoFinal }) =>
-          riesgoFinal.toLowerCase() === "MO: Moderado".toLowerCase()
-      ).length * 3;
+    const arrValuesRiesgoInicialRestantes =
+      arrAbiertas &&
+      arrAbiertas.map(({ riesgoInicial }) => {
+        return parseInt(riesgoInicial);
+      });
 
-    // Sigfificativo
-    const RI4A =
-      arrCerradas.filter(
-        ({ riesgoFinal }) =>
-          riesgoFinal.toLowerCase() === "SI: Significativo".toLowerCase()
-      ).length * 4;
+    const nivelRiesgoInicialRestantes = arrValuesRiesgoInicialRestantes.reduce(
+      (a, b) => a + b,
+      0
+    );
 
-    // Intolerable
-    const RI5A =
-      arrCerradas.filter(
-        ({ riesgoFinal }) =>
-          riesgoFinal.toLowerCase() === "IN: Intolerable".toLowerCase()
-      ).length * 5;
-
-    const nivelRiesgoFinal = RI1A + RI2A + RI3A + RI4A + RI5A;
+    const nivelRiesgoFinal =
+      sumArrValuesRiesgoFinal + nivelRiesgoInicialRestantes;
 
     const reduccionRiesgo =
       ((nivelRiesgoInicial - nivelRiesgoFinal) / nivelRiesgoInicial) * 100;
@@ -152,7 +121,7 @@ export class GraficoRiesgo extends Component {
           <Col lg={8} md={12} sm={12}>
             <Card>
               <CardBody>
-                <h3>Tabla Mapas de riesgo</h3>
+                <h3>Reducción de Riesgo</h3>
                 <Table className="no-wrap v-middle" responsive>
                   <thead>
                     <tr className="border-0">
@@ -161,14 +130,14 @@ export class GraficoRiesgo extends Component {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Total de Puntos</td>
+                      <td>Tarjetas abiertas | | Tarjetas cerradas</td>
                       <td>
-                        {newFilter.length} | | {arrAbiertas.length}
+                        {newFilter.length} | | {arrCerradas.length}
                       </td>
                     </tr>
                     <tr>
                       <td>Porcentaje de puntos tratados</td>
-                      <td>{100 - arrPorcentajePuntos.toFixed(2)} %</td>
+                      <td>{arrPorcentajePuntos.toFixed(2)} %</td>
                     </tr>
                     <tr>
                       <td>Nivel Riesgo Inicial</td>
