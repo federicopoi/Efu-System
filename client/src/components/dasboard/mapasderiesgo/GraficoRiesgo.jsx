@@ -74,43 +74,115 @@ export class GraficoRiesgo extends Component {
 
     // Nivel Riesgo Inicial
 
-    const arrValuesRiesgoInicial =
-      newFilter &&
-      newFilter.map(({ riesgoInicial }) => {
-        return parseInt(riesgoInicial);
-      });
+    // No significativo
+    const RI1 = newFilter.filter(({ riesgoInicial }) =>
+      riesgoInicial.toLowerCase().includes("NS: NO SIGNIFICATIVO".toLowerCase())
+    ).length;
 
-    const nivelRiesgoInicial = arrValuesRiesgoInicial.reduce(
-      (a, b) => a + b,
-      0
-    );
+    // Poco significativo
+    const RI2 =
+      newFilter.filter(({ riesgoInicial }) =>
+        riesgoInicial
+          .toLowerCase()
+          .includes("PS: POCO SIGNIFICATIVO".toLowerCase())
+      ).length * 2;
+
+    // Moderado
+    const RI3 =
+      newFilter.filter(({ riesgoInicial }) =>
+        riesgoInicial.toLowerCase().includes("MO: MODERADO".toLowerCase())
+      ).length * 3;
+
+    // Sigfificativo
+    const RI4 =
+      newFilter.filter(({ riesgoInicial }) =>
+        riesgoInicial.toLowerCase().includes("SI: SIGNIFICATIVO".toLowerCase())
+      ).length * 4;
+
+    // Intolerable
+    const RI5 =
+      newFilter.filter(({ riesgoInicial }) =>
+        riesgoInicial.toLowerCase().includes("IN: INTOLERABLE".toLowerCase())
+      ).length * 5;
+
+    const nivelRiesgoInicial = RI1 + RI2 + RI3 + RI4 + RI5;
 
     // Nivel Riesgo Final
 
-    const arrValuesRiesgoFinal =
-      arrCerradas &&
-      arrCerradas.map(({ riesgoFinal }) => {
-        return parseInt(riesgoFinal);
-      });
+    // No significativo
+    const RI1A = arrCerradas.filter(
+      ({ riesgoFinal }) =>
+        riesgoFinal.toLowerCase() === "NS: NO SIGNIFICATIVO".toLowerCase()
+    ).length;
 
-    const sumArrValuesRiesgoFinal = arrValuesRiesgoFinal.reduce(
-      (a, b) => a + b,
-      0
-    );
+    // Poco significativo
+    const RI2A =
+      arrCerradas.filter(
+        ({ riesgoFinal }) =>
+          riesgoFinal.toLowerCase() === "PS: POCO SIGNIFICATIVO".toLowerCase()
+      ).length * 2;
 
-    const arrValuesRiesgoInicialRestantes =
-      arrAbiertas &&
-      arrAbiertas.map(({ riesgoInicial }) => {
-        return parseInt(riesgoInicial);
-      });
+    // Moderado
+    const RI3A =
+      arrCerradas.filter(
+        ({ riesgoFinal }) =>
+          riesgoFinal.toLowerCase() === "MO: MODERADO".toLowerCase()
+      ).length * 3;
 
-    const nivelRiesgoInicialRestantes = arrValuesRiesgoInicialRestantes.reduce(
-      (a, b) => a + b,
-      0
-    );
+    // Sigfificativo
+    const RI4A =
+      arrCerradas.filter(
+        ({ riesgoFinal }) =>
+          riesgoFinal.toLowerCase() === "SI: SIGNIFICATIVO".toLowerCase()
+      ).length * 4;
+
+    // Intolerable
+    const RI5A =
+      arrCerradas.filter(
+        ({ riesgoFinal }) =>
+          riesgoFinal.toLowerCase() === "IN: INTOLERABLE".toLowerCase()
+      ).length * 5;
+
+    // No significativo
+    const RI1B = arrAbiertas.filter(({ riesgoInicial }) =>
+      riesgoInicial.toLowerCase().includes("NS: NO SIGNIFICATIVO".toLowerCase())
+    ).length;
+
+    // Poco significativo
+    const RI2B =
+      arrAbiertas.filter(({ riesgoInicial }) =>
+        riesgoInicial
+          .toLowerCase()
+          .includes("PS: POCO SIGNIFICATIVO".toLowerCase())
+      ).length * 2;
+
+    // Moderado
+    const RI3B =
+      arrAbiertas.filter(({ riesgoInicial }) =>
+        riesgoInicial.toLowerCase().includes("MO: MODERADO".toLowerCase())
+      ).length * 3;
+
+    // Sigfificativo
+    const RI4B =
+      arrAbiertas.filter(({ riesgoInicial }) =>
+        riesgoInicial.toLowerCase().includes("SI: SIGNIFICATIVO".toLowerCase())
+      ).length * 4;
+
+    // Intolerable
+    const RI5B =
+      arrAbiertas.filter(({ riesgoInicial }) =>
+        riesgoInicial.toLowerCase().includes("IN: INTOLERABLE".toLowerCase())
+      ).length * 5;
 
     const nivelRiesgoFinal =
-      sumArrValuesRiesgoFinal + nivelRiesgoInicialRestantes;
+      RI1A + RI2A + RI3A + RI4A + RI5A + RI1B + RI2B + RI3B + RI4B + RI5B;
+
+    console.log("+");
+    console.log(RI1B);
+    console.log(RI2B);
+    console.log(RI3B);
+    console.log(RI4B);
+    console.log(RI5B);
 
     const reduccionRiesgo =
       ((nivelRiesgoInicial - nivelRiesgoFinal) / nivelRiesgoInicial) * 100;
@@ -121,7 +193,7 @@ export class GraficoRiesgo extends Component {
           <Col lg={8} md={12} sm={12}>
             <Card>
               <CardBody>
-                <h3>Reducción de Riesgo</h3>
+                <h3>Tabla Mapas de riesgo</h3>
                 <Table className="no-wrap v-middle" responsive>
                   <thead>
                     <tr className="border-0">
@@ -136,7 +208,9 @@ export class GraficoRiesgo extends Component {
                       </td>
                     </tr>
                     <tr>
-                      <td>Porcentaje de puntos tratados</td>
+                      <td>
+                        Porcentaje de puntos tratados (% de tarjetas cerradas)
+                      </td>
                       <td>{arrPorcentajePuntos.toFixed(2)} %</td>
                     </tr>
                     <tr>

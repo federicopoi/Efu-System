@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getTarjetas } from "../../store/actions/tarjetaActions";
+import { getKaizen } from "../../store/actions/kaizenActions";
 import { loadUser } from "../../store/actions/authActions";
 import { Card, CardBody, Row, Col, Table, Button, Container } from "reactstrap";
 import moment from "moment";
@@ -10,12 +11,17 @@ import MaterialTable from "material-table";
 export class MisTarjetas extends Component {
   componentDidMount() {
     this.props.getTarjetas();
+    this.props.getKaizen();
     this.props.loadUser();
     window.scrollTo(0, 0);
   }
 
   render() {
+    if (this.props.isAuthenticated === false && this.props.isLoading === false)
+      return <Redirect to="/login" />;
+
     const { tarjetas } = this.props.tarjetas;
+    console.log(this.props.tarjetaskaizen);
 
     function customRender(
       value,
@@ -201,9 +207,12 @@ export class MisTarjetas extends Component {
 const mapStateToProps = (state) => {
   return {
     tarjetas: state.tarjetas,
+    tarjetaskaizen: state.tarjetaskaizen,
     isAuthenticated: state.auth.isAuthenticated,
     isLoading: state.auth.isLoading,
     user: state.auth.user,
   };
 };
-export default connect(mapStateToProps, { getTarjetas, loadUser })(MisTarjetas);
+export default connect(mapStateToProps, { getTarjetas, getKaizen, loadUser })(
+  MisTarjetas
+);

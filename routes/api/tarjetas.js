@@ -23,6 +23,7 @@ router.post("/", (req, res) => {
   const {
     numero,
     descripcion,
+    sugerencia,
     color,
     detecto,
     prioridad,
@@ -39,6 +40,7 @@ router.post("/", (req, res) => {
   if (
     !numero ||
     !descripcion ||
+    !sugerencia ||
     !color ||
     !detecto ||
     !prioridad ||
@@ -55,6 +57,7 @@ router.post("/", (req, res) => {
   const nuevaTarjeta = new Tarjeta({
     numero,
     descripcion,
+    sugerencia,
     color,
     detecto,
     prioridad,
@@ -353,9 +356,9 @@ router.post("/editarAmarilla", (req, res) => {
     tarjeta.responsable = responsable;
     tarjeta.sugerencia = sugerencia;
     tarjeta.tareaRealizada = tareaRealizada;
-    tarjeta.parteMaquina = parteMaquina;
     tarjeta.accionesComplementarias = accionesComplementarias;
     tarjeta.riesgoFinal = riesgoFinal;
+    tarjeta.parteMaquina = parteMaquina;
     tarjeta.prioridad = prioridad;
     tarjeta.maquina = maquina;
     tarjeta.tipodeRiesgo = tipodeRiesgo;

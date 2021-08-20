@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Image } from "cloudinary-react";
+import { Button, Modal, ModalHeader } from "reactstrap";
 import { connect } from "react-redux";
 import { agregarImagen } from "../../../store/actions/tarjetaActions";
 import Axios from "axios";
@@ -35,7 +34,6 @@ const UploadImageModal = (props) => {
   if (status === 200) {
     return toggle;
   }
-  console.log(props._id);
   return (
     <div>
       {props.button && (

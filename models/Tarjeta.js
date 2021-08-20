@@ -17,7 +17,7 @@ const TarjetaSchema = new Schema(
       type: String,
       default: "Abierta",
     },
-    imagenUrl: {
+    photo: {
       type: String,
     },
     color: {
@@ -43,7 +43,6 @@ const TarjetaSchema = new Schema(
     },
     parteMaquina: {
       type: String,
-      required: true,
     },
     equipo: {
       type: String,
@@ -55,9 +54,15 @@ const TarjetaSchema = new Schema(
     tipodeRiesgo: {
       type: String,
     },
+    imagenUrl: {
+      type: String,
+    },
     // Solo en Tarjeta amarilla
     sustoExperimentado: {
       type: Boolean,
+    },
+    imagenUrl: {
+      type: String,
     },
     sustoObservado: {
       type: Boolean,
@@ -78,9 +83,6 @@ const TarjetaSchema = new Schema(
       type: String,
     },
     responsable: {
-      type: String,
-    },
-    areaResponsable: {
       type: String,
     },
     tiempoEmpleado: {
@@ -115,11 +117,11 @@ const TarjetaSchema = new Schema(
     },
 
     // Global
+
     fecha: {
       type: Date,
       default: Date.now,
     },
-
     previstaCierre: {
       type: Date,
     },
@@ -158,6 +160,7 @@ const TarjetaSchema = new Schema(
       default: false,
     },
   },
+
   {
     collection: "tarjetas",
   }

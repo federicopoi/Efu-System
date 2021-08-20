@@ -8,13 +8,8 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Card,
-  Button,
-  CardTitle,
-  CardText,
   Row,
   Col,
-  CardBody,
 } from "reactstrap";
 import classnames from "classnames";
 import GraficoAmarillas from "./tarjetasamarillas/GraficoAmarillas";
@@ -40,7 +35,8 @@ class DashBoard extends Component {
   render() {
     const { tarjetas } = this.props.tarjetas;
     const { isAuthenticated, isLoading } = this.props;
-
+    if (isAuthenticated === false && isLoading === false)
+      return <Redirect to="/login" />;
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -116,7 +112,7 @@ class DashBoard extends Component {
                       this.toggle("6");
                     }}
                   >
-                    Reducción de Riesgo
+                    Mapas de riesgo
                   </NavLink>
                 </NavItem>
                 <NavItem>

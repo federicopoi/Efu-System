@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { editarTarjetaAmarilla } from "../../../store/actions/tarjetaActions";
+import { getCampos } from "../../../store/actions/camposActions";
 import { clearErrors } from "../../../store/actions/errorActions";
 import {
   Button,
@@ -31,13 +32,14 @@ class EditarTarjetaModalAmarilla extends Component {
     riesgoInicial: this.props.tarjeta.riesgoInicial,
     tipodeRiesgo: this.props.tarjeta.tipodeRiesgo,
     sugerencia: this.props.tarjeta.sugerencia,
-
+    parteMaquina: this.props.tarjeta.parteMaquina,
     tareaRealizada: this.props.tarjeta.tareaRealizada,
     responsable: this.props.tarjeta.responsable,
     accionesComplementarias: this.props.tarjeta.accionesComplementarias,
     causa: this.props.tarjeta.causa,
     riesgoFinal: this.props.tarjeta.riesgoFinal,
     tipoAccion: this.props.tarjeta.tipoAccion,
+    idMaquina: "",
   };
 
   componentDidUpdate(prevProps) {
@@ -65,7 +67,8 @@ class EditarTarjetaModalAmarilla extends Component {
     });
   };
   onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    e.target.value !== "Seleccionar" &&
+      this.setState({ [e.target.name]: e.target.value });
   };
   onSubmit = (e) => {
     e.preventDefault();
@@ -75,6 +78,7 @@ class EditarTarjetaModalAmarilla extends Component {
       detecto,
       prioridad,
       maquina,
+      parteMaquina,
       familia,
       equipo,
       sugerencia,
@@ -93,6 +97,7 @@ class EditarTarjetaModalAmarilla extends Component {
       detecto,
       prioridad,
       maquina,
+      parteMaquina,
       familia,
       equipo,
       sugerencia,
@@ -109,6 +114,8 @@ class EditarTarjetaModalAmarilla extends Component {
   };
 
   render() {
+    const { campos } = this.props.campos;
+
     return (
       <div>
         <p onClick={this.toggle} style={{ cursor: "pointer" }} className="my-3">
@@ -120,7 +127,7 @@ class EditarTarjetaModalAmarilla extends Component {
             {this.state.msg ? (
               <Alert color="danger">{this.state.msg}</Alert>
             ) : null}
-            <h4>Tarjeta Frente</h4>
+            <h4 className="text-center">Tarjeta Frente</h4>
             <Form className="mt-3" onSubmit={this.onSubmit} id="agregartarjeta">
               <Row>
                 <Col>
@@ -131,25 +138,55 @@ class EditarTarjetaModalAmarilla extends Component {
                       name="maquina"
                       id="maquina"
                       // defaultValue={this.state.maquina}
-                      onChange={this.onChange}
+                      onChange={(e) => {
+                        const index = e.target.selectedIndex;
+                        const el = e.target.childNodes[index];
+                        const option = el.getAttribute("_id");
+                        this.setState({
+                          idMaquina: option,
+                          maquina: e.target.value,
+                        });
+                      }}
                     >
                       <option>Seleccionar</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
+                      {campos &&
+                        campos
+                          .filter(({ name, value }) => {
+                            return name === "maquina";
+                          })
+                          .map(({ name, value, _id }, index) => {
+                            return (
+                              <option key={index} _id={_id}>
+                                {value}
+                              </option>
+                            );
+                          })}
                     </Input>
                   </FormGroup>
 
                   <FormGroup>
                     <Label for="detecto">Riesgo Inicial *</Label>
                     <Input
-                      type="text"
+                      type="select"
                       defaultValue={this.state.riesgoInicial}
                       name="riesgoInicial"
                       id="riesgoInicial"
                       onChange={this.onChange}
-                    />
+                    >
+                      <option>Seleccionar</option>
+                      {campos &&
+                        campos
+                          .filter(({ name, value }) => {
+                            return name === "riesgoInicial";
+                          })
+                          .map(({ name, value, _id }, index) => {
+                            return (
+                              <option key={index} _id={_id}>
+                                {value}
+                              </option>
+                            );
+                          })}
+                    </Input>
                   </FormGroup>
                   <FormGroup>
                     <Label for="detecto">Detectó *</Label>
@@ -175,6 +212,27 @@ class EditarTarjetaModalAmarilla extends Component {
                 </Col>
                 <Col>
                   <FormGroup>
+                    <Label for="maquina">Parte de maquina *</Label>
+                    <Input
+                      type="select"
+                      name="parteMaquina"
+                      id="parteMaquina"
+                      onChange={this.onChange}
+                    >
+                      <option>Seleccionar</option>
+                      {campos &&
+                        campos
+                          .filter(({ name, value, _id }) => {
+                            return _id === this.state.idMaquina;
+                          })
+                          .map(({ parteMaquina }) => {
+                            return parteMaquina.map((item) => {
+                              return <option>{item}</option>;
+                            });
+                          })}
+                    </Input>
+                  </FormGroup>
+                  <FormGroup>
                     <Label for="equipo">Equipo Autonomo*</Label>
                     <Input
                       type="select"
@@ -184,16 +242,14 @@ class EditarTarjetaModalAmarilla extends Component {
                       onChange={this.onChange}
                     >
                       <option>Seleccionar</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
+                      {campos &&
+                        campos
+                          .filter(({ name, value }) => {
+                            return name === "equipo";
+                          })
+                          .map(({ name, value }, index) => {
+                            return <option key={index}>{value}</option>;
+                          })}
                     </Input>
                   </FormGroup>
 
@@ -227,12 +283,14 @@ class EditarTarjetaModalAmarilla extends Component {
                       onChange={this.onChange}
                     >
                       <option>Seleccionar</option>
-                      <option>Atrapamiento</option>
-                      <option>Corte</option>
-                      <option>Quemadura</option>
-                      <option>Deslizamiento</option>
-                      <option>Salpicadura</option>
-                      <option>Otros</option>
+                      {campos &&
+                        campos
+                          .filter(({ name, value }) => {
+                            return name === "tipo";
+                          })
+                          .map(({ name, value }, index) => {
+                            return <option key={index}>{value}</option>;
+                          })}
                     </Input>
                   </FormGroup>
                   <FormGroup>
@@ -255,7 +313,7 @@ class EditarTarjetaModalAmarilla extends Component {
 
               {this.props.tarjeta.estado === "Cerrada" && (
                 <div>
-                  <h4>Tarjeta Dorso</h4>
+                  <h4 className="text-center">Tarjeta Dorso</h4>
                   <FormGroup>
                     <Label for="accionRealizada">Acción Realizada</Label>
                     <Input
@@ -291,15 +349,29 @@ class EditarTarjetaModalAmarilla extends Component {
                       className="mb-2"
                     ></Input>
 
-                    <Label for="updaters">Determinacion del Riesgo Final</Label>
+                    <Label for="responsable">Riesgo Final</Label>
                     <Input
                       onChange={this.onChange}
-                      type="text"
+                      type="select"
                       name="riesgoFinal"
-                      defaultValue={this.state.riesgoFinal}
                       id="riesgoFinal"
                       className="mb-2"
-                    ></Input>
+                      defaultValue={this.state.riesgoFinal}
+                    >
+                      <option>Seleccionar</option>
+                      {campos &&
+                        campos
+                          .filter(({ name, value }) => {
+                            return name === "riesgoFinal";
+                          })
+                          .map(({ name, value, _id }, index) => {
+                            return (
+                              <option key={index} _id={_id}>
+                                {value}
+                              </option>
+                            );
+                          })}
+                    </Input>
 
                     <Label for="updaters">Acciones Complementarias</Label>
                     <Input
@@ -334,8 +406,10 @@ class EditarTarjetaModalAmarilla extends Component {
 }
 const mapStateToProps = (state) => ({
   error: state.error,
+  campos: state.campos,
 });
 export default connect(mapStateToProps, {
   clearErrors,
   editarTarjetaAmarilla,
+  getCampos,
 })(EditarTarjetaModalAmarilla);

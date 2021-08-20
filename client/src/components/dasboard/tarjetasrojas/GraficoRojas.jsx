@@ -48,8 +48,6 @@ export class GraficoRojas extends Component {
       .filter(({ estado, color }) => estado === "Cerrada" && color === "Roja")
       .map(({ finReparacion }) => finReparacion.substr(0, 7));
 
-    console.log(fechasTarjetasRojasCerradas);
-
     // Borro todos los meses repetidos
     let fechasTarjetasRojas1 = new Set(fechasTarjetasRojas);
     const fechasTarjetasRojasUnicas = [...fechasTarjetasRojas1];

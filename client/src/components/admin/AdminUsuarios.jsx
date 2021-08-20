@@ -12,8 +12,9 @@ import {
   Label,
   Input,
 } from "reactstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CampoModal from "./camposModal";
+import CambiarRolModal from "./cambiarRolModal";
 import CamposParteMaquinaModal from "./camposparteMaquinaModal";
 import { getUsers, borrarUser } from "../../store/actions/usersActions";
 import { borrarCampo } from "../../store/actions/camposActions";
@@ -55,8 +56,6 @@ export class AdminUsuarios extends Component {
   render() {
     const { users } = this.props.users;
     const { campos } = this.props.campos;
-    console.log(this.state);
-    console.log(campos);
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -68,7 +67,7 @@ export class AdminUsuarios extends Component {
                     <div className="d-sm-flex align-items-center">
                       <div className="">
                         <div>
-                          <h2 className="mb-3">ADMINISTRAR</h2>
+                          <h2 className="mb-3">Administrar</h2>
                         </div>
                       </div>
 
@@ -108,7 +107,7 @@ export class AdminUsuarios extends Component {
                     <Table className="no-wrap v-middle" responsive>
                       <thead>
                         <tr className="border-0">
-                          <th className="border-0">Email</th>
+                          <th className="border-0">N° Legajo</th>
                           <th className="border-0">Rol</th>
                           <th className="border-0">Acciones</th>
                         </tr>
@@ -127,6 +126,9 @@ export class AdminUsuarios extends Component {
                                   >
                                     Borrar
                                   </Button>
+                                </td>
+                                <td>
+                                  <CambiarRolModal _id={_id}></CambiarRolModal>
                                 </td>
                               </tr>
                             </tbody>
@@ -256,7 +258,7 @@ export class AdminUsuarios extends Component {
                           <div className="">
                             <div>
                               <FormGroup>
-                                <Label for="tipo">Tipo de riesgo</Label>
+                                <Label for="tipo">Tipo</Label>
                                 <Input
                                   type="select"
                                   name="tipo"
@@ -303,7 +305,7 @@ export class AdminUsuarios extends Component {
                           <div className="">
                             <div>
                               <FormGroup>
-                                <Label for="equipo">Equipo Autonomo</Label>
+                                <Label for="equipo">Equipo</Label>
                                 <Input
                                   type="select"
                                   name="equipo"
@@ -367,9 +369,6 @@ export class AdminUsuarios extends Component {
                                       .filter(({ name }) => {
                                         return name === "riesgoInicial";
                                       })
-                                      .sort((a, b) => {
-                                        return a.value - b.value;
-                                      })
                                       .map(({ name, value, _id }) => {
                                         return (
                                           <option value={_id}>{value}</option>
@@ -416,9 +415,6 @@ export class AdminUsuarios extends Component {
                                     campos
                                       .filter(({ name }) => {
                                         return name === "riesgoFinal";
-                                      })
-                                      .sort((a, b) => {
-                                        return a.value - b.value;
                                       })
                                       .map(({ name, value, _id }) => {
                                         return (

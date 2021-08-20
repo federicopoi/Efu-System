@@ -67,7 +67,8 @@ class EditarTarjetaModal extends Component {
     });
   };
   onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    e.target.value !== "Seleccionar" &&
+      this.setState({ [e.target.name]: e.target.value });
   };
   onSubmit = (e) => {
     e.preventDefault();
@@ -120,6 +121,7 @@ class EditarTarjetaModal extends Component {
 
   render() {
     const { campos } = this.props.campos;
+    console.log(this.state);
     return (
       <div>
         <p onClick={this.toggle} style={{ cursor: "pointer" }} className="my-3">
@@ -131,7 +133,7 @@ class EditarTarjetaModal extends Component {
             {this.state.msg ? (
               <Alert color="danger">{this.state.msg}</Alert>
             ) : null}
-            <h4>Tarjeta Frente</h4>
+            <h4 className="text-center">Tarjeta Frente</h4>
             <Form className="mt-3" onSubmit={this.onSubmit} id="agregartarjeta">
               <Row>
                 <Col>
@@ -317,7 +319,7 @@ class EditarTarjetaModal extends Component {
 
               {this.props.tarjeta.estado === "Cerrada" && (
                 <div>
-                  <h4>Tarjeta Dorso</h4>{" "}
+                  <h4 className="text-center">Tarjeta Dorso</h4>{" "}
                   <FormGroup>
                     <Label for="responsable">Responsable</Label>
                     <Input
@@ -332,12 +334,26 @@ class EditarTarjetaModal extends Component {
                     <Label for="responsable">Riesgo Final</Label>
                     <Input
                       onChange={this.onChange}
-                      type="text"
+                      type="select"
                       name="riesgoFinal"
                       id="riesgoFinal"
                       className="mb-2"
                       defaultValue={this.state.riesgoFinal}
-                    ></Input>
+                    >
+                      <option>Seleccionar</option>
+                      {campos &&
+                        campos
+                          .filter(({ name, value }) => {
+                            return name === "riesgoFinal";
+                          })
+                          .map(({ name, value, _id }, index) => {
+                            return (
+                              <option key={index} _id={_id}>
+                                {value}
+                              </option>
+                            );
+                          })}
+                    </Input>
 
                     <Label for="updaters">Tiempo empleado en horas</Label>
                     <Input

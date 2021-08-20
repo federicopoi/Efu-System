@@ -1,20 +1,40 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Card,
-  CardBody,
-  Table,
-} from "reactstrap";
+import { Card, CardBody, Table } from "reactstrap";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import MaterialTable from "material-table";
 
 const TableModal = (props) => {
+  // const newFechas = props.fechas.unshift("Mes");
+
   return (
     <div>
       <Card>
         <CardBody>
+          {/* <MaterialTable
+            title=""
+            data={props}
+            columns={[
+              {
+                title: "Fechas",
+                field: "fechas",
+                render: (rowData) => {
+                  return rowData.fechas;
+                },
+              },
+              { title: "Prioridad", field: "prioridad" },
+              // {
+              //   title: "Fecha apertura",
+              //   field: "fecha",
+              //   render: (rowData) =>
+              //     moment(rowData.fecha).format("DD/MM/YYYY LTS"),
+              // },
+              { title: "Descripción anomalia", field: "descripcion" },
+              {
+                title: "Estado actual",
+                field: "estado",
+              },
+            ]}
+          />
           <div className="d-flex align-items-center">
             <div className="">
               <h3 className="mb-3">Tabla</h3>
@@ -30,7 +50,7 @@ const TableModal = (props) => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
           <Table className="no-wrap v-middle" responsive id="emp">
             <thead>
               <tr className="border-0">

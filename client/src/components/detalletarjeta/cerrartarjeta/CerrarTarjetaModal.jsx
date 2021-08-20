@@ -26,7 +26,7 @@ export class CerrarTarjetaModal extends Component {
         finReparacionHora: "",
         responsable: "",
         // tiempoEmpleado: "",
-        causa: "",
+        causa: ".",
         riesgoFinal: "",
         tareaRealizada: "",
         tipoAccion: "",
@@ -52,7 +52,7 @@ export class CerrarTarjetaModal extends Component {
         finReparacionDia: false,
         finReparacionHora: false,
         responsable: false,
-        causa: false,
+        causa: true,
         riesgoFinal: false,
         tareaRealizada: false,
         tipoAccion: false,
@@ -77,7 +77,8 @@ export class CerrarTarjetaModal extends Component {
     const validity = this.state.formValidity;
     const isEmail = name === "email";
     const isPassword = name === "password";
-    const isResposable = name === "responsable";
+    const isInicioReparacion = name === "inicioReparacionDia";
+    const isFinReparacion = name === "finReparacionDia";
     const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
     validity[name] = value.length > 0;
@@ -97,6 +98,19 @@ export class CerrarTarjetaModal extends Component {
         fieldValidationErrors[name] = validity[name]
           ? ""
           : `${name} should be 3 characters minimum`;
+      }
+      if (isInicioReparacion) {
+        validity[name] = value > this.props.fecha;
+
+        fieldValidationErrors[name] = validity[name]
+          ? ""
+          : "Inicio de reparacion tiene que ser posterior a fecha creada.";
+      }
+      if (isFinReparacion) {
+        validity[name] = value >= this.props.fecha;
+        fieldValidationErrors[name] = validity[name]
+          ? ""
+          : "Fin de reparacion tiene que ser posterior a fecha creada.";
       }
     }
 
@@ -194,7 +208,7 @@ export class CerrarTarjetaModal extends Component {
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>
               <FormGroup>
-                <Label for="updaters">Inicio de la Tarea</Label>
+                <Label>Inicio de la Tarea</Label>
                 <Input
                   onChange={this.handleChange}
                   value={formValues.inicioReparacionDia}
@@ -294,18 +308,24 @@ export class CerrarTarjetaModal extends Component {
                   {formErrors.riesgoFinal}
                 </div>
 
-                <Label className="mt-2">Causa de la Anomalia</Label>
-                <Input
-                  onChange={this.handleChange}
-                  value={formValues.causa}
-                  type="text"
-                  name="causa"
-                  id="causa"
-                  className={`form-control ${
-                    formErrors.causa ? "is-invalid" : ""
-                  }`}
-                ></Input>
-                <div className="invalid-feedback mb-2">{formErrors.causa}</div>
+                {this.props.color !== "Verde" && (
+                  <div>
+                    <Label className="mt-2">Causa de la Anomalia</Label>
+                    <Input
+                      onChange={this.handleChange}
+                      value={formValues.causa}
+                      type="text"
+                      name="causa"
+                      id="causa"
+                      className={`form-control ${
+                        formErrors.causa ? "is-invalid" : ""
+                      }`}
+                    ></Input>
+                    <div className="invalid-feedback mb-2">
+                      {formErrors.causa}
+                    </div>
+                  </div>
+                )}
 
                 <Label className="mt-2">Tarea Realizada</Label>
                 <Input

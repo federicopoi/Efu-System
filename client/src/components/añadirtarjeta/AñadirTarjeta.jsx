@@ -28,6 +28,7 @@ class AñadirTarjeta extends Component {
   state = {
     numero: "",
     descripcion: "",
+    sugerencia: "",
     color: "",
     detecto: "",
     prioridad: "",
@@ -38,7 +39,6 @@ class AñadirTarjeta extends Component {
     equipo: "",
     riesgoInicial: "",
     tipodeRiesgo: "",
-    sugerencia: "false",
     sustoExperimentado: false,
     sustoObservado: false,
     impactoAmbiente: false,
@@ -101,6 +101,7 @@ class AñadirTarjeta extends Component {
     const nuevaTarjeta = {
       numero,
       descripcion,
+      sugerencia,
       color,
       detecto,
       prioridad,
@@ -315,9 +316,6 @@ class AñadirTarjeta extends Component {
                             .filter(({ name, value }) => {
                               return name === "riesgoInicial";
                             })
-                            .sort((a, b) => {
-                              return a.value - b.value;
-                            })
                             .map(({ name, value, _id }, index) => {
                               return (
                                 <option key={index} _id={_id}>
@@ -353,6 +351,44 @@ class AñadirTarjeta extends Component {
                         onChange={this.onChange}
                       />
                     </FormGroup>
+
+                    {this.state.color === "Roja" && (
+                      <div>
+                        <Label for="sugerencia">
+                          Sugerencia para eliminar la anomalía *
+                        </Label>
+                        <Input
+                          type="text"
+                          name="sugerencia"
+                          id="sugerencia"
+                          onChange={this.onChange}
+                        />
+                      </div>
+                    )}
+                    {this.state.color === "Azul" && (
+                      <div>
+                        <Label for="sugerencia">
+                          Sugerencia para eliminar la anomalía *
+                        </Label>
+                        <Input
+                          type="text"
+                          name="sugerencia"
+                          id="sugerencia"
+                          onChange={this.onChange}
+                        />
+                      </div>
+                    )}
+                    {this.state.color === "Verde" && (
+                      <div>
+                        <Label for="sugerencia">Sugerencia de mejora *</Label>
+                        <Input
+                          type="text"
+                          name="sugerencia"
+                          id="sugerencia"
+                          onChange={this.onChange}
+                        />
+                      </div>
+                    )}
                   </Col>
                   <Col>
                     <FormGroup>

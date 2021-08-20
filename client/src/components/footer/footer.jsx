@@ -8,7 +8,7 @@ const Footer = () => {
         src={LogoP}
         width="100"
         height="40"
-        className="d-inline-block align-top mr-3"
+        className="d-inline-block align-top"
       />
       <img src={LogoG} height={40} className="d-inline-block align-top" />
     </footer>

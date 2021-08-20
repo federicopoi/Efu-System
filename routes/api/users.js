@@ -69,10 +69,52 @@ router.post("/", (req, res) => {
 
 // @route DELETE api/users/:id
 // @desc Delte A User
-// @access Private
+// @access Public
 router.delete("/:id", (req, res) => {
   User.findById(req.params.id)
     .then((user) => user.remove().then(() => res.json({ success: true })))
     .catch((err) => res.status(404).json({ success: false }));
 });
 module.exports = router;
+
+// @route POST api/users/cambiarrol
+// @desc Cambiar rol Usuario
+// @access Public
+router.post("/cambiarrol", (req, res) => {
+  const { _id, rol } = req.body;
+
+  // Simple validation
+
+  User.findOne({ _id }).exec((err, user) => {
+    if (err) console.log("Editar usuario error  ", err);
+
+    user.role = rol;
+
+    user.save();
+    res.json(user);
+  });
+});
+
+// @route GET api/users/init
+// @desc Add multiple users
+// @access Public
+// router.get("/init", (req, res) => {
+//   Papa.parse(file, {
+//     delimiter: ";",
+//     worker: true,
+//     complete: function (results) {
+//       const array = results.data.map((tj) => {
+//         return {
+//           legajo: tj[0],
+//           pin: tj[1],
+//           role: tj[2],
+//         };
+//       });
+//       array.forEach((tj) => {
+//         const newUser = new User(tj);
+//         newUser.save();
+//       });
+//       return res.json(array);
+//     },
+//   });
+// });

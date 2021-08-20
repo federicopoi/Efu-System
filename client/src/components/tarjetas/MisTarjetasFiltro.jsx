@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getTarjetas } from "../../store/actions/tarjetaActions";
-import { getCampos } from "../../store/actions/camposActions";
 import { agregarFilter, getFilters } from "../../store/actions/filterActions";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import QRCode from "qrcode.react";
@@ -20,7 +19,6 @@ import {
 } from "reactstrap";
 import Select from "react-select";
 import PresetModal from "./PresetModal";
-import { Redirect } from "react-router-dom";
 
 const options = [
   { value: "numero", label: "N°" },
@@ -31,7 +29,6 @@ const options = [
   { value: "descripcion", label: "Descripcion anomalia" },
   { value: "estado", label: "Estado actual" },
   { value: "maquina", label: "Maquina / Instalacion" },
-  { value: "parteMaquina", label: "Parte Maquina" },
   { value: "detecto", label: "Detecto" },
   { value: "familia", label: "Familia de anomalia" },
   { value: "tipodeRiesgo", label: "Tipo de Riesgo" },
@@ -48,7 +45,6 @@ class MisTarjetasFiltro extends Component {
   componentDidMount() {
     this.props.getTarjetas();
     this.props.getFilters();
-    this.props.getCampos();
   }
   state = {
     selectedOption: null,
@@ -71,7 +67,6 @@ class MisTarjetasFiltro extends Component {
     riesgoInicial: "",
     riesgoFinal: "",
     tipoAccion: "",
-    parteMaquina: "",
     qrcode: false,
     alerta: false,
     planificacion: false,
@@ -89,7 +84,6 @@ class MisTarjetasFiltro extends Component {
 
   render() {
     const { tarjetas } = this.props.tarjetas;
-    const { campos } = this.props.campos;
     const { filters } = this.props.filters;
     const { selectedOption } = this.state;
     var filter = {
@@ -113,7 +107,6 @@ class MisTarjetasFiltro extends Component {
       tareaRealizada: this.state.tareaRealizada && this.state.tareaRealizada,
       materialUtilizado:
         this.state.materialUtilizado && this.state.materialUtilizado,
-      parteMaquina: this.state.parteMaquina && this.state.parteMaquina,
     };
 
     const multiFilter = (arr, filters) => {
@@ -153,18 +146,6 @@ class MisTarjetasFiltro extends Component {
     const arrMaquina = tarjetas.map(({ maquina }) => maquina);
     const unicosMaquina = Array.from(new Set(arrMaquina));
 
-    const arrParteMaquina = campos
-      .filter(({ value }) => {
-        return value === this.state.maquina;
-      })
-      .map(({ parteMaquina }) => {
-        return parteMaquina.map((item) => {
-          return item;
-        });
-      });
-
-    const unicosarrParteMaquina = Array.from(new Set(arrParteMaquina[0]));
-
     const arrDetecto = tarjetas.map(({ detecto }) => detecto);
     const unicosDetecto = Array.from(new Set(arrDetecto));
 
@@ -191,6 +172,8 @@ class MisTarjetasFiltro extends Component {
     );
     const unicosTiempoEmpleado = Array.from(new Set(arrTiempoEmpleado));
 
+    const unicosConvertida = [true, false];
+
     const arrCausa = tarjetas.map(({ causa }) => causa);
     const unicosCausa = Array.from(new Set(arrCausa));
 
@@ -213,7 +196,6 @@ class MisTarjetasFiltro extends Component {
       estado: unicosEstado,
       descripcion: unicosDescripcion,
       maquina: unicosMaquina,
-      parteMaquina: unicosarrParteMaquina,
       detecto: unicosDetecto,
       familia: unicosFamilia,
       tipodeRiesgo: unicosTipo,
@@ -471,7 +453,6 @@ class MisTarjetasFiltro extends Component {
                           selectedOption.map(({ value, label }) => {
                             return <th className="border-0">{label}</th>;
                           })}
-
                         {this.state.qrcode && (
                           <th className="border-0">QR Code</th>
                         )}
@@ -586,7 +567,6 @@ class MisTarjetasFiltro extends Component {
                                     );
                                   }
                                 )}
-
                               {this.state.qrcode && (
                                 <td>
                                   <QRCode value={link + item._id} />
@@ -690,7 +670,6 @@ const mapStateToProps = (state) => {
     tarjetas: state.tarjetas,
     filters: state.filters,
     user: state.auth.user,
-    campos: state.campos,
   };
 };
 
@@ -698,5 +677,4 @@ export default connect(mapStateToProps, {
   getTarjetas,
   agregarFilter,
   getFilters,
-  getCampos,
 })(MisTarjetasFiltro);

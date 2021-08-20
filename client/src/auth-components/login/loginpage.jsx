@@ -1,33 +1,18 @@
 import React, { Component } from "react";
+import { Card } from "reactstrap";
 import { connect } from "react-redux";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  Label,
-  Input,
-  FormGroup,
-  NavLink,
-  Alert,
-} from "reactstrap";
-import { clearErrors } from "../../store/actions/errorActions";
 import { login } from "../../store/actions/authActions";
+import { clearErrors } from "../../store/actions/errorActions";
+import { Label, Input, Alert } from "reactstrap";
+import { withRouter, Redirect } from "react-router-dom";
 
-class LoginPage extends Component {
+export class LoginPage extends Component {
   state = {
-    modal: false,
     email: "",
     password: "",
     msg: null,
   };
 
-  toggle = () => {
-    this.setState({
-      modal: !this.state.modal,
-    });
-  };
   componentDidUpdate(prevProps) {
     const { error, isAuthenticated } = this.props;
     if (error !== prevProps.error) {
@@ -42,11 +27,8 @@ class LoginPage extends Component {
         });
       }
     }
-    // If auth, close modal
-    if (this.state.modal) {
-      if (isAuthenticated) {
-        this.toggle();
-      }
+    if (isAuthenticated) {
+      this.props.history.push("/");
     }
   }
   onChange = (e) => {
@@ -61,55 +43,69 @@ class LoginPage extends Component {
       email,
       password,
     };
-    //Attempt to login
+    // Attempt to login
     this.props.login(user);
   };
+
   render() {
     return (
-      <div>
-        <NavLink onClick={this.toggle} href="#">
-          <Button color="link text-muted">Iniciar Sesión</Button>
-        </NavLink>
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Sign in</ModalHeader>
-          <ModalBody>
-            <Form onSubmit={this.onSubmit}>
-              <FormGroup>
-                <Label for="email">Email</Label>
-                <Input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Email"
-                  className="mb-3"
-                  onChange={this.onChange}
-                />
-                <Label for="password">Password</Label>
-                <Input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="Password"
-                  className="mb-3"
-                  onChange={this.onChange}
-                />
+      <div className="container h-100">
+        <div className="row align-items-center h-100">
+          <div className=" mx-auto">
+            <Card className="px-5 py-5">
+              <form onSubmit={this.onSubmit}>
+                <h3 className="mb-3 text-center">Iniciar Sesión</h3>
+                <div className="form-group">
+                  <Label for="legajo">N° Legajo</Label>
+                  <Input
+                    type="number"
+                    name="email"
+                    id="email"
+                    placeholder="N° Legajo"
+                    className="mb-3"
+                    onChange={this.onChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <Label for="pin">Pin</Label>
+                  <Input
+                    type="number"
+                    secureTextEntry={true}
+                    class="pin"
+                    pattern="[0-9]*"
+                    inputmode="numeric"
+                    name="password"
+                    id="password"
+                    placeholder="Pin"
+                    className="mb-3"
+                    onChange={this.onChange}
+                  />
+                </div>
                 {this.state.msg ? (
-                  <Alert color="danger">{this.state.msg}</Alert>
+                  <Alert color="danger" className="mt-3">
+                    {this.state.msg}
+                  </Alert>
                 ) : null}
-                <Button color="dark" block style={{ marginTop: "2rem" }}>
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block mt-3"
+                >
                   Login
-                </Button>
-              </FormGroup>
-            </Form>
-          </ModalBody>
-        </Modal>
+                </button>
+              </form>
+            </Card>
+          </div>
+        </div>
       </div>
     );
   }
 }
-
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
+  user: state.auth.user,
+  users: state.users,
 });
-export default connect(mapStateToProps, { login, clearErrors })(LoginPage);
+export default withRouter(
+  connect(mapStateToProps, { login, clearErrors })(LoginPage)
+);

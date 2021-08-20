@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Card, CardBody, Row, Col } from "reactstrap";
+import { Card, CardBody, Row, Col, Button } from "reactstrap";
+import CynTarjetasModal from "./cynTarjetasModal";
 import moment from "moment";
 
 export class AbiertaDetalle extends Component {
   render() {
-    const { tarjetas, link_id } = this.props;
+    const { tarjetas, link_id, tarjetaskaizen } = this.props;
     const fecha =
       tarjetas &&
       tarjetas.filter(({ _id }) => _id === link_id).map(({ fecha }) => fecha);
@@ -35,8 +36,6 @@ export class AbiertaDetalle extends Component {
                 sustoExperimentado,
                 sustoObservado,
                 impactoAmbiente,
-                planta,
-                photo,
               }) => {
                 return (
                   <div>
@@ -90,7 +89,9 @@ export class AbiertaDetalle extends Component {
                           </h5>
                         </Row>
                         <Row className="ml-2 my-1">
-                          <h5 className="font-16 font-medium mr-2">Detectó:</h5>
+                          <h5 className="font-16 font-medium mr-2">
+                            Detecto:{" "}
+                          </h5>
                           <h5 className="font-14 font-weight-normal">
                             {detecto}
                           </h5>
@@ -295,6 +296,26 @@ export class AbiertaDetalle extends Component {
                             </h5>
                           </Col>
                         </Row>
+                        <Row className="ml-2 mt-3">
+                          {color === "Roja" && (
+                            <h5 className="font-16 font-medium mr-2">
+                              Sugerencia para eliminar la anomalía:
+                            </h5>
+                          )}
+                          {color === "Azul" && (
+                            <h5 className="font-16 font-medium mr-2">
+                              Sugerencia para eliminar la anomalía:
+                            </h5>
+                          )}
+                          {color === "Verde" && (
+                            <h5 className="font-16 font-medium mr-2">
+                              Sugerencia de mejora:
+                            </h5>
+                          )}
+                          <h5 className="font-14 font-weight-normal">
+                            {sugerencia}
+                          </h5>
+                        </Row>
                       </CardBody>
                       {color === "Azul" && <div class="rectangleAzul"></div>}
                       {color === "Verde" && (
@@ -304,6 +325,169 @@ export class AbiertaDetalle extends Component {
                       {color === "Amarilla" && (
                         <div class="rectangleAmarilla"></div>
                       )}
+                    </Card>
+                  </div>
+                );
+              }
+            )}
+        {tarjetaskaizen &&
+          tarjetaskaizen
+            .filter(({ _id }) => _id === link_id)
+            .map(
+              ({
+                numero,
+                linea,
+                maquina,
+                codigo,
+                color,
+                preNumero,
+                preTarjeta,
+                tema,
+                perdidaAtacada,
+                pilar,
+                lider,
+              }) => {
+                return (
+                  <div>
+                    {/* <div class="trapezoidKaizen"></div> */}
+
+                    <Card className="card">
+                      <CardBody>
+                        <Row className="ml-2 my-1">
+                          <Col>
+                            <h5
+                              className="font-16 font-medium mr-2"
+                              style={{ display: "block" }}
+                            >
+                              Código del Kaizen:
+                            </h5>
+
+                            <h5 className="font-16 font-weight-normal">
+                              {codigo}
+                            </h5>
+                          </Col>
+                          <Col>
+                            <h5
+                              className="font-16 font-medium mr-2"
+                              style={{ display: "block" }}
+                            >
+                              Tarjetas Color y Numero:
+                            </h5>
+
+                            <CynTarjetasModal
+                              _id={link_id}
+                              preTarjeta={preTarjeta}
+                            ></CynTarjetasModal>
+                          </Col>
+                        </Row>
+
+                        {/* <Row className="ml-2 my-1">
+                          <h5
+                            className="font-16 font-medium mr-2"
+                            style={{ display: "block" }}
+                          >
+                            Tarjeta Numero:
+                          </h5>
+                          <div>&nbsp;</div>
+                          <h5 className="font-16 font-weight-normal">
+                            {preNumero}
+                          </h5>
+                        </Row> */}
+                        <Row className="ml-2 my-1">
+                          <Col>
+                            <h5
+                              className="font-16 font-medium mr-2"
+                              style={{ display: "block" }}
+                            >
+                              Maquina:
+                            </h5>
+
+                            <h5 className="font-16 font-weight-normal">
+                              {maquina}
+                            </h5>
+                          </Col>
+                          <Col>
+                            {" "}
+                            <h5
+                              className="font-16 font-medium mr-2"
+                              style={{ display: "block" }}
+                            >
+                              Línea:
+                            </h5>
+                            <h5 className="font-16 font-weight-normal">
+                              {linea}
+                            </h5>
+                          </Col>
+                        </Row>
+
+                        <Row className="ml-2 my-1">
+                          <Col>
+                            {" "}
+                            <h5
+                              className="font-16 font-medium mr-2"
+                              style={{ display: "block" }}
+                            >
+                              Líder del equipo de mejora:
+                            </h5>
+                            <h5 className="font-16 font-weight-normal">
+                              {lider}
+                            </h5>
+                          </Col>
+                          <Col>
+                            {" "}
+                            <h5
+                              className="font-16 font-medium mr-2"
+                              style={{ display: "block" }}
+                            >
+                              Pérdida atacada:
+                            </h5>
+                            <h5 className="font-16 font-weight-normal">
+                              {perdidaAtacada}
+                            </h5>
+                          </Col>
+                        </Row>
+
+                        <Row className="ml-2 my-1">
+                          <Col>
+                            {" "}
+                            <h5
+                              className="font-16 font-medium mr-2"
+                              style={{ display: "block" }}
+                            >
+                              Pilar:
+                            </h5>
+                            <h5 className="font-16 font-weight-normal">
+                              {pilar}
+                            </h5>
+                          </Col>
+                          <Col>
+                            <h5 className="font-16 font-medium mr-2">
+                              Fecha apertura:
+                            </h5>
+                            <h5 className="font-14 font-weight-normal">
+                              {moment(fecha).format("DD/MM/YYYY LTS ")}
+                            </h5>
+                          </Col>
+                        </Row>
+
+                        <Row className="my-3 text-center">
+                          <Col>
+                            <h5 className="font-16 font-medium text-center">
+                              Tema:
+                            </h5>
+                          </Col>
+                        </Row>
+
+                        <Row className="text-center">
+                          <Col>
+                            <h5 className="font-14 font-weight-normal">
+                              {tema}
+                            </h5>
+                          </Col>
+                        </Row>
+                      </CardBody>
+
+                      {/* <div class="rectangleKaizen"></div> */}
                     </Card>
                   </div>
                 );

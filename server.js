@@ -2,8 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const config = require("config");
-
+const ipfilter = require("express-ipfilter").IpFilter;
+const ipWhitelist = require("ip-whitelist");
 const tarjetas = require("./routes/api/tarjetas");
+const tarjetaskaizen = require("./routes/api/tarjetaskaizen");
 const filters = require("./routes/api/filters");
 const campos = require("./routes/api/campos");
 const users = require("./routes/api/users");
@@ -27,8 +29,10 @@ mongoose
   })
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
+
 // User routes
 app.use("/api/tarjetas", tarjetas);
+app.use("/api/tarjetaskaizen", tarjetaskaizen);
 app.use("/api/filters", filters);
 app.use("/api/campos", campos);
 app.use("/api/users", users);

@@ -15,98 +15,163 @@ import {
   Alert,
 } from "reactstrap";
 export class CerrarTarjetaAmarillaModal extends Component {
-  state = {
-    modal: false,
-    _id: this.props._id,
-    finReparacionDia: "",
-    finReparacionHora: "",
-    responsable: "",
-    tareaRealizada: "",
-    riesgoFinal: "",
-    verificacion: false,
-    accionesComplementarias: "",
-    tipoAccion: "",
-    convertida: false,
-    msg: null,
+  constructor(props) {
+    super(props);
+    this.state = {
+      formValues: {
+        _id: this.props._id,
+        finReparacionDia: "",
+        finReparacionHora: "",
+        responsable: "",
+        tareaRealizada: "",
+        riesgoFinal: "",
+        accionesComplementarias: "",
+        tipoAccion: "",
+        causa: "",
+      },
+      formErrors: {
+        _id: this.props._id,
+        finReparacionDia: "",
+        finReparacionHora: "",
+        responsable: "",
+        tareaRealizada: "",
+        riesgoFinal: "",
+        accionesComplementarias: "",
+        tipoAccion: "",
+        causa: "",
+      },
+      formValidity: {
+        _id: this.props._id,
+        finReparacionDia: false,
+        finReparacionHora: false,
+        responsable: false,
+        tareaRealizada: false,
+        riesgoFinal: false,
+        accionesComplementarias: false,
+        tipoAccion: false,
+        causa: false,
+      },
+      isSubmitting: false,
+      modal: false,
+      convertida: false,
+      verificacion: false,
+    };
+  }
+  handleChange = ({ target }) => {
+    const { formValues } = this.state;
+    formValues[target.name] = target.value;
+    this.setState({ formValues });
+    this.handleValidation(target);
   };
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-  componentDidUpdate(prevProps) {
-    const { error } = this.props;
-    if (error !== prevProps.error) {
-      //Check for login error
-      console.log(error.msg.msg);
-      if (error.id === "CERRAR_TARJETA_AMARILLA_ERROR") {
-        this.setState({
-          msg: error.msg.msg,
-        });
-      } else {
-        this.setState({
-          msg: null,
-        });
+
+  handleValidation = (target) => {
+    const { name, value } = target;
+    const fieldValidationErrors = this.state.formErrors;
+    const validity = this.state.formValidity;
+    const isEmail = name === "email";
+    const isPassword = name === "password";
+    const isInicioReparacion = name === "inicioReparacionDia";
+    const isFinReparacion = name === "finReparacionDia";
+    const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+
+    validity[name] = value.length > 0;
+    fieldValidationErrors[name] = validity[name]
+      ? ""
+      : "Este campo es requerido y no puede estar vacio";
+
+    if (validity[name]) {
+      if (isEmail) {
+        validity[name] = emailTest.test(value);
+        fieldValidationErrors[name] = validity[name]
+          ? ""
+          : `${name} should be a valid email address`;
+      }
+      if (isPassword) {
+        validity[name] = value.length >= 3;
+        fieldValidationErrors[name] = validity[name]
+          ? ""
+          : `${name} should be 3 characters minimum`;
+      }
+      if (isInicioReparacion) {
+        validity[name] = value > this.props.fecha;
+        fieldValidationErrors[name] = validity[name]
+          ? ""
+          : "Inicio de reparacion tiene que ser posterior a fecha creada.";
+      }
+      if (isFinReparacion) {
+        validity[name] = value > this.props.fecha;
+        fieldValidationErrors[name] = validity[name]
+          ? ""
+          : "Fin de reparacion tiene que ser posterior a fecha creada.";
       }
     }
-  }
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      formValidity: validity,
+    });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.setState({ isSubmitting: true });
+    const { formValues, formValidity } = this.state;
+    if (Object.values(formValidity).every(Boolean)) {
+      // Here is when the validate comes
+      this.setState({ isSubmitting: false });
+
+      const {
+        _id,
+        finReparacionDia,
+        finReparacionHora,
+        responsable,
+        tareaRealizada,
+        riesgoFinal,
+        accionesComplementarias,
+        tipoAccion,
+        causa,
+      } = this.state.formValues;
+
+      // Cerrar Tarjeta
+      const tarjetaActualizada = {
+        _id,
+        finReparacion: finReparacionDia + " " + finReparacionHora,
+        responsable,
+        tareaRealizada,
+        tipoAccion,
+        riesgoFinal,
+        accionesComplementarias,
+        tipoAccion,
+        causa,
+        convertida: this.state.convertida,
+        verificacion: this.state.verificacion,
+      };
+
+      this.props.cerrarTarjetaAmarilla(tarjetaActualizada);
+    } else {
+      for (let key in formValues) {
+        let target = {
+          name: key,
+          value: formValues[key],
+        };
+        this.handleValidation(target);
+      }
+      this.setState({ isSubmitting: false });
+    }
+  };
+
   toggle = () => {
-    // Clear errors
-    this.props.clearErrors();
     this.setState({
       modal: !this.state.modal,
     });
   };
-  onSubmit = (e) => {
-    e.preventDefault();
-    const {
-      _id,
-      finReparacionDia,
-      finReparacionHora,
-      responsable,
-      tareaRealizada,
-      convertida,
-      riesgoFinal,
-      causa,
-      tipoAccion,
-      verificacion,
-      accionesComplementarias,
-    } = this.state;
 
-    // Cerrar Tarjeta
-    const tarjetaActualizada = {
-      _id,
-      finReparacion: finReparacionDia + " " + finReparacionHora,
-      responsable,
-      tareaRealizada,
-      riesgoFinal,
-      verificacion,
-      causa,
-      tipoAccion,
-      accionesComplementarias,
-      convertida,
-    };
-
-    this.props.cerrarTarjetaAmarilla(tarjetaActualizada);
-    if (
-      !_id ||
-      !riesgoFinal ||
-      !finReparacionDia ||
-      !finReparacionHora ||
-      !responsable ||
-      !tipoAccion ||
-      !causa ||
-      !accionesComplementarias ||
-      !tareaRealizada
-    ) {
-      return null;
-    } else {
-      return this.toggle();
-    }
-  };
   componentDidMount() {
     this.props.getCampos();
   }
   render() {
     const { campos } = this.props.campos;
+    const { formValues, formErrors, isSubmitting } = this.state;
     return (
       <div>
         <p onClick={this.toggle} style={{ cursor: "pointer" }} className="my-3">
@@ -115,23 +180,34 @@ export class CerrarTarjetaAmarillaModal extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Cerrar Tarjeta</ModalHeader>
           <ModalBody>
-            <Form onSubmit={this.onSubmit}>
+            <Form onSubmit={this.handleSubmit}>
               <FormGroup>
                 <Label for="accionRealizada">Acción Realizada</Label>
                 <Input
-                  onChange={this.onChange}
+                  onChange={this.handleChange}
                   type="text"
+                  value={formValues.tareaRealizada}
                   name="tareaRealizada"
                   id="tareaRealizada"
                   className="mb-2"
+                  className={`form-control ${
+                    formErrors.tareaRealizada ? "is-invalid" : "mb-2"
+                  }`}
                 ></Input>
+                <div className="invalid-feedback mb-2">
+                  {formErrors.tareaRealizada}
+                </div>
                 <Label for="tipoAccion">Tipo de acción a realizar *</Label>
                 <Input
                   type="select"
                   name="tipoAccion"
                   id="tipoAccion"
                   className="mb-2"
-                  onChange={this.onChange}
+                  value={formValues.tipoAccion}
+                  onChange={this.handleChange}
+                  className={`form-control ${
+                    formErrors.tipoAccion ? "is-invalid" : "mb-2"
+                  }`}
                 >
                   <option>Seleccionar</option>
                   <option>Eliminar</option>
@@ -139,44 +215,77 @@ export class CerrarTarjetaAmarillaModal extends Component {
                   <option>Reemplazar</option>
                   <option>Simplificar</option>
                 </Input>
+                <div className="invalid-feedback mb-2">
+                  {formErrors.tipoAccion}
+                </div>
                 <Label for="responsable">Responsable</Label>
                 <Input
-                  onChange={this.onChange}
+                  onChange={this.handleChange}
+                  value={formValues.responsable}
                   type="text"
                   name="responsable"
                   id="responsable"
                   className="mb-2"
+                  className={`form-control ${
+                    formErrors.responsable ? "is-invalid" : "mb-2"
+                  }`}
                 ></Input>
+                <div className="invalid-feedback mb-2">
+                  {formErrors.responsable}
+                </div>
                 <Label for="responsable">Causa</Label>
                 <Input
-                  onChange={this.onChange}
+                  onChange={this.handleChange}
+                  value={formValues.causa}
                   type="text"
                   name="causa"
                   id="causa"
                   className="mb-2"
+                  className={`form-control ${
+                    formErrors.causa ? "is-invalid" : "mb-2"
+                  }`}
                 ></Input>
+                <div className="invalid-feedback mb-2">{formErrors.causa}</div>
                 <Label for="updaters">Fecha de terminacion</Label>
                 <Input
-                  onChange={this.onChange}
+                  onChange={this.handleChange}
+                  value={formValues.finReparacionDia}
                   type="date"
                   name="finReparacionDia"
                   id="finReparacionDia"
                   className="mb-2"
+                  className={`form-control ${
+                    formErrors.finReparacionDia ? "is-invalid" : "mb-2"
+                  }`}
                 ></Input>
+                <div className="invalid-feedback mb-2">
+                  {formErrors.finReparacionDia}
+                </div>
                 <Input
-                  onChange={this.onChange}
+                  onChange={this.handleChange}
+                  value={formValues.finReparacionHora}
                   type="time"
                   name="finReparacionHora"
                   id="finReparacionHora"
                   className="mb-2"
+                  className={`form-control ${
+                    formErrors.finReparacionHora ? "is-invalid" : "mb-2"
+                  }`}
                 ></Input>
+                <div className="invalid-feedback mb-2">
+                  {formErrors.finReparacionHora}
+                </div>
 
                 <Label for="detecto">Riesgo Final</Label>
                 <Input
                   type="select"
                   name="riesgoFinal"
                   id="riesgoFinal"
-                  onChange={this.onChange}
+                  onChange={this.handleChange}
+                  value={formValues.riesgoFinal}
+                  className={`form-control ${
+                    formErrors.riesgoFinal ? "is-invalid" : "mb-2"
+                  }`}
                 >
                   <option>Seleccionar</option>
                   {campos &&
@@ -192,17 +301,27 @@ export class CerrarTarjetaAmarillaModal extends Component {
                         );
                       })}
                 </Input>
+                <div className="invalid-feedback mb-2">
+                  {formErrors.riesgoFinal}
+                </div>
 
                 <Label for="updaters" className="mt-3">
                   Acciones Complementarias
                 </Label>
                 <Input
-                  onChange={this.onChange}
+                  onChange={this.handleChange}
                   type="text"
                   name="accionesComplementarias"
                   id="accionesComplementarias"
                   className="mb-2"
+                  value={formValues.accionesComplementarias}
+                  className={`form-control ${
+                    formErrors.accionesComplementarias ? "is-invalid" : "mb-2"
+                  }`}
                 ></Input>
+                <div className="invalid-feedback mb-2">
+                  {formErrors.accionesComplementarias}
+                </div>
 
                 <FormGroup check>
                   <Label check>
@@ -210,12 +329,9 @@ export class CerrarTarjetaAmarillaModal extends Component {
                       type="checkbox"
                       id="verificacion"
                       name="verificacion"
-                      onChange={(e) => {
-                        this.onChange({
-                          target: {
-                            name: e.target.name,
-                            value: e.target.checked,
-                          },
+                      onChange={() => {
+                        this.setState({
+                          verificacion: !this.state.verificacion,
                         });
                       }}
                     />
@@ -229,12 +345,9 @@ export class CerrarTarjetaAmarillaModal extends Component {
                       type="checkbox"
                       id="convertida"
                       name="convertida"
-                      onChange={(e) => {
-                        this.onChange({
-                          target: {
-                            name: e.target.name,
-                            value: e.target.checked,
-                          },
+                      onChange={() => {
+                        this.setState({
+                          convertida: !this.state.convertida,
                         });
                       }}
                     />
@@ -242,13 +355,15 @@ export class CerrarTarjetaAmarillaModal extends Component {
                   </Label>
                 </FormGroup>
 
-                {this.state.msg ? (
-                  <Alert color="danger" className="mt-3">
-                    {this.state.msg}
-                  </Alert>
-                ) : null}
-                <Button color="dark" block style={{ marginTop: "2rem" }}>
-                  Subir
+                <Button
+                  color="dark"
+                  block
+                  style={{ marginTop: "2rem" }}
+                  type="submit"
+                  className="btn btn-primary btn-block"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Por favor espere..." : "Subir"}
                 </Button>
               </FormGroup>
             </Form>
