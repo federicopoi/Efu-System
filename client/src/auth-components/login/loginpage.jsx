@@ -46,6 +46,14 @@ export class LoginPage extends Component {
     // Attempt to login
     this.props.login(user);
   };
+  onSubmitDefault = (e) => {
+    const user = {
+      email: "111111",
+      password: "111111",
+    };
+    // Attempt to login
+    this.props.login(user);
+  };
 
   render() {
     return (
@@ -92,6 +100,19 @@ export class LoginPage extends Component {
                 >
                   Login
                 </button>
+
+                <p className="mt-3">
+                  Login as a demo user <span></span>
+                  <a
+                    style={{ cursor: "pointer" }}
+                    className="text-primary"
+                    onClick={() => {
+                      return this.onSubmitDefault();
+                    }}
+                  >
+                    here
+                  </a>
+                </p>
               </form>
             </Card>
           </div>
