@@ -21,10 +21,6 @@ import { Redirect } from "react-router-dom";
 class App extends Component {
   componentDidMount() {
     this.props.store.dispatch(loadUser());
-
-    if (document.location.href.indexOf("herokuapp.com") > -1) {
-      document.location.href = "https://www.efuklocknertpm.com/login";
-    }
   }
   render() {
     return (
