@@ -1,4 +1,1 @@
-{
-  "mongoURI": "mongodb+srv://fedepoi33:Cl2Eabv1PPJX1yQw@cluster0.sjb5r.mongodb.net/efusystem?retryWrites=true&w=majority",
-  "jwtSecret": "sl_mysecret"
-}
+
